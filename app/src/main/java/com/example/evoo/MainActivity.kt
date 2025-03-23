@@ -70,6 +70,7 @@ class MainActivity : ComponentActivity() {
 
 
 // Startseite
+@Preview(showBackground = true)
 @Composable
 fun MainScreen(){
     Box(
@@ -128,12 +129,7 @@ fun MainScreen(){
 
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
 
-
-    }
 
 // Function um Logo auf dem Screen darzustellen
 @Composable

@@ -513,16 +513,16 @@ fun Vorschau() {
 fun LogoImage() {
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .height(70.dp)
             .padding(3.dp)
-            .offset(y = (-380).dp)
-
+            .fillMaxWidth()
 
     ) {
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "Logo",
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier
+                .align(Alignment.TopCenter)
         )
     }
 }

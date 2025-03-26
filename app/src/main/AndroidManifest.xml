@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EVOO"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="DEIN_GOOGLE_MAPS_API_KEY" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

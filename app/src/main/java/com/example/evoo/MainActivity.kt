@@ -8,15 +8,18 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.snapping.SnapPosition.Center.position
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -56,6 +59,12 @@ import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
 
 
 class MainActivity : ComponentActivity() {
@@ -129,7 +138,7 @@ fun MainScreen(navController: NavController){
                 Row(
                     modifier = Modifier
                         .height(55.dp)
-                        .fillMaxWidth(0.8f)
+                        .fillMaxWidth(0.7f)
                         .background(ForegroundColor),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
@@ -205,7 +214,7 @@ fun SetingScreen(navController: NavController){
                 Row(
                     modifier = Modifier
                         .height(55.dp)
-                        .fillMaxWidth(0.8f)
+                        .fillMaxWidth(0.7f)
                         .background(ForegroundColor),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
@@ -279,7 +288,7 @@ fun AccountScreen(navController: NavController){
                 Row(
                     modifier = Modifier
                         .height(55.dp)
-                        .fillMaxWidth(0.8f)
+                        .fillMaxWidth(0.7f)
                         .background(ForegroundColor),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
@@ -330,15 +339,30 @@ fun LocationScreen(navController: NavController){
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
                 .background(BackgroundColor)
         ){
-            LogoImage()   // Function um Logo auf dem Screen darzustellen.
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 16.dp),  // Abstand zur Status Bar
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-            Box (
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ){
-                Text("Location", fontSize = 50.sp)
+                //Spacer(modifier = Modifier.height(16.dp))
+                Card(
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(24.dp),
+                    modifier = Modifier
+                        .fillMaxWidth(0.98f)
+                        .heightIn(300.dp)
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+
+                        GoogleMapScreen()
+                    }
+                }
             }
-
 
             // Menu Bar
             Card (
@@ -351,7 +375,7 @@ fun LocationScreen(navController: NavController){
                 Row(
                     modifier = Modifier
                         .height(55.dp)
-                        .fillMaxWidth(0.8f)
+                        .fillMaxWidth(0.7f)
                         .background(ForegroundColor),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
@@ -388,6 +412,27 @@ fun LocationScreen(navController: NavController){
 }
 
 
+
+@Composable
+fun GoogleMapScreen() {
+    val singapore = LatLng(1.3521, 103.8198) // Beispiel: Singapur Koordinaten
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(singapore, 12f) // Zoom Level
+    }
+
+    GoogleMap(
+        modifier = Modifier.fillMaxSize(),
+        cameraPositionState = cameraPositionState
+    ) {
+        // Füge eine Markierung hinzu
+        Marker(
+            state = MarkerState(position = singapore),
+            title = "Singapur",
+            snippet = "Hier ist Singapur!"
+        )
+    }
+}
+
 @Composable
 fun ContentScreen(navController: NavController){
     Box(
@@ -423,7 +468,7 @@ fun ContentScreen(navController: NavController){
                 Row(
                     modifier = Modifier
                         .height(55.dp)
-                        .fillMaxWidth(0.8f)
+                        .fillMaxWidth(0.7f)
                         .background(ForegroundColor),
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically

@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -109,23 +110,20 @@ fun MainScreen(navController: NavController){
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
                 .background(BackgroundColor)
         ){
-            LogoImage()   // Function um Logo auf dem Screen darzustellen.
-            SearchBar()  // Function um die Suchleiste darzustellen
+            Vorschau()
 
             // Zwei Funktionen für die Vorschau (Jede in eigener Box)
             Box (
                 modifier = Modifier
-                    .padding(top = 200.dp)
-                    .clickable{navController.navigate("ContentScreen")}
+                    .padding(top = 6.dp)
+
             ) {
-                Vorschau()
+
+                LogoImage()   // Function um Logo auf dem Screen darzustellen.
+
             }
 
-            Box (
-                modifier = Modifier.padding(top = 450.dp)
-            ) {
-                Vorschau()
-            }
+
 
             // Menu Bar
             Card (
@@ -133,7 +131,7 @@ fun MainScreen(navController: NavController){
                 elevation = CardDefaults.cardElevation(24.dp),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .offset(y = (-32).dp)
+                    .offset(y = (-21).dp)
             ) {
                 Row(
                     modifier = Modifier
@@ -507,50 +505,75 @@ fun ContentScreen(navController: NavController){
 
 @Composable
 fun Vorschau() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(243.dp)
-            .padding(16.dp)
-    ) {
-        val pagerState = rememberPagerState(initialPage = 5) { 10 }
 
-        HorizontalPager(
-
-            state = pagerState,
-            modifier = Modifier
-                .fillMaxSize()
-        ) { page ->
-            Card(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(8.dp)
-                    .clickable{},
-                elevation = CardDefaults.cardElevation(16.dp)
-
-            ) {
-                // Bild für die Vorschau
-                Box(
+        LazyColumn (
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            items (30){
+                Image(
+                    painter = painterResource(id = R.drawable.festival1),
+                    contentDescription = null,
                     modifier = Modifier
-                        .background(BackgroundColor)
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.festival1),
-                        contentDescription = null
-                    )
-                    /*Text(
-                    text = "Bild $page",
-                    style = MaterialTheme.typography.headlineMedium
-                )*/
-                }
+                        .fillMaxSize()
+                        .padding(start = 6.dp, end = 6.dp)
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Image(
+                    painter = painterResource(id = R.drawable.festival2),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(start = 6.dp, end = 6.dp)
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Image(
+                    painter = painterResource(id = R.drawable.festival3),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(start = 6.dp, end = 6.dp)
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Image(
+                    painter = painterResource(id = R.drawable.festival4),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(start = 6.dp, end = 6.dp)
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Image(
+                    painter = painterResource(id = R.drawable.festival5),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(start = 6.dp, end = 6.dp)
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Image(
+                    painter = painterResource(id = R.drawable.festival6),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(start = 6.dp, end = 6.dp)
+                )
+                Spacer(modifier = Modifier.height(6.dp))
             }
+
+
         }
 
 
-    }
+
 }
+
 
 
 // Function um Logo auf dem Screen darzustellen

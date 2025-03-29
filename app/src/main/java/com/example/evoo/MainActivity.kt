@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -49,6 +50,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -271,7 +273,25 @@ fun AccountScreen(navController: NavController){
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ){
-                Text("Account", fontSize = 50.sp)
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 96.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.avatar2),
+                        contentDescription = "Avatar",
+                        modifier = Modifier
+                            .size(340.dp)
+                            .clip(CircleShape)
+                    )
+                    Text("Anna Mustermann", fontSize = 24.sp, color = Color.White)
+                    Text("Android-Entwicklerin aus Stuttgert", color = Color.Gray)
+                }
+            }
+
             }
 
 
@@ -320,7 +340,7 @@ fun AccountScreen(navController: NavController){
 
     }
 
-}
+
 
 
 @Composable

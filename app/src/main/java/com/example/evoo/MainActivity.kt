@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            //MainScreen() // Hier wird die Startseite aufgerufen.
+
             Navigation()
 
         }
@@ -97,7 +97,7 @@ fun Navigation(){
 
 
 // Startseite
-//@Preview(showBackground = true)
+
 @Composable
 fun MainScreen(navController: NavController){
     Box(
@@ -114,7 +114,7 @@ fun MainScreen(navController: NavController){
         ){
             Vorschau()
 
-            // Zwei Funktionen für die Vorschau (Jede in eigener Box)
+            // Funktionen für die Vorschau
             Box (
                 modifier = Modifier
                     .padding(top = 6.dp)
@@ -178,7 +178,7 @@ fun MainScreen(navController: NavController){
 
 }
 
-//@Preview(showBackground = true)
+
 @Composable
 fun SetingScreen(navController: NavController){
     Box(
@@ -364,7 +364,7 @@ fun LocationScreen(navController: NavController){
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                //Spacer(modifier = Modifier.height(16.dp))
+
                 Card(
                     shape = RoundedCornerShape(16.dp),
                     elevation = CardDefaults.cardElevation(24.dp),

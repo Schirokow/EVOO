@@ -114,7 +114,6 @@ fun MainScreen(navController: NavController){
             // Funktion für die Vorschau.
             Vorschau(navController)
 
-
             Box (
                 modifier = Modifier
                     .padding(top = 6.dp)
@@ -357,6 +356,7 @@ fun LocationScreen(navController: NavController){
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
                 .background(BackgroundColor)
         ){
+
 
             Box(
                 modifier = Modifier.fillMaxSize(),

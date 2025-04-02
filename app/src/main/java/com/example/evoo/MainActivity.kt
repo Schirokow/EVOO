@@ -111,6 +111,7 @@ fun MainScreen(navController: NavController){
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
                 .background(BackgroundColor)
         ){
+
             // Funktion für die Vorschau.
             Vorschau(navController)
 
@@ -511,6 +512,7 @@ fun ContentScreen(navController: NavController){
 @Composable
 fun Vorschau(navController: NavController) {
 
+
         LazyColumn (
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -526,6 +528,7 @@ fun Vorschau(navController: NavController) {
                         .clickable{
                             navController.navigate("ContentScreen")
                         }
+
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -538,6 +541,7 @@ fun Vorschau(navController: NavController) {
                         .clickable{
                             navController.navigate("ContentScreen")
                         }
+
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -550,6 +554,7 @@ fun Vorschau(navController: NavController) {
                         .clickable{
                             navController.navigate("ContentScreen")
                         }
+
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -562,6 +567,7 @@ fun Vorschau(navController: NavController) {
                         .clickable{
                             navController.navigate("ContentScreen")
                         }
+
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 

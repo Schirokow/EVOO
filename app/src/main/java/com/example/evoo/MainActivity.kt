@@ -82,7 +82,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Preview
 @Composable
 fun Navigation(){
@@ -215,6 +214,7 @@ fun LocationScreen(navController: NavController){
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
                 .background(BackgroundColor)
         ){
+
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -356,6 +356,7 @@ fun Vorschau(navController: NavController) {
                         .clickable{
                             navController.navigate("ContentScreen")
                         }
+
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -368,6 +369,7 @@ fun Vorschau(navController: NavController) {
                         .clickable{
                             navController.navigate("ContentScreen")
                         }
+
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -380,6 +382,7 @@ fun Vorschau(navController: NavController) {
                         .clickable{
                             navController.navigate("ContentScreen")
                         }
+
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -392,6 +395,7 @@ fun Vorschau(navController: NavController) {
                         .clickable{
                             navController.navigate("ContentScreen")
                         }
+
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 

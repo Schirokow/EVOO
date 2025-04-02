@@ -214,7 +214,6 @@ fun LocationScreen(navController: NavController){
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
                 .background(BackgroundColor)
         ){
-
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -298,7 +297,6 @@ fun MenuBar(navController: NavController){
                     .background(ForegroundColor),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
-
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Place,
@@ -330,7 +328,6 @@ fun MenuBar(navController: NavController){
                         .size(34.dp)
                         .clickable{navController.navigate("SettingScreen")}
                 )
-
             }
         }
     }

@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            //MainScreen() // Hier wird die Startseite aufgerufen.
+
             Navigation()
 
         }
@@ -88,7 +88,7 @@ fun Navigation(){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "MainScreen"){
         composable ("MainScreen"){ MainScreen(navController)}
-        composable ("SetingScreen"){ SetingScreen(navController)}
+        composable ("SettingScreen"){ SettingScreen(navController)}
         composable ("AccountScreen"){ AccountScreen(navController)}
         composable ("LocationScreen"){ LocationScreen(navController)}
         composable ("ContentScreen"){ ContentScreen(navController)}
@@ -97,7 +97,6 @@ fun Navigation(){
 
 
 // Startseite
-//@Preview(showBackground = true)
 @Composable
 fun MainScreen(navController: NavController){
     Box(
@@ -112,9 +111,10 @@ fun MainScreen(navController: NavController){
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
                 .background(BackgroundColor)
         ){
-            Vorschau()
+            // Funktion für die Vorschau.
+            Vorschau(navController)
 
-            // Zwei Funktionen für die Vorschau (Jede in eigener Box)
+
             Box (
                 modifier = Modifier
                     .padding(top = 6.dp)
@@ -164,7 +164,7 @@ fun MainScreen(navController: NavController){
                         modifier = Modifier
                             .size(34.dp)
                             .clickable{
-                                 navController.navigate("SetingScreen")
+                                 navController.navigate("SettingScreen")
 
 
                             }
@@ -178,9 +178,9 @@ fun MainScreen(navController: NavController){
 
 }
 
-//@Preview(showBackground = true)
+
 @Composable
-fun SetingScreen(navController: NavController){
+fun SettingScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -209,7 +209,7 @@ fun SetingScreen(navController: NavController){
                 elevation = CardDefaults.cardElevation(24.dp),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .offset(y = (-32).dp)
+                    .offset(y = (-21).dp)
             ) {
                 Row(
                     modifier = Modifier
@@ -301,7 +301,7 @@ fun AccountScreen(navController: NavController){
                 elevation = CardDefaults.cardElevation(24.dp),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .offset(y = (-32).dp)
+                    .offset(y = (-21).dp)
             ) {
                 Row(
                     modifier = Modifier
@@ -331,7 +331,7 @@ fun AccountScreen(navController: NavController){
                         contentDescription = "Settings",
                         modifier = Modifier
                             .size(34.dp)
-                            .clickable{navController.navigate("SetingScreen")}
+                            .clickable{navController.navigate("SettingScreen")}
                     )
                 }
             }
@@ -357,29 +357,12 @@ fun LocationScreen(navController: NavController){
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
                 .background(BackgroundColor)
         ){
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 16.dp),  // Abstand zur Status Bar
-                horizontalAlignment = Alignment.CenterHorizontally
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-
-                //Spacer(modifier = Modifier.height(16.dp))
-                Card(
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.cardElevation(24.dp),
-                    modifier = Modifier
-                        .fillMaxWidth(0.98f)
-                        .heightIn(300.dp)
-                ) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-
-                        GoogleMapScreen()
-                    }
-                }
+                GoogleMapScreen()
             }
 
             // Menu Bar
@@ -388,7 +371,7 @@ fun LocationScreen(navController: NavController){
                 elevation = CardDefaults.cardElevation(24.dp),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .offset(y = (-32).dp)
+                    .offset(y = (-21).dp)
             ) {
                 Row(
                     modifier = Modifier
@@ -418,7 +401,7 @@ fun LocationScreen(navController: NavController){
                         contentDescription = "Settings",
                         modifier = Modifier
                             .size(34.dp)
-                            .clickable{navController.navigate("SetingScreen")}
+                            .clickable{navController.navigate("SettingScreen")}
                     )
                 }
             }
@@ -481,7 +464,7 @@ fun ContentScreen(navController: NavController){
                 elevation = CardDefaults.cardElevation(24.dp),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .offset(y = (-32).dp)
+                    .offset(y = (-21).dp)
             ) {
                 Row(
                     modifier = Modifier
@@ -497,7 +480,9 @@ fun ContentScreen(navController: NavController){
                         contentDescription = "Explore",
                         modifier = Modifier
                             .size(34.dp)
-                            .clickable{}
+                            .clickable{
+                                navController.navigate("LocationScreen")
+                            }
                     )
                     Icon(
                         imageVector = Icons.Rounded.Home,
@@ -511,7 +496,7 @@ fun ContentScreen(navController: NavController){
                         contentDescription = "Settings",
                         modifier = Modifier
                             .size(34.dp)
-                            .clickable{navController.navigate("SetingScreen")}
+                            .clickable{navController.navigate("SettingScreen")}
                     )
                 }
             }
@@ -524,7 +509,7 @@ fun ContentScreen(navController: NavController){
 
 
 @Composable
-fun Vorschau() {
+fun Vorschau(navController: NavController) {
 
         LazyColumn (
             modifier = Modifier.fillMaxSize(),
@@ -538,6 +523,9 @@ fun Vorschau() {
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 6.dp, end = 6.dp)
+                        .clickable{
+                            navController.navigate("ContentScreen")
+                        }
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -547,6 +535,9 @@ fun Vorschau() {
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 6.dp, end = 6.dp)
+                        .clickable{
+                            navController.navigate("ContentScreen")
+                        }
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -556,6 +547,9 @@ fun Vorschau() {
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 6.dp, end = 6.dp)
+                        .clickable{
+                            navController.navigate("ContentScreen")
+                        }
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -565,6 +559,9 @@ fun Vorschau() {
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 6.dp, end = 6.dp)
+                        .clickable{
+                            navController.navigate("ContentScreen")
+                        }
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -574,6 +571,9 @@ fun Vorschau() {
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 6.dp, end = 6.dp)
+                        .clickable{
+                            navController.navigate("ContentScreen")
+                        }
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -583,6 +583,9 @@ fun Vorschau() {
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 6.dp, end = 6.dp)
+                        .clickable{
+                            navController.navigate("ContentScreen")
+                        }
                 )
                 Spacer(modifier = Modifier.height(6.dp))
             }

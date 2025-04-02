@@ -82,7 +82,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
+@Preview
 @Composable
 fun Navigation(){
     val navController = rememberNavController()

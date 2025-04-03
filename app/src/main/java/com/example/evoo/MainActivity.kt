@@ -75,20 +75,20 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            //MainScreen() // Hier wird die Startseite aufgerufen.
+
             Navigation()
 
         }
     }
 }
 
-
+@Preview
 @Composable
 fun Navigation(){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "MainScreen"){
         composable ("MainScreen"){ MainScreen(navController)}
-        composable ("SetingScreen"){ SetingScreen(navController)}
+        composable ("SettingScreen"){ SettingScreen(navController)}
         composable ("AccountScreen"){ AccountScreen(navController)}
         composable ("LocationScreen"){ LocationScreen(navController)}
         composable ("ContentScreen"){ ContentScreen(navController)}
@@ -97,7 +97,6 @@ fun Navigation(){
 
 
 // Startseite
-//@Preview(showBackground = true)
 @Composable
 fun MainScreen(navController: NavController){
     Box(
@@ -105,88 +104,36 @@ fun MainScreen(navController: NavController){
             .fillMaxSize()
             .background(AccentColor)
     ){
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
                 .background(BackgroundColor)
         ){
-            Vorschau()
+            // Funktion für die Vorschau.
+            Vorschau(navController)
 
-            // Zwei Funktionen für die Vorschau (Jede in eigener Box)
             Box (
                 modifier = Modifier
                     .padding(top = 6.dp)
-
-            ) {
-
+            )
+            {
                 LogoImage()   // Function um Logo auf dem Screen darzustellen.
-
             }
-
-
-
             // Menu Bar
-            Card (
-                shape = RoundedCornerShape(28.dp),
-                elevation = CardDefaults.cardElevation(24.dp),
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = (-21).dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .height(55.dp)
-                        .fillMaxWidth(0.7f)
-                        .background(ForegroundColor),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Place,
-                        contentDescription = "Explore",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{navController.navigate("LocationScreen")}
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.AccountCircle,
-                        contentDescription = "Account",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{navController.navigate("AccountScreen")}
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.Settings,
-                        contentDescription = "Settings",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{
-                                 navController.navigate("SetingScreen")
-
-
-                            }
-                    )
-                }
-            }
+            MenuBar(navController)
         }
-
-
     }
-
 }
 
-//@Preview(showBackground = true)
+
 @Composable
-fun SetingScreen(navController: NavController){
+fun SettingScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(AccentColor)
     ){
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -201,55 +148,10 @@ fun SetingScreen(navController: NavController){
             ){
                 Text("Einstellungen", fontSize = 50.sp)
             }
-
-
             // Menu Bar
-            Card (
-                shape = RoundedCornerShape(28.dp),
-                elevation = CardDefaults.cardElevation(24.dp),
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = (-32).dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .height(55.dp)
-                        .fillMaxWidth(0.7f)
-                        .background(ForegroundColor),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Place,
-                        contentDescription = "Explore",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{navController.navigate("LocationScreen")}
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.Home,
-                        contentDescription = "Home",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{ navController.navigate("MainScreen")}
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.Settings,
-                        contentDescription = "Settings",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{
-
-                            }
-                    )
-                }
-            }
+            MenuBar(navController)
         }
-
-
     }
-
 }
 
 
@@ -266,13 +168,13 @@ fun AccountScreen(navController: NavController){
                 .fillMaxSize()
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
                 .background(BackgroundColor)
-        ){
+        ) {
             LogoImage()   // Function um Logo auf dem Screen darzustellen.
 
-            Box (
+            Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
-            ){
+            ) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -291,56 +193,12 @@ fun AccountScreen(navController: NavController){
                     Text("Android-Entwicklerin aus Stuttgert", color = Color.Gray)
                 }
             }
-
-            }
-
-
             // Menu Bar
-            Card (
-                shape = RoundedCornerShape(28.dp),
-                elevation = CardDefaults.cardElevation(24.dp),
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = (-32).dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .height(55.dp)
-                        .fillMaxWidth(0.7f)
-                        .background(ForegroundColor),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Place,
-                        contentDescription = "Explore",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{navController.navigate("LocationScreen")}
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.Home,
-                        contentDescription = "Home",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{ navController.navigate("MainScreen")}
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.Settings,
-                        contentDescription = "Settings",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{navController.navigate("SetingScreen")}
-                    )
-                }
-            }
+            MenuBar(navController)
         }
-
-
     }
 
-
+}
 
 
 @Composable
@@ -350,85 +208,23 @@ fun LocationScreen(navController: NavController){
             .fillMaxSize()
             .background(AccentColor)
     ){
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
                 .background(BackgroundColor)
         ){
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 16.dp),  // Abstand zur Status Bar
-                horizontalAlignment = Alignment.CenterHorizontally
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-
-                //Spacer(modifier = Modifier.height(16.dp))
-                Card(
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.cardElevation(24.dp),
-                    modifier = Modifier
-                        .fillMaxWidth(0.98f)
-                        .heightIn(300.dp)
-                ) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-
-                        GoogleMapScreen()
-                    }
-                }
+                GoogleMapScreen()
             }
-
             // Menu Bar
-            Card (
-                shape = RoundedCornerShape(28.dp),
-                elevation = CardDefaults.cardElevation(24.dp),
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = (-32).dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .height(55.dp)
-                        .fillMaxWidth(0.7f)
-                        .background(ForegroundColor),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Place,
-                        contentDescription = "Explore",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{}
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.Home,
-                        contentDescription = "Home",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{ navController.navigate("MainScreen")}
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.Settings,
-                        contentDescription = "Settings",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{navController.navigate("SetingScreen")}
-                    )
-                }
-            }
+            MenuBar(navController)
         }
-
-
     }
-
 }
-
 
 
 @Composable
@@ -451,6 +247,7 @@ fun GoogleMapScreen() {
     }
 }
 
+
 @Composable
 fun ContentScreen(navController: NavController){
     Box(
@@ -472,59 +269,74 @@ fun ContentScreen(navController: NavController){
                 contentAlignment = Alignment.Center
             ){
                 Text("Content Detail", fontSize = 50.sp)
-            }
-
-
-            // Menu Bar
-            Card (
-                shape = RoundedCornerShape(28.dp),
-                elevation = CardDefaults.cardElevation(24.dp),
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .offset(y = (-32).dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .height(55.dp)
-                        .fillMaxWidth(0.7f)
-                        .background(ForegroundColor),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Place,
-                        contentDescription = "Explore",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{}
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.Home,
-                        contentDescription = "Home",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{ navController.navigate("MainScreen")}
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.Settings,
-                        contentDescription = "Settings",
-                        modifier = Modifier
-                            .size(34.dp)
-                            .clickable{navController.navigate("SetingScreen")}
-                    )
-                }
+                // Menu Bar
+                MenuBar(navController)
             }
         }
+    }
+}
 
 
+@Composable
+fun MenuBar(navController: NavController){
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomCenter
+    ){
+        Card (
+            shape = RoundedCornerShape(28.dp),
+            elevation = CardDefaults.cardElevation(24.dp),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .offset(y = (-21).dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .height(55.dp)
+                    .fillMaxWidth(0.7f)
+                    .background(ForegroundColor),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Place,
+                    contentDescription = "Explore",
+                    modifier = Modifier
+                        .size(34.dp)
+                        .clickable{
+                            navController.navigate("LocationScreen")
+                        }
+                )
+                Icon(
+                    imageVector = Icons.Rounded.Home,
+                    contentDescription = "Home",
+                    modifier = Modifier
+                        .size(34.dp)
+                        .clickable{ navController.navigate("MainScreen")}
+                )
+                Icon(
+                    imageVector = Icons.Rounded.AccountCircle,
+                    contentDescription = "Settings",
+                    modifier = Modifier
+                        .size(34.dp)
+                        .clickable{navController.navigate("AccountScreen")}
+                )
+                Icon(
+                    imageVector = Icons.Rounded.Settings,
+                    contentDescription = "Settings",
+                    modifier = Modifier
+                        .size(34.dp)
+                        .clickable{navController.navigate("SettingScreen")}
+                )
+            }
+        }
     }
 
 }
 
 
 @Composable
-fun Vorschau() {
+fun Vorschau(navController: NavController) {
 
         LazyColumn (
             modifier = Modifier.fillMaxSize(),
@@ -538,6 +350,10 @@ fun Vorschau() {
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 6.dp, end = 6.dp)
+                        .clickable{
+                            navController.navigate("ContentScreen")
+                        }
+
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -547,6 +363,10 @@ fun Vorschau() {
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 6.dp, end = 6.dp)
+                        .clickable{
+                            navController.navigate("ContentScreen")
+                        }
+
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -556,6 +376,10 @@ fun Vorschau() {
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 6.dp, end = 6.dp)
+                        .clickable{
+                            navController.navigate("ContentScreen")
+                        }
+
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -565,6 +389,10 @@ fun Vorschau() {
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 6.dp, end = 6.dp)
+                        .clickable{
+                            navController.navigate("ContentScreen")
+                        }
+
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -574,6 +402,9 @@ fun Vorschau() {
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 6.dp, end = 6.dp)
+                        .clickable{
+                            navController.navigate("ContentScreen")
+                        }
                 )
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -583,17 +414,14 @@ fun Vorschau() {
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 6.dp, end = 6.dp)
+                        .clickable{
+                            navController.navigate("ContentScreen")
+                        }
                 )
                 Spacer(modifier = Modifier.height(6.dp))
             }
-
-
         }
-
-
-
 }
-
 
 
 // Function um Logo auf dem Screen darzustellen
@@ -604,7 +432,6 @@ fun LogoImage() {
             .height(70.dp)
             .padding(3.dp)
             .fillMaxWidth()
-
     ) {
         Image(
             painter = painterResource(id = R.drawable.logo),
@@ -650,9 +477,6 @@ fun SearchBar() {
                 .fillMaxWidth()
         )
     }
-
-
-
 }
 // Neue Zeile
 // Selbstdefinierte Farben für Hintergrund und Vordergrund.

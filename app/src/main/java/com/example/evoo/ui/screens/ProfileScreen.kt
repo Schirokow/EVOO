@@ -3,7 +3,6 @@
 // ProfileScreen.kt
 package com.example.evoo.ui.screens
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -24,15 +23,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.evoo.ui.components.header.HeaderBar
+import com.example.evoo.ui.components.header1.HeaderBar
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import com.example.evoo.R
-import androidx.compose.foundation.layout.clip
-
-
+import androidx.compose.ui.draw.clip
+import com.example.evoo.ui.components.buttons.ClickButton
 
 
 val AccentColor = Color(0xFF29719E)
@@ -68,7 +67,7 @@ fun ProfileScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp), // Hier explizit Padding setzen
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HeaderBar()
@@ -93,21 +92,72 @@ fun ProfileScreen() {
 
             //Profilinformationen
 
-            ProfileField("Name" , name,isEditingName, onEdit = {isEditingName = true})
-            {newValue -> name = newValue
-            isEditingName = false
-            }
+            ProfileField(
+                    label = "Name" ,
+                    value = name,
+                    isEditing = isEditingName,
+                    onEdit = { isEditingName = true },
+                    onValueChange = { newValue ->
+                            name = newValue
+                            isEditingName = false
+                }
+            )
 
-            ProfileField("E-Mail" , email, isEditingEmail, onEdit = {isEditingEmail = true})
-            {newValue -> email = newValue
-                isEditingEmail = false
-            }
+            ProfileField(
+                label = "E-mail" ,
+                value = email,
+                isEditing = isEditingEmail,
+                onEdit = { isEditingEmail = true },
+                onValueChange = { newValue ->
+                        email = newValue
+                        isEditingName = false
+                }
+            )
 
-            ProfileField("E-Mail" , email, isEditingEmail, onEdit = {isEditingEmail = true})
-            {newValue -> email = newValue
-                isEditingEmail = false
-            }
+            ProfileField(
+                label = "Passwort" ,
+                value = password,
+                isEditing = isEditingPassword,
+                onEdit = { isEditingPassword = true },
+            onValueChange = { newValue ->
+                    password = newValue
+                    isEditingName = false
+
+                }
+            )
 
         }
     }
 }
+
+@Composable
+fun ProfileField(
+    label: String,
+    value: String,
+    isEditing: Boolean,
+    onEdit: () -> Unit,
+    onValueChange: (String) -> Unit
+)
+{
+    Column(modifier = Modifier.padding(8.dp)){
+        Text(text = label, style = MaterialTheme.typography.bodyMedium, color = Color.White)
+        Spacer(modifier = Modifier.height(4.dp))
+
+        if (isEditing) {
+            TextField(
+                value = value,
+                onValueChange = { onValueChange(it) },
+                singleLine = true
+            )
+        } else {
+            Text(text = value, color = Color.White, style = MaterialTheme.typography.bodyLarge)
+        }
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        ClickButton(
+            text = "Bearbeiten",
+            onClick = onEdit
+                )
+        }
+    }

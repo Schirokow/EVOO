@@ -1,4 +1,4 @@
-package com.example.evoo.ui.theme
+package com.example.evoo.ui.theme.colorthemetype
 
 import androidx.compose.ui.graphics.Color
 

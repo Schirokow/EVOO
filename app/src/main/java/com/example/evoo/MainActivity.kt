@@ -52,6 +52,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -344,81 +345,113 @@ fun Vorschau(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             items (30){
-                Image(
-                    painter = painterResource(id = R.drawable.festival1),
-                    contentDescription = null,
+                Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 6.dp, end = 6.dp)
-                        .clickable{
-                            navController.navigate("ContentScreen")
-                        }
+                        .size(width = 400.dp, height = 250.dp)
+                        .padding(6.dp)
+                ){
+                    Image(
+                        painter = painterResource(id = R.drawable.festival1),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable{
+                                navController.navigate("ContentScreen")
+                            }
 
-                )
-                Spacer(modifier = Modifier.height(6.dp))
+                    )
+                }
 
-                Image(
-                    painter = painterResource(id = R.drawable.festival2),
-                    contentDescription = null,
+                Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 6.dp, end = 6.dp)
-                        .clickable{
-                            navController.navigate("ContentScreen")
-                        }
+                        .size(width = 400.dp, height = 250.dp)
+                        .padding(6.dp)
+                ){
+                    Image(
+                        painter = painterResource(id = R.drawable.festival2),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable{
+                                navController.navigate("ContentScreen")
+                            }
 
-                )
-                Spacer(modifier = Modifier.height(6.dp))
+                    )
+                }
 
-                Image(
-                    painter = painterResource(id = R.drawable.festival3),
-                    contentDescription = null,
+                Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 6.dp, end = 6.dp)
-                        .clickable{
-                            navController.navigate("ContentScreen")
-                        }
+                        .size(width = 400.dp, height = 250.dp)
+                        .padding(6.dp)
+                ){
+                    Image(
+                        painter = painterResource(id = R.drawable.festival3),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable{
+                                navController.navigate("ContentScreen")
+                            }
 
-                )
-                Spacer(modifier = Modifier.height(6.dp))
+                    )
+                }
 
-                Image(
-                    painter = painterResource(id = R.drawable.festival4),
-                    contentDescription = null,
+                Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 6.dp, end = 6.dp)
-                        .clickable{
-                            navController.navigate("ContentScreen")
-                        }
+                        .size(width = 400.dp, height = 250.dp)
+                        .padding(6.dp)
+                ){
+                    Image(
+                        painter = painterResource(id = R.drawable.festival4),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable{
+                                navController.navigate("ContentScreen")
+                            }
 
-                )
-                Spacer(modifier = Modifier.height(6.dp))
+                    )
+                }
 
-                Image(
-                    painter = painterResource(id = R.drawable.festival5),
-                    contentDescription = null,
+                Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 6.dp, end = 6.dp)
-                        .clickable{
-                            navController.navigate("ContentScreen")
-                        }
-                )
-                Spacer(modifier = Modifier.height(6.dp))
+                        .size(width = 400.dp, height = 250.dp)
+                        .padding(6.dp)
+                ){
+                    Image(
+                        painter = painterResource(id = R.drawable.festival5),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable{
+                                navController.navigate("ContentScreen")
+                            }
 
-                Image(
-                    painter = painterResource(id = R.drawable.festival6),
-                    contentDescription = null,
+                    )
+                }
+
+                Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 6.dp, end = 6.dp)
-                        .clickable{
-                            navController.navigate("ContentScreen")
-                        }
-                )
-                Spacer(modifier = Modifier.height(6.dp))
+                        .size(width = 400.dp, height = 250.dp)
+                        .padding(6.dp)
+                ){
+                    Image(
+                        painter = painterResource(id = R.drawable.festival6),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable{
+                                navController.navigate("ContentScreen")
+                            }
+
+                    )
+                }
             }
         }
 }

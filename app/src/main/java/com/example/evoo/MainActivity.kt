@@ -92,7 +92,7 @@ fun Navigation(){
         composable ("SettingScreen"){ SettingScreen(navController)}
         composable ("AccountScreen"){ AccountScreen(navController)}
         composable ("LocationScreen"){ LocationScreen(navController)}
-        composable ("ContentScreen"){ ContentScreen(navController)}
+        composable ("ContentDetailScreen"){ ContentDetailScreen(navController)}
     }
 }
 
@@ -112,7 +112,7 @@ fun MainScreen(navController: NavController){
                 .background(BackgroundColor)
         ){
             // Funktion für die Vorschau.
-            Vorschau(navController)
+            EventContent(navController)
 
             Box (
                 modifier = Modifier
@@ -250,7 +250,7 @@ fun GoogleMapScreen() {
 
 
 @Composable
-fun ContentScreen(navController: NavController){
+fun ContentDetailScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -337,14 +337,14 @@ fun MenuBar(navController: NavController){
 
 
 @Composable
-fun Vorschau(navController: NavController) {
+fun EventContent(navController: NavController) {
 
         LazyColumn (
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            items (30){
+            items (30){ index ->
                 Box(
                     modifier = Modifier
                         .size(width = 400.dp, height = 250.dp)
@@ -357,7 +357,7 @@ fun Vorschau(navController: NavController) {
                         modifier = Modifier
                             .fillMaxSize()
                             .clickable{
-                                navController.navigate("ContentScreen")
+                                navController.navigate("ContentDetailScreen")
                             }
 
                     )
@@ -375,7 +375,7 @@ fun Vorschau(navController: NavController) {
                         modifier = Modifier
                             .fillMaxSize()
                             .clickable{
-                                navController.navigate("ContentScreen")
+                                navController.navigate("ContentDetailScreen")
                             }
 
                     )
@@ -393,7 +393,7 @@ fun Vorschau(navController: NavController) {
                         modifier = Modifier
                             .fillMaxSize()
                             .clickable{
-                                navController.navigate("ContentScreen")
+                                navController.navigate("ContentDetailScreen")
                             }
 
                     )
@@ -411,7 +411,7 @@ fun Vorschau(navController: NavController) {
                         modifier = Modifier
                             .fillMaxSize()
                             .clickable{
-                                navController.navigate("ContentScreen")
+                                navController.navigate("ContentDetailScreen")
                             }
 
                     )
@@ -429,7 +429,7 @@ fun Vorschau(navController: NavController) {
                         modifier = Modifier
                             .fillMaxSize()
                             .clickable{
-                                navController.navigate("ContentScreen")
+                                navController.navigate("ContentDetailScreen")
                             }
 
                     )
@@ -447,7 +447,7 @@ fun Vorschau(navController: NavController) {
                         modifier = Modifier
                             .fillMaxSize()
                             .clickable{
-                                navController.navigate("ContentScreen")
+                                navController.navigate("ContentDetailScreen")
                             }
 
                     )

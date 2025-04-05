@@ -335,7 +335,6 @@ fun MenuBar(navController: NavController){
 
 }
 
-
 @Composable
 fun EventContent(navController: NavController) {
 

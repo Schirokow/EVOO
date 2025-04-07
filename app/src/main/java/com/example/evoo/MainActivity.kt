@@ -51,6 +51,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -87,8 +88,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Navigation(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "MainScreen"){
-        composable ("MainScreen"){ MainScreen(navController)}
+    NavHost(navController = navController, startDestination = "HomeScreen"){
+        composable ("HomeScreen"){ HomeScreen(navController)}
         composable ("SettingScreen"){ SettingScreen(navController)}
         composable ("AccountScreen"){ AccountScreen(navController)}
         composable ("LocationScreen"){ LocationScreen(navController)}
@@ -99,7 +100,7 @@ fun Navigation(){
 
 // Startseite
 @Composable
-fun MainScreen(navController: NavController){
+fun HomeScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -109,7 +110,7 @@ fun MainScreen(navController: NavController){
             modifier = Modifier
                 .fillMaxSize()
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
-                .background(BackgroundColor)
+                .background(brush = Brush.verticalGradient(colors = listOf(TopLightBlue, BottomDarkBlue)))
         ){
             // Funktion für die Vorschau.
             EventContent(navController)
@@ -139,7 +140,7 @@ fun SettingScreen(navController: NavController){
             modifier = Modifier
                 .fillMaxSize()
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
-                .background(BackgroundColor)
+                .background(brush = Brush.verticalGradient(colors = listOf(TopLightBlue, BottomDarkBlue)))
         ){
             LogoImage()   // Function um Logo auf dem Screen darzustellen.
 
@@ -168,7 +169,7 @@ fun AccountScreen(navController: NavController){
             modifier = Modifier
                 .fillMaxSize()
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
-                .background(BackgroundColor)
+                .background(brush = Brush.verticalGradient(colors = listOf(TopLightBlue, BottomDarkBlue)))
         ) {
             LogoImage()   // Function um Logo auf dem Screen darzustellen.
 
@@ -261,7 +262,7 @@ fun ContentDetailScreen(navController: NavController){
             modifier = Modifier
                 .fillMaxSize()
                 .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
-                .background(BackgroundColor)
+                .background(brush = Brush.verticalGradient(colors = listOf(TopLightBlue, BottomDarkBlue)))
         ){
             LogoImage()   // Function um Logo auf dem Screen darzustellen.
 
@@ -313,7 +314,7 @@ fun MenuBar(navController: NavController){
                     contentDescription = "Home",
                     modifier = Modifier
                         .size(34.dp)
-                        .clickable{ navController.navigate("MainScreen")}
+                        .clickable{ navController.navigate("HomeScreen")}
                 )
                 Icon(
                     imageVector = Icons.Rounded.AccountCircle,
@@ -334,7 +335,6 @@ fun MenuBar(navController: NavController){
     }
 
 }
-
 
 @Composable
 fun EventContent(navController: NavController) {
@@ -516,3 +516,5 @@ fun SearchBar() {
 val BackgroundColor = Color(0xFF20587B)
 val ForegroundColor = Color(0xFFED6E63)
 val AccentColor = Color(0xFF29719E)
+val BottomDarkBlue = Color(0xFF1A4D6C)
+val TopLightBlue = Color(0xFF62A7C3)

@@ -13,7 +13,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.remember
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -23,15 +22,15 @@ import androidx.compose.ui.unit.dp
 
 fun ClickButton(
     text: String = "Press here",
-    onClick: () -> Unit ={}
+    onClick: () -> Unit ={},
+    modifier: Modifier = Modifier
 ) {
     Button (
         onClick = onClick,
         modifier = Modifier
-            .padding(16.dp)
             .indication(interactionSource = remember { MutableInteractionSource() },
                 indication = LocalIndication.current),
-             colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray , contentColor = Color.White)
+             colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray , contentColor = Color.Black)
      ,
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 10.dp,

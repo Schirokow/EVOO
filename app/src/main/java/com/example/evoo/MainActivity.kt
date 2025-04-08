@@ -12,10 +12,13 @@ import androidx.compose.foundation.gestures.snapping.SnapPosition.Center.positio
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,6 +28,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -41,6 +46,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -120,7 +126,7 @@ fun HomeScreen(navController: NavController){
                     .padding(top = 6.dp)
             )
             {
-                LogoImage()   // Function um Logo auf dem Screen darzustellen.
+                //LogoImage()   // Function um Logo auf dem Screen darzustellen.
             }
             // Menu Bar
             MenuBar(navController)
@@ -339,121 +345,79 @@ fun MenuBar(navController: NavController){
 @Composable
 fun EventContent(navController: NavController) {
 
-        LazyColumn (
+    // Liste aller Festival-Bilder
+    val festivalImages = listOf(
+        R.drawable.festival1, R.drawable.festival2, R.drawable.festival3,
+        R.drawable.festival4, R.drawable.festival5, R.drawable.festival6,
+        R.drawable.festival7, R.drawable.festival8, R.drawable.festival9,
+        R.drawable.festival10, R.drawable.festival11, R.drawable.festival12,
+        R.drawable.festival1, R.drawable.festival2, R.drawable.festival3,
+        R.drawable.festival4, R.drawable.festival5, R.drawable.festival6,
+        R.drawable.festival7, R.drawable.festival8, R.drawable.festival9,
+        R.drawable.festival10, R.drawable.festival11, R.drawable.festival12,
+    )
+
+    // State, um das ausgewählte Bild zu speichern
+    var selectedImage by remember { mutableStateOf<Int?>(null) }
+
+
+        LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            contentPadding = PaddingValues(vertical = 16.dp),
+            columns = GridCells.Fixed(2)
         ){
-            items (30){ index ->
+            items (festivalImages.size){ index ->
+                val imageIndex = festivalImages[index]
                 Box(
                     modifier = Modifier
-                        .size(width = 400.dp, height = 250.dp)
                         .padding(6.dp)
+                        .aspectRatio(1f)
+                        .clickable{
+                            selectedImage = imageIndex
+                            //navController.navigate("ContentDetailScreen")
+                        }
                 ){
                     Image(
-                        painter = painterResource(id = R.drawable.festival1),
+                        painter = painterResource(id = imageIndex),
                         contentDescription = null,
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier
                             .fillMaxSize()
-                            .clickable{
-                                navController.navigate("ContentDetailScreen")
-                            }
+                            .clip(RoundedCornerShape(12.dp))
+
 
                     )
                 }
 
-                Box(
-                    modifier = Modifier
-                        .size(width = 400.dp, height = 250.dp)
-                        .padding(6.dp)
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.festival2),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable{
-                                navController.navigate("ContentDetailScreen")
-                            }
 
-                    )
-                }
-
-                Box(
-                    modifier = Modifier
-                        .size(width = 400.dp, height = 250.dp)
-                        .padding(6.dp)
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.festival3),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable{
-                                navController.navigate("ContentDetailScreen")
-                            }
-
-                    )
-                }
-
-                Box(
-                    modifier = Modifier
-                        .size(width = 400.dp, height = 250.dp)
-                        .padding(6.dp)
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.festival4),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable{
-                                navController.navigate("ContentDetailScreen")
-                            }
-
-                    )
-                }
-
-                Box(
-                    modifier = Modifier
-                        .size(width = 400.dp, height = 250.dp)
-                        .padding(6.dp)
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.festival5),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable{
-                                navController.navigate("ContentDetailScreen")
-                            }
-
-                    )
-                }
-
-                Box(
-                    modifier = Modifier
-                        .size(width = 400.dp, height = 250.dp)
-                        .padding(6.dp)
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.festival6),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable{
-                                navController.navigate("ContentDetailScreen")
-                            }
-
-                    )
-                }
             }
         }
+
+        // Overlay für vergrößertes Bild, wenn selectedImage nicht null ist
+        selectedImage?.let { imageIndex ->
+            Surface(
+                color = Color.Black.copy(alpha = 0.7f), // Dunkler Hintergrund
+                modifier = Modifier.fillMaxSize(),
+                onClick = { selectedImage = null } // Klick außerhalb schließt das Overlay
+            ) {
+                Box (
+                    modifier = Modifier.fillMaxSize()
+                ){
+                    Image(
+                        painter = painterResource(id = imageIndex),
+                        contentDescription = "Vergrößertes Bild",
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .fillMaxWidth(0.9f)
+                            .fillMaxHeight(0.5f)
+                            .align(Alignment.Center)
+                            .clip(RoundedCornerShape(12.dp))
+                    )
+                }
+
+            }
+       }
+
 }
 
 

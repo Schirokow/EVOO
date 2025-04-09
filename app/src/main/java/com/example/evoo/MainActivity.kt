@@ -109,7 +109,7 @@ fun Navigation(){
 }
 
 
-
+//
 // Selbstdefinierte Farben für Hintergrund und Vordergrund.
 val BackgroundColor = Color(0xFF20587B)
 val ForegroundColor = Color(0xFFED6E63)

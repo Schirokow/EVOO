@@ -1,9 +1,12 @@
 package com.example.evoo.ui.screens
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -12,11 +15,19 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.FavoriteBorder
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -73,16 +85,135 @@ fun HomeScreen(navController: NavController){
 @Composable
 fun EventContent(navController: NavController) {
 
+    data class FestivalData(
+        val imageRes: Int,
+        val title: String,
+        val description: String
+    )
+
     // Liste aller Festival-Bilder
     val festivalImages = listOf(
-        R.drawable.festival1, R.drawable.festival2, R.drawable.festival3,
-        R.drawable.festival4, R.drawable.festival5, R.drawable.festival6,
-        R.drawable.festival7, R.drawable.festival8, R.drawable.festival9,
-        R.drawable.festival10, R.drawable.festival11, R.drawable.festival12,
-        R.drawable.festival1, R.drawable.festival2, R.drawable.festival3,
-        R.drawable.festival4, R.drawable.festival5, R.drawable.festival6,
-        R.drawable.festival7, R.drawable.festival8, R.drawable.festival9,
-        R.drawable.festival10, R.drawable.festival11, R.drawable.festival12,
+        FestivalData(
+            imageRes = R.drawable.festival1,
+            title = "Summer Festival",
+            description = "Techno Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival2,
+            title = "Heaven & Hill Neukirchen",
+            description = "Neukirchen-Vluyn"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival3,
+            title = "LOVEMUSIC Festival Magdeburg",
+            description = "Elbauenpark Magdeburg"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival4,
+            title = "CAPTAIN JACK Weiden",
+            description = "Festival in Weiden"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival5,
+            title = "GLÜCKSGEFÜHLE Festival",
+            description = "Techno Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival6,
+            title = "SUMMER FOOD ROCK",
+            description = "Rock Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival7,
+            title = "HAVEL BEATS Festival",
+            description = "Techno Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival8,
+            title = "FESTIVAL HOCKENHEIMRING",
+            description = "Techno Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival9,
+            title = "DAS HR-FESTIVAL 2025",
+            description = "Embrace Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival10,
+            title = "TAUBERTAL Festival 2025",
+            description = "Techno Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival11,
+            title = "BLANKENFELDE Festival Juli 2025",
+            description = "Techno Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival12,
+            title = "Latin Airport Festival",
+            description = "Latino Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival1,
+            title = "Summer Festival",
+            description = "Techno Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival2,
+            title = "Heaven & Hill Neukirchen",
+            description = "Neukirchen-Vluyn"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival3,
+            title = "LOVEMUSIC Festival Magdeburg",
+            description = "Elbauenpark Magdeburg"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival4,
+            title = "CAPTAIN JACK Weiden",
+            description = "Festival in Weiden"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival5,
+            title = "GLÜCKSGEFÜHLE Festival",
+            description = "Techno Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival6,
+            title = "SUMMER FOOD ROCK",
+            description = "Rock Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival7,
+            title = "HAVEL BEATS Festival",
+            description = "Techno Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival8,
+            title = "FESTIVAL HOCKENHEIMRING",
+            description = "Techno Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival9,
+            title = "DAS HR-FESTIVAL 2025",
+            description = "Embrace Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival10,
+            title = "TAUBERTAL Festival 2025",
+            description = "Techno Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival11,
+            title = "BLANKENFELDE Festival Juli 2025",
+            description = "Techno Festival"
+        ),
+        FestivalData(
+            imageRes = R.drawable.festival12,
+            title = "Latin Airport Festival",
+            description = "Latino Festival"
+        ),
+
     )
 
     // State, um das ausgewählte Bild zu speichern
@@ -95,18 +226,18 @@ fun EventContent(navController: NavController) {
         columns = GridCells.Fixed(2)
     ){
         items (festivalImages.size){ index ->
-            val imageIndex = festivalImages[index]
+            val festivalData = festivalImages[index]
             Box(
                 modifier = Modifier
                     .padding(6.dp)
                     .aspectRatio(1f)
                     .clickable{
-                        selectedImage = imageIndex
+                        selectedImage = index
                         //navController.navigate("ContentDetailScreen")
                     }
             ){
                 Image(
-                    painter = painterResource(id = imageIndex),
+                    painter = painterResource(id = festivalData.imageRes),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
@@ -121,25 +252,73 @@ fun EventContent(navController: NavController) {
         }
     }
 
+    val animateScale by animateFloatAsState(
+        targetValue = if (selectedImage != null) 1f else 0.5f,
+        animationSpec = tween(durationMillis = 400)
+    )
+
     // Overlay für vergrößertes Bild, wenn selectedImage nicht null ist
     selectedImage?.let { imageIndex ->
+        val festivalData = festivalImages[imageIndex] // Datenobjekt via Index
         Surface(
-            color = Color.Black.copy(alpha = 0.7f), // Dunkler Hintergrund
+            color = Color.Black.copy(alpha = 0.8f), // Dunkler Hintergrund
             modifier = Modifier.fillMaxSize(),
-            onClick = { selectedImage = null } // Klick außerhalb schließt das Overlay
+            onClick = { /*selectedImage = null */} // Klick außerhalb schließt das Overlay
         ) {
             Box (
                 modifier = Modifier.fillMaxSize()
             ){
-                Image(
-                    painter = painterResource(id = imageIndex),
-                    contentDescription = "Vergrößertes Bild",
-                    contentScale = ContentScale.FillBounds,
+                Column (
                     modifier = Modifier
-                        .fillMaxWidth(0.9f)
-                        .fillMaxHeight(0.5f)
-                        .align(Alignment.Center)
-                        .clip(RoundedCornerShape(12.dp))
+                        .fillMaxWidth()
+                        .align(Alignment.Center),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+
+                    Text(
+                        text = festivalData.title,
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = Color.White,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+
+                    Image(
+                        painter = painterResource(id = festivalData.imageRes),
+                        contentDescription = "Vergrößertes Bild",
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
+                            .fillMaxWidth(0.9f)
+                            .fillMaxHeight(0.5f)
+                            //.align(Alignment.Center)
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable{navController.navigate("ContentDetailScreen")/* Blockiert Klicks auf das Bild */}
+
+
+                    )
+                }
+
+
+                Icon(
+                    imageVector = Icons.Rounded.Close,
+                    contentDescription = "Close",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .align(alignment = Alignment.TopEnd)
+                        .padding(16.dp)
+                        .size(34.dp)
+                        .clickable{ selectedImage = null}
+                    )
+
+                Icon(
+                    imageVector = Icons.Rounded.FavoriteBorder,
+                    contentDescription = "Favorite",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .align(alignment = Alignment.TopEnd)
+                        .padding(top = 80.dp, end = 16.dp)
+                        .size(34.dp)
+                        .clickable{ }
                 )
             }
 

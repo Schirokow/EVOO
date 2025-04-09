@@ -1,4 +1,4 @@
-package com.example.evoo.ui.components.header1
+package com.example.evoo.ui.components.header
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.Image

@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Home
@@ -300,12 +301,12 @@ fun EventContent(navController: NavController) {
 
 
                 Icon(
-                    imageVector = Icons.Rounded.Close,
+                    imageVector = Icons.Rounded.ArrowBack,
                     contentDescription = "Close",
                     tint = Color.White,
                     modifier = Modifier
-                        .align(alignment = Alignment.TopEnd)
-                        .padding(16.dp)
+                        .align(alignment = Alignment.TopStart)
+                        .padding(24.dp)
                         .size(34.dp)
                         .clickable{ selectedImage = null}
                     )
@@ -316,7 +317,7 @@ fun EventContent(navController: NavController) {
                     tint = Color.White,
                     modifier = Modifier
                         .align(alignment = Alignment.TopEnd)
-                        .padding(top = 80.dp, end = 16.dp)
+                        .padding(24.dp)
                         .size(34.dp)
                         .clickable{ }
                 )

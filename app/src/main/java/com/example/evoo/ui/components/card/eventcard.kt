@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -54,13 +55,15 @@ fun EventCard(
     isLarge : Boolean = false,
     imageResId : Int
 ){
-    val cardSize = if (isLarge) 200.dp else 100.dp
+val cardSize = if (isLarge) 200.dp else 100.dp
 
         Card(
             shape = RoundedCornerShape(8.dp),
             elevation = CardDefaults.cardElevation(4.dp),
             modifier = modifier
                 .size(cardSize)
+                //.fillMaxWidth()
+                //.aspectRatio(1f)
                 .clickable(onClick = onClick)
         ){
             Box{
@@ -82,22 +85,22 @@ fun EventCard(
                     Text(
                     text = event.title,
                     color = Color.White,
-                    fontSize = if (isLarge) 16.sp else 12.sp
+                    fontSize = if (isLarge) 14.sp else 10.sp
                     )
                         Spacer(modifier = Modifier.height(4.dp))
 
                         Text(
                             text = event.date ?: "No Date",
                             color = Color.White,
-                            fontSize = if (isLarge) 14.sp else 10.sp
+                            fontSize = if (isLarge) 12.sp else 8.sp
                         )
                         Spacer(modifier = Modifier.height(4.dp))
 
-                        Text(
-                            text = event.description,
-                            color = Color.White,
-                            fontSize = if (isLarge) 14.sp else 10.sp
-                                )
+                        //Text(
+                          //  text = event.description,
+                            //color = Color.White,
+                            //fontSize = if (isLarge) 12.sp else 8.sp
+                              //  )
 
                 }
 

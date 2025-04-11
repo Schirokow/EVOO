@@ -22,8 +22,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.evoo.BackgroundColor
 import com.example.evoo.ForegroundColor
 
 @Composable
@@ -43,13 +45,14 @@ fun MenuBar(navController: NavController){
                 modifier = Modifier
                     .height(55.dp)
                     .fillMaxWidth(0.7f)
-                    .background(ForegroundColor),
+                    .background(BackgroundColor),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Place,
                     contentDescription = "Explore",
+                    tint = Color.White,
                     modifier = Modifier
                         .size(34.dp)
                         .clickable{
@@ -59,6 +62,7 @@ fun MenuBar(navController: NavController){
                 Icon(
                     imageVector = Icons.Rounded.Home,
                     contentDescription = "Home",
+                    tint = Color.White,
                     modifier = Modifier
                         .size(34.dp)
                         .clickable{ navController.navigate("HomeScreen")}
@@ -66,6 +70,7 @@ fun MenuBar(navController: NavController){
                 Icon(
                     imageVector = Icons.Rounded.AccountCircle,
                     contentDescription = "Settings",
+                    tint = Color.White,
                     modifier = Modifier
                         .size(34.dp)
                         .clickable{navController.navigate("AccountScreen")}
@@ -73,6 +78,7 @@ fun MenuBar(navController: NavController){
                 Icon(
                     imageVector = Icons.Rounded.Settings,
                     contentDescription = "Settings",
+                    tint = Color.White,
                     modifier = Modifier
                         .size(34.dp)
                         .clickable{navController.navigate("SettingScreen")}

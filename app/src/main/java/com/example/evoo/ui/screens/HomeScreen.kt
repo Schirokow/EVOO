@@ -49,6 +49,7 @@ import com.example.evoo.BottomDarkBlue
 import com.example.evoo.R
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.menu.MenuBar
+import com.example.evoo.ui.screens.FestivalRepository.festivalImages
 
 // Startseite
 @Composable
@@ -83,139 +84,193 @@ fun HomeScreen(navController: NavController){
     }
 }
 
-@Composable
-fun EventContent(navController: NavController) {
+data class FestivalData(
+    val imageRes: Int,
+    val title: String,
+    val description: String,
+    val datum: String,
+    val location: String
+)
 
-    data class FestivalData(
-        val imageRes: Int,
-        val title: String,
-        val description: String
-    )
+object FestivalRepository{
 
     // Liste aller Festival-Bilder
     val festivalImages = listOf(
         FestivalData(
             imageRes = R.drawable.festival1,
             title = "Summer Festival",
-            description = "Techno Festival"
+            description = "Techno Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival2,
             title = "Heaven & Hill Neukirchen",
-            description = "Neukirchen-Vluyn"
+            description = "Neukirchen-Vluyn",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival3,
             title = "LOVEMUSIC Festival Magdeburg",
-            description = "Elbauenpark Magdeburg"
+            description = "Party bis zum Umfallen!!!",
+            datum = "20.-22.06 2025",
+            location = "Elbauenpark Magdeburg"
         ),
         FestivalData(
             imageRes = R.drawable.festival4,
             title = "CAPTAIN JACK Weiden",
-            description = "Festival in Weiden"
+            description = "Festival in Weiden",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival5,
             title = "GLÜCKSGEFÜHLE Festival",
-            description = "Techno Festival"
+            description = "Techno Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival6,
             title = "SUMMER FOOD ROCK",
-            description = "Rock Festival"
+            description = "Rock Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival7,
             title = "HAVEL BEATS Festival",
-            description = "Techno Festival"
+            description = "Techno Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival8,
             title = "FESTIVAL HOCKENHEIMRING",
-            description = "Techno Festival"
+            description = "Techno Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival9,
             title = "DAS HR-FESTIVAL 2025",
-            description = "Embrace Festival"
+            description = "Embrace Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival10,
             title = "TAUBERTAL Festival 2025",
-            description = "Techno Festival"
+            description = "Techno Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival11,
             title = "BLANKENFELDE Festival Juli 2025",
-            description = "Techno Festival"
+            description = "Techno Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival12,
             title = "Latin Airport Festival",
-            description = "Latino Festival"
+            description = "Latino Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival1,
             title = "Summer Festival",
-            description = "Techno Festival"
+            description = "Techno Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival2,
             title = "Heaven & Hill Neukirchen",
-            description = "Neukirchen-Vluyn"
+            description = "Neukirchen-Vluyn",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival3,
             title = "LOVEMUSIC Festival Magdeburg",
-            description = "Elbauenpark Magdeburg"
+            description = "Elbauenpark Magdeburg",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival4,
             title = "CAPTAIN JACK Weiden",
-            description = "Festival in Weiden"
+            description = "Festival in Weiden",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival5,
             title = "GLÜCKSGEFÜHLE Festival",
-            description = "Techno Festival"
+            description = "Techno Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival6,
             title = "SUMMER FOOD ROCK",
-            description = "Rock Festival"
+            description = "Rock Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival7,
             title = "HAVEL BEATS Festival",
-            description = "Techno Festival"
+            description = "Techno Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival8,
             title = "FESTIVAL HOCKENHEIMRING",
-            description = "Techno Festival"
+            description = "Techno Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival9,
             title = "DAS HR-FESTIVAL 2025",
-            description = "Embrace Festival"
+            description = "Embrace Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival10,
             title = "TAUBERTAL Festival 2025",
-            description = "Techno Festival"
+            description = "Techno Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival11,
             title = "BLANKENFELDE Festival Juli 2025",
-            description = "Techno Festival"
+            description = "Techno Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
         FestivalData(
             imageRes = R.drawable.festival12,
             title = "Latin Airport Festival",
-            description = "Latino Festival"
+            description = "Latino Festival",
+            datum = "20 & 21 Juni 2025",
+            location = "Am Strand"
         ),
 
-    )
+        )
+}
+
+
+@Composable
+fun EventContent(navController: NavController) {
 
     // State, um das ausgewählte Bild zu speichern
     var selectedImage by remember { mutableStateOf<Int?>(null) }
@@ -234,7 +289,6 @@ fun EventContent(navController: NavController) {
                     .aspectRatio(1f)
                     .clickable{
                         selectedImage = index
-                        //navController.navigate("ContentDetailScreen")
                     }
             ){
                 Image(
@@ -244,12 +298,8 @@ fun EventContent(navController: NavController) {
                     modifier = Modifier
                         .fillMaxSize()
                         .clip(RoundedCornerShape(12.dp))
-
-
                 )
             }
-
-
         }
     }
 
@@ -262,7 +312,7 @@ fun EventContent(navController: NavController) {
     selectedImage?.let { imageIndex ->
         val festivalData = festivalImages[imageIndex] // Datenobjekt via Index
         Surface(
-            color = Color.Black.copy(alpha = 0.8f), // Dunkler Hintergrund
+            color = BackgroundColor.copy(alpha = 0.9f), // Farbe von Hintergrund
             modifier = Modifier.fillMaxSize(),
             onClick = { /*selectedImage = null */} // Klick außerhalb schließt das Overlay
         ) {
@@ -291,14 +341,10 @@ fun EventContent(navController: NavController) {
                             .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
                             .fillMaxWidth(0.9f)
                             .fillMaxHeight(0.5f)
-                            //.align(Alignment.Center)
                             .clip(RoundedCornerShape(12.dp))
-                            .clickable{navController.navigate("ContentDetailScreen")/* Blockiert Klicks auf das Bild */}
-
-
+                            .clickable{navController.navigate("ContentDetailScreen/$imageIndex")}
                     )
                 }
-
 
                 Icon(
                     imageVector = Icons.Rounded.ArrowBack,
@@ -327,3 +373,5 @@ fun EventContent(navController: NavController) {
     }
 
 }
+
+val BackgroundColor = Color(0xFF20587B)

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
@@ -33,14 +32,14 @@ import com.example.evoo.ui.components.buttons.ClickButton
 @Preview(showBackground = true)
 @Composable
 fun PreviewLoginScreen() {
-    loginScreen()
+    LoginScreen()
 }
 
 
 
 
 @Composable
-fun loginScreen(){
+fun LoginScreen(){
 
     val emailState = remember {mutableStateOf(TextFieldValue())}
     val passwordState = remember {mutableStateOf(TextFieldValue())}
@@ -73,8 +72,7 @@ fun loginScreen(){
                 .padding(top = 8.dp)
                 .align(Alignment.CenterHorizontally)
         )
-//Wir sind die Besten!
-        //Wir sind noch immer die Besten!!
+
         Spacer(modifier = Modifier.height(100.dp))
 
         TextField(

@@ -1,6 +1,6 @@
 package com.example.evoo.ui.components.card
 
-import android.app.usage.UsageEvents
+
 import androidx.compose.ui.Alignment
 import com.example.evoo.model.Event
 
@@ -10,7 +10,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -37,11 +36,11 @@ fun PreviewEventCard(){
     val event = Event(
         title = "Smooth Sound",
         date = "05.05.2025, 20:25 Uhr" ,
-        description = "Free Entry - All Welcome"
+        description = "Free Entry - All Welcome",
+        imageResId = R.drawable.festival1
     )
     EventCard(
         event = event,
-        imageResId = R.drawable.festival1,
         onClick = {} ,
         isLarge = true
     )
@@ -53,9 +52,10 @@ fun EventCard(
     modifier : Modifier = Modifier,
     onClick: () -> Unit,
     isLarge : Boolean = false,
-    imageResId : Int
 ){
+
 val cardSize = if (isLarge) 200.dp else 100.dp
+val imageToUse = event.imageResId ?: R.drawable.festival1
 
         Card(
             shape = RoundedCornerShape(8.dp),
@@ -68,7 +68,7 @@ val cardSize = if (isLarge) 200.dp else 100.dp
         ){
             Box{
                 Image(
-                    painter = painterResource(id = imageResId),
+                    painter = painterResource(id = imageToUse),
                     contentDescription = event.title,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()

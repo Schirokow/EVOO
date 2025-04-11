@@ -35,8 +35,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -73,7 +71,6 @@ fun ProfileScreen1 () {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -163,7 +160,6 @@ fun ProfileScreen1 () {
                                 event = event,
                                 onClick = {},
                                 isLarge = true,
-                                imageResId = R.drawable.festival1,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .aspectRatio(1f)

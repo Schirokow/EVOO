@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -25,8 +26,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
@@ -76,6 +79,7 @@ fun LocationScreen(navController: NavController) {
 fun OpenStreetMapWithLiveLocation() {
     val context = LocalContext.current
     var mapView by remember { mutableStateOf<MapView?>(null) }
+    var zoomLevel by remember { mutableStateOf(15.0) }
 
     // OSMDroid Konfiguration
     LaunchedEffect(Unit) {
@@ -88,7 +92,7 @@ fun OpenStreetMapWithLiveLocation() {
             setMultiTouchControls(true)
             minZoomLevel = 12.0
             maxZoomLevel = 20.0
-            controller.setZoom(15.0)
+            controller.setZoom(zoomLevel)
         }
     }
 
@@ -98,27 +102,63 @@ fun OpenStreetMapWithLiveLocation() {
 
     var lastLocation by remember { mutableStateOf<GeoPoint?>(null) }
 
-    // Kartenansicht
-    mapView?.let { mv ->
-        AndroidView(
-            factory = { mv },
-            modifier = Modifier.fillMaxSize(),
-            update = { view ->
-                if (locationPermissionState.status.isGranted) {
-                    lastLocation?.let {
-                        view.controller.animateTo(it)
-                        view.overlays.removeIf { true }
-                        Marker(view).apply {
-                            position = it
-                            setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                            title = "Aktuelle Position"
-                        }.also { marker ->
-                            view.overlays.add(marker)
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Kartenansicht
+        mapView?.let { mv ->
+            AndroidView(
+                factory = { mv },
+                modifier = Modifier.fillMaxSize(),
+                update = { view ->
+                    view.controller.setZoom(zoomLevel)
+                    if (locationPermissionState.status.isGranted) {
+                        lastLocation?.let {
+                            view.controller.animateTo(it)
+                            view.overlays.removeIf { true }
+                            Marker(view).apply {
+                                position = it
+                                setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                                title = "Aktuelle Position"
+                            }.also { marker ->
+                                view.overlays.add(marker)
+                            }
                         }
                     }
                 }
+            )
+        }
+
+        // Benutzerdefinierte Zoom-Buttons
+        Column(
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Button(
+                onClick = {
+                    zoomLevel = (zoomLevel + 1).coerceAtMost(20.0)
+                    mapView?.controller?.setZoom(zoomLevel)
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF29719E),  // EVOO Blauton Hintergrundfarbe
+                    contentColor = Color.White      // Text-/Symbolfarbe
+            )
+            ) {
+                Text("+")
             }
-        )
+            Button(
+                onClick = {
+                    zoomLevel = (zoomLevel - 1).coerceAtLeast(12.0)
+                    mapView?.controller?.setZoom(zoomLevel)
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF29719E),  // EVOO Blauton Hintergrundfarbe
+                    contentColor = Color.White      // Text-/Symbolfarbe
+                )
+            ) {
+                Text("-")
+            }
+        }
     }
 
     if (locationPermissionState.status.isGranted) {

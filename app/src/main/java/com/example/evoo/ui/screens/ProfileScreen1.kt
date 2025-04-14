@@ -43,6 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.evoo.model.EventTab
 import com.example.evoo.model.sampleEvents
+import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.components.card.EventCard
 
 
@@ -120,7 +121,13 @@ fun ProfileScreen1 () {
                     )
                 }
 
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(5.dp))
+
+            ClickButton(
+                text = "Edit Profile",
+                onClick = {},
+                modifier = Modifier
+            )
 
             TabRow(
                 selectedTabIndex = selectedTab.ordinal,

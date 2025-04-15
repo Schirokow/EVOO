@@ -36,7 +36,7 @@ fun SettingScreen(navController: NavController){
                     BottomDarkBlue
                 )))
         ){
-            LogoImage()   // Function um Logo auf dem Screen darzustellen.
+            //LogoImage()   // Function um Logo auf dem Screen darzustellen.
 
             Box (
                 modifier = Modifier.fillMaxSize(),

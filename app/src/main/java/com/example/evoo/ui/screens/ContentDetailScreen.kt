@@ -85,10 +85,19 @@ fun ContentDetailScreen(navController: NavController, index: Int){
                     .clickable{ }
             )
 
+            Button(
+                onClick = {navController.navigate("LocationScreen")},
+                modifier = Modifier
+                    .align(alignment = Alignment.TopCenter)
+                    .padding(24.dp)
+            ) {
+                Text(text = "Auf der Karte zeigen")
+            }
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 70.dp),
+                    .padding(top = 100.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Titel
@@ -96,7 +105,7 @@ fun ContentDetailScreen(navController: NavController, index: Int){
                     text = festivalData.title,
                     style = MaterialTheme.typography.headlineLarge,
                     color = Color.White,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = 10.dp)
                 )
 
                 // Bild
@@ -129,19 +138,11 @@ fun ContentDetailScreen(navController: NavController, index: Int){
 
                 // Location
                 Text(
-                    text = "Veranstaltungsort: ${festivalData.location}",
+                    text = "Ort: ${festivalData.location}",
                     style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
                     color = Color.White,
                     modifier = Modifier.padding(16.dp)
                 )
-
-                Spacer(modifier = Modifier.height(20.dp))
-                Button(
-                    onClick = {navController.navigate("LocationScreen")}
-                ) {
-                    Text(text = "Auf der Karte zeigen")
-                }
-
 
             }
 

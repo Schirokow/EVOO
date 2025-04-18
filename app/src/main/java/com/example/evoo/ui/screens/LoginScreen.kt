@@ -3,13 +3,17 @@ package com.example.evoo.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -26,94 +30,108 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.evoo.AccentColor
+import com.example.evoo.BottomDarkBlue
+import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.components.buttons.ClickButton
-
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewLoginScreen() {
-    LoginScreen()
-}
-
-
+import com.example.evoo.ui.menu.MenuBar
 
 
 @Composable
-fun LoginScreen(){
-
-    val emailState = remember {mutableStateOf(TextFieldValue())}
-    val passwordState = remember {mutableStateOf(TextFieldValue())}
-
-    Column(
+fun LoginScreen(navController: NavController) {
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
+            .background(AccentColor)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
+                .background(
                     brush = Brush.verticalGradient(
-                            colors = listOf(TopLightBlue,BottomDarkBlue)
+                        colors = listOf(
+                            TopLightBlue,
+                            BottomDarkBlue
+                        )
                     )
-),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ){
-        Spacer(modifier = Modifier.height(30.dp))
+                )
+        ) {
+            val emailState = remember { mutableStateOf(TextFieldValue()) }
+            val passwordState = remember { mutableStateOf(TextFieldValue()) }
 
-       Image(
-           painter = painterResource(id = R.drawable.logo_anye),
-           contentDescription = "App Logo",
-           modifier = Modifier
-               .size(120.dp)
-               .align(Alignment.CenterHorizontally)
-       )
-        Text( "Event Up Your Life",
-            color = Color.White,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-            modifier = Modifier
-                .padding(top = 8.dp)
-                .align(Alignment.CenterHorizontally)
-        )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Spacer(modifier = Modifier.height(30.dp))
 
-        Spacer(modifier = Modifier.height(100.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.logo_anye),
+                    contentDescription = "App Logo",
+                    modifier = Modifier
+                        .size(120.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
+                Text(
+                    "Event Up Your Life",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
 
-        TextField(
-            value = emailState.value,
-            onValueChange = { newText -> emailState.value = newText },
-            label = {Text("E-Mail oder Benutzername") },
-            placeholder = {Text("E-Mail/Benutzername")},
-            singleLine = true,
-            modifier = Modifier
-                .padding(horizontal = 32.dp)
-                .padding(top = 16.dp)
-                .fillMaxWidth()
-        )
-        TextField(
-            value = passwordState.value,
-            onValueChange = { newText -> passwordState.value = newText },
-            label = {Text("Passwort") },
-            placeholder = {Text("Passwort")},
-            singleLine = true,
-            modifier = Modifier
-                .padding(horizontal = 32.dp)
-                .padding(top = 16.dp)
-                .fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(64.dp))
+                Spacer(modifier = Modifier.height(100.dp))
 
-        ClickButton(
-            text = "Anmelden",
-            onClick = {},
-            modifier = Modifier
-                .padding(horizontal = 32.dp)
-                .fillMaxWidth()
-        )
+                TextField(
+                    value = emailState.value,
+                    onValueChange = { newText -> emailState.value = newText },
+                    label = { Text("E-Mail oder Benutzername") },
+                    placeholder = { Text("E-Mail/Benutzername") },
+                    singleLine = true,
+                    modifier = Modifier
+                        .padding(horizontal = 32.dp)
+                        .padding(top = 16.dp)
+                        .fillMaxWidth()
+                )
+                TextField(
+                    value = passwordState.value,
+                    onValueChange = { newText -> passwordState.value = newText },
+                    label = { Text("Passwort") },
+                    placeholder = { Text("Passwort") },
+                    singleLine = true,
+                    modifier = Modifier
+                        .padding(horizontal = 32.dp)
+                        .padding(top = 16.dp)
+                        .fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(64.dp))
 
-        Spacer(modifier = Modifier.height(8.dp))
+                ClickButton(
+                    text = "Anmelden",
+                    onClick = {},
+                    modifier = Modifier
+                        .padding(horizontal = 32.dp)
+                        .fillMaxWidth()
+                )
 
-        ClickButton(
-            text = "Neues Konto",
-            onClick = {},
-            modifier = Modifier
-                .padding(horizontal = 32.dp)
-                .fillMaxWidth()
-        )
-            }}
+                Spacer(modifier = Modifier.height(8.dp))
+
+                ClickButton(
+                    text = "Neues Konto",
+                    onClick = {},
+                    modifier = Modifier
+                        .padding(horizontal = 32.dp)
+                        .fillMaxWidth()
+                )
+            }
+            MenuBar(navController)
+        }
+
+    }
+}

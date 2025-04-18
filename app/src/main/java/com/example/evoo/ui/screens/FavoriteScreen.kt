@@ -17,11 +17,10 @@ import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
-import com.example.evoo.ui.components.header.LogoImage
 import com.example.evoo.ui.menu.MenuBar
 
 @Composable
-fun SettingScreen(navController: NavController){
+fun FavoriteScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -42,7 +41,7 @@ fun SettingScreen(navController: NavController){
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ){
-                Text("Einstellungen", fontSize = 50.sp)
+                Text("Favorite", fontSize = 50.sp)
             }
             // Menu Bar
             MenuBar(navController)

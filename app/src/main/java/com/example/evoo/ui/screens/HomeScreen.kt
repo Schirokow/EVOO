@@ -26,6 +26,8 @@ import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -96,7 +98,7 @@ data class FestivalData(
 
 object FestivalRepository{
 
-    // Liste aller Festival-Bilder
+    // Liste aller Events
     val festivalData = listOf(
         FestivalData(
             imageId = R.drawable.festival1,
@@ -290,17 +292,24 @@ fun EventContent(navController: NavController) {
                     .padding(6.dp)
                     .aspectRatio(1f)
             ){
-                Image(
-                    painter = painterResource(id = festivalData.imageId),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
+                Card(
                     modifier = Modifier
                         .fillMaxSize()
-                        .clip(RoundedCornerShape(12.dp))
                         .clickable{
                             selectedImage = index
-                        }
-                )
+                        },
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(12.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = festivalData.imageId),
+                        contentDescription = null,
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
+                }
+
             }
         }
     }
@@ -337,17 +346,25 @@ fun EventContent(navController: NavController) {
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
 
-                    Image(
-                        painter = painterResource(id = festivalData.imageId),
-                        contentDescription = "Vergrößertes Bild",
-                        contentScale = ContentScale.FillBounds,
+                    Card (
                         modifier = Modifier
                             .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
                             .fillMaxWidth(0.9f)
                             .fillMaxHeight(0.5f)
-                            .clip(RoundedCornerShape(12.dp))
-                            .clickable{navController.navigate("ContentDetailScreen/$index")}
-                    )
+                            .clickable{navController.navigate("ContentDetailScreen/$index")},
+                        shape = RoundedCornerShape(16.dp),
+                        elevation = CardDefaults.cardElevation(12.dp)
+                    ){
+                        Image(
+                            painter = painterResource(id = festivalData.imageId),
+                            contentDescription = "Vergrößertes Bild",
+                            contentScale = ContentScale.FillBounds,
+                            modifier = Modifier
+                                .fillMaxSize()
+                        )
+                    }
+
+
                 }
 
                 Icon(

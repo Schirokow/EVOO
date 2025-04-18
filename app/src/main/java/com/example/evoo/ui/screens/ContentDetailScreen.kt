@@ -20,6 +20,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -109,16 +111,22 @@ fun ContentDetailScreen(navController: NavController, index: Int){
                 )
 
                 // Bild
-                Image(
-                    painter = painterResource(id = festivalData.imageId),
-                    contentDescription = null,
+                Card (
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
-                        .fillMaxHeight(0.5f)
-                        //.padding(16.dp)
-                        .clip(RoundedCornerShape(12.dp)),
-                    contentScale = ContentScale.FillBounds
-                )
+                        .fillMaxHeight(0.5f),
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(12.dp)
+                ){
+                    Image(
+                        painter = painterResource(id = festivalData.imageId),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentScale = ContentScale.FillBounds
+                    )
+                }
+
 
                 // Beschreibung
                 Text(

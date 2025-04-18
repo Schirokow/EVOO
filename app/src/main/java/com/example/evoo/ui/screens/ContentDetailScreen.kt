@@ -39,13 +39,14 @@ import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.menu.MenuBar
-import com.example.evoo.ui.screens.FestivalRepository.festivalImages
+import com.example.evoo.ui.screens.FestivalRepository.festivalData
+
 
 @Composable
 fun ContentDetailScreen(navController: NavController, index: Int){
 
     // Holt die FestivalData aus der gemeinsamen Liste
-    val festivalData = festivalImages[index]
+    val festivalData = festivalData[index]
 
     Box(
         modifier = Modifier
@@ -100,7 +101,7 @@ fun ContentDetailScreen(navController: NavController, index: Int){
 
                 // Bild
                 Image(
-                    painter = painterResource(id = festivalData.imageRes),
+                    painter = painterResource(id = festivalData.imageId),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
@@ -149,3 +150,5 @@ fun ContentDetailScreen(navController: NavController, index: Int){
         }
     }
 }
+
+

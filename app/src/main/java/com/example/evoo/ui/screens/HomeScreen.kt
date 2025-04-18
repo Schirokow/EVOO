@@ -1,5 +1,6 @@
 package com.example.evoo.ui.screens
 
+import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -49,7 +50,8 @@ import com.example.evoo.BottomDarkBlue
 import com.example.evoo.R
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.menu.MenuBar
-import com.example.evoo.ui.screens.FestivalRepository.festivalImages
+import com.example.evoo.ui.screens.FestivalRepository.festivalData
+
 
 // Startseite
 @Composable
@@ -85,7 +87,7 @@ fun HomeScreen(navController: NavController){
 }
 
 data class FestivalData(
-    val imageRes: Int,
+    val imageId: Int,
     val title: String,
     val description: String,
     val datum: String,
@@ -95,170 +97,170 @@ data class FestivalData(
 object FestivalRepository{
 
     // Liste aller Festival-Bilder
-    val festivalImages = listOf(
+    val festivalData = listOf(
         FestivalData(
-            imageRes = R.drawable.festival1,
+            imageId = R.drawable.festival1,
             title = "Summer Festival",
             description = "Techno Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival2,
+            imageId = R.drawable.festival2,
             title = "Heaven & Hill Neukirchen",
             description = "Neukirchen-Vluyn",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival3,
+            imageId = R.drawable.festival3,
             title = "LOVEMUSIC Festival Magdeburg",
             description = "Party bis zum Umfallen!!!",
             datum = "20.-22.06 2025",
             location = "Elbauenpark Magdeburg"
         ),
         FestivalData(
-            imageRes = R.drawable.festival4,
+            imageId = R.drawable.festival4,
             title = "CAPTAIN JACK Weiden",
             description = "Festival in Weiden",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival5,
+            imageId = R.drawable.festival5,
             title = "GLÜCKSGEFÜHLE Festival",
             description = "Techno Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival6,
+            imageId = R.drawable.festival6,
             title = "SUMMER FOOD ROCK",
             description = "Rock Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival7,
+            imageId = R.drawable.festival7,
             title = "HAVEL BEATS Festival",
             description = "Techno Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival8,
+            imageId = R.drawable.festival8,
             title = "FESTIVAL HOCKENHEIMRING",
             description = "Techno Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival9,
+            imageId = R.drawable.festival9,
             title = "DAS HR-FESTIVAL 2025",
             description = "Embrace Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival10,
+            imageId = R.drawable.festival10,
             title = "TAUBERTAL Festival 2025",
             description = "Techno Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival11,
+            imageId = R.drawable.festival11,
             title = "BLANKENFELDE Festival Juli 2025",
             description = "Techno Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival12,
+            imageId = R.drawable.festival12,
             title = "Latin Airport Festival",
             description = "Latino Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival1,
+            imageId = R.drawable.festival1,
             title = "Summer Festival",
             description = "Techno Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival2,
+            imageId = R.drawable.festival2,
             title = "Heaven & Hill Neukirchen",
             description = "Neukirchen-Vluyn",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival3,
+            imageId = R.drawable.festival3,
             title = "LOVEMUSIC Festival Magdeburg",
             description = "Elbauenpark Magdeburg",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival4,
+            imageId = R.drawable.festival4,
             title = "CAPTAIN JACK Weiden",
             description = "Festival in Weiden",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival5,
+            imageId = R.drawable.festival5,
             title = "GLÜCKSGEFÜHLE Festival",
             description = "Techno Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival6,
+            imageId = R.drawable.festival6,
             title = "SUMMER FOOD ROCK",
             description = "Rock Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival7,
+            imageId = R.drawable.festival7,
             title = "HAVEL BEATS Festival",
             description = "Techno Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival8,
+            imageId = R.drawable.festival8,
             title = "FESTIVAL HOCKENHEIMRING",
             description = "Techno Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival9,
+            imageId = R.drawable.festival9,
             title = "DAS HR-FESTIVAL 2025",
             description = "Embrace Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival10,
+            imageId = R.drawable.festival10,
             title = "TAUBERTAL Festival 2025",
             description = "Techno Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival11,
+            imageId = R.drawable.festival11,
             title = "BLANKENFELDE Festival Juli 2025",
             description = "Techno Festival",
             datum = "20 & 21 Juni 2025",
             location = "Am Strand"
         ),
         FestivalData(
-            imageRes = R.drawable.festival12,
+            imageId = R.drawable.festival12,
             title = "Latin Airport Festival",
             description = "Latino Festival",
             datum = "20 & 21 Juni 2025",
@@ -281,23 +283,23 @@ fun EventContent(navController: NavController) {
         contentPadding = PaddingValues(vertical = 16.dp),
         columns = GridCells.Fixed(2)
     ){
-        items (festivalImages.size){ index ->
-            val festivalData = festivalImages[index]
+        items (festivalData.size){ index ->
+            val festivalData = festivalData[index]
             Box(
                 modifier = Modifier
                     .padding(6.dp)
                     .aspectRatio(1f)
-                    .clickable{
-                        selectedImage = index
-                    }
             ){
                 Image(
-                    painter = painterResource(id = festivalData.imageRes),
+                    painter = painterResource(id = festivalData.imageId),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
                         .fillMaxSize()
                         .clip(RoundedCornerShape(12.dp))
+                        .clickable{
+                            selectedImage = index
+                        }
                 )
             }
         }
@@ -309,8 +311,10 @@ fun EventContent(navController: NavController) {
     )
 
     // Overlay für vergrößertes Bild, wenn selectedImage nicht null ist
-    selectedImage?.let { imageIndex ->
-        val festivalData = festivalImages[imageIndex] // Datenobjekt via Index
+    selectedImage?.let { index ->
+        Log.d("LazyVerticalGrid", "let Block -> Value in selectedImage: $selectedImage, Value in index: $index")
+        val festivalData = festivalData[index] // Datenobjekt via Index
+        Log.d("LazyVerticalGrid", "let Block -> Value in festivalData: $festivalData")
         Surface(
             color = BackgroundColor.copy(alpha = 0.9f), // Farbe von Hintergrund
             modifier = Modifier.fillMaxSize(),
@@ -334,7 +338,7 @@ fun EventContent(navController: NavController) {
                     )
 
                     Image(
-                        painter = painterResource(id = festivalData.imageRes),
+                        painter = painterResource(id = festivalData.imageId),
                         contentDescription = "Vergrößertes Bild",
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier
@@ -342,7 +346,7 @@ fun EventContent(navController: NavController) {
                             .fillMaxWidth(0.9f)
                             .fillMaxHeight(0.5f)
                             .clip(RoundedCornerShape(12.dp))
-                            .clickable{navController.navigate("ContentDetailScreen/$imageIndex")}
+                            .clickable{navController.navigate("ContentDetailScreen/$index")}
                     )
                 }
 
@@ -375,3 +379,5 @@ fun EventContent(navController: NavController) {
 }
 
 val BackgroundColor = Color(0xFF20587B)
+
+

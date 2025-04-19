@@ -41,7 +41,7 @@ import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.menu.MenuBar
-import com.example.evoo.ui.screens.FestivalRepository.festivalData
+import com.example.evoo.eventRepository.EventRepository.festivalData
 
 
 @Composable

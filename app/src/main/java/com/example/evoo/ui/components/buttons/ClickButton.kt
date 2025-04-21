@@ -27,7 +27,7 @@ fun ClickButton(
 ) {
     Button (
         onClick = onClick,
-        modifier = Modifier
+        modifier = modifier
             .indication(interactionSource = remember { MutableInteractionSource() },
                 indication = LocalIndication.current),
              colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray , contentColor = Color.Black)

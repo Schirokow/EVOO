@@ -56,7 +56,7 @@ fun EventCard(
 ){
     val cardSize = if (isLarge) 200.dp else 100.dp
 
-        Card(
+    Card(
             shape = RoundedCornerShape(8.dp),
             elevation = CardDefaults.cardElevation(4.dp),
             modifier = modifier

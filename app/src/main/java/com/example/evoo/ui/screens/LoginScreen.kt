@@ -125,7 +125,7 @@ fun LoginScreen(navController: NavController) {
                     text = "Anmelden",
                     onClick = {},
                     modifier = Modifier
-                        .padding(horizontal = 32.dp)
+                        .padding(horizontal = 120.dp)
                         .fillMaxWidth()
                 )
 
@@ -135,7 +135,7 @@ fun LoginScreen(navController: NavController) {
                     text = "Neues Konto",
                     onClick = {},
                     modifier = Modifier
-                        .padding(horizontal = 32.dp)
+                        .padding(horizontal = 120.dp)
                         .fillMaxWidth()
                 )
             }

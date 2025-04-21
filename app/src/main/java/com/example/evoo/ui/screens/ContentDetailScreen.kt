@@ -42,6 +42,7 @@ import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.menu.MenuBar
 import com.example.evoo.eventRepository.EventRepository.festivalData
+import com.example.evoo.ui.components.buttons.ClickButton
 
 
 @Composable
@@ -87,14 +88,14 @@ fun ContentDetailScreen(navController: NavController, index: Int){
                     .clickable{ }
             )
 
-            Button(
+            ClickButton(
+                text = "Auf der Karte",
                 onClick = {navController.navigate("LocationScreen")},
                 modifier = Modifier
-                    .align(alignment = Alignment.TopCenter)
-                    .padding(24.dp)
-            ) {
-                Text(text = "Auf der Karte zeigen")
-            }
+                    .align(Alignment.TopCenter)
+                    .padding(top = 24.dp, start = 120.dp, end = 120.dp)
+                    .fillMaxWidth()
+            )
 
             Column(
                 modifier = Modifier

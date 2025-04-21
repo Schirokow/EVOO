@@ -23,9 +23,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.FavoriteBorder
-import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -39,7 +37,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -49,10 +46,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
-import com.example.evoo.R
 import com.example.evoo.TopLightBlue
-import com.example.evoo.ui.menu.MenuBar
 import com.example.evoo.eventRepository.EventRepository.festivalData
+import com.example.evoo.ui.menu.MenuBar
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 // Startseite
@@ -94,7 +93,6 @@ fun EventContent(navController: NavController) {
 
     // State, um ausgewählte FestivalData zu speichern
     var selectedFestivalData by remember { mutableStateOf<Int?>(null) }
-
 
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),

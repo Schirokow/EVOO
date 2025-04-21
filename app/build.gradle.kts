@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.coroutines.android)
 
 
     // OpenStreetMap
@@ -62,16 +63,16 @@ dependencies {
     implementation (libs.accompanist.permissions.v0320)
 
     // Play Services Location mit backward compatibility
-    implementation ("com.google.android.gms:play-services-location:21.0.1")
+    implementation (libs.play.services.location)
 
     // OSMDroid
-    implementation ("org.osmdroid:osmdroid-android:6.1.16")
+    implementation (libs.osmdroid.osmdroid.android)
 
     // Accompanist Permissions
-    implementation ("com.google.accompanist:accompanist-permissions:0.32.0")
+    implementation (libs.accompanist.permissions.v0320)
 
     // Fügen Sie diese Zeile hinzu für AndroidX Core
-    implementation ("androidx.core:core-ktx:1.12.0")
+    implementation (libs.androidx.core.ktx.v1160)
 
 
 

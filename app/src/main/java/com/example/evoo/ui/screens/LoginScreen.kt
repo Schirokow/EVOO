@@ -65,14 +65,23 @@ fun LoginScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Top
             ) {
-                Spacer(modifier = Modifier.height(30.dp))
+                Text(
+                    "Anmeldung",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 40.sp,
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
 
                 Image(
                     painter = painterResource(id = R.drawable.logo_anye),
                     contentDescription = "App Logo",
                     modifier = Modifier
+                        .padding(top = 60.dp)
                         .size(120.dp)
                         .align(Alignment.CenterHorizontally)
                 )
@@ -86,7 +95,7 @@ fun LoginScreen(navController: NavController) {
                         .align(Alignment.CenterHorizontally)
                 )
 
-                Spacer(modifier = Modifier.height(100.dp))
+                Spacer(modifier = Modifier.height(80.dp))
 
                 TextField(
                     value = emailState.value,

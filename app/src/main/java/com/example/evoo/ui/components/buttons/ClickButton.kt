@@ -22,7 +22,8 @@ import androidx.compose.ui.unit.dp
 
 fun ClickButton(
     text: String = "Press here",
-    onClick: () -> Unit ={}
+    onClick: () -> Unit ={},
+    modifier: Modifier = Modifier
 ) {
     Button (
         onClick = onClick,

@@ -50,8 +50,8 @@ import com.example.evoo.ui.components.card.EventCard
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreen1 () {
-    var selectedTab by remember {mutableStateOf(EventTab.All)}
-    val displayedEvents = when (selectedTab) {
+    var selectedTab by remember {mutableStateOf(EventTab.All)} // speichert den ausgewählten Tab
+    val displayedEvents = when (selectedTab) { // entscheidet die Anzeige abhängig vom ausgewählten Tab
         EventTab.All -> sampleEvents
         EventTab.Favorites -> sampleEvents.take(2)
         EventTab.Liked -> sampleEvents.takeLast(2)
@@ -91,7 +91,7 @@ fun ProfileScreen1 () {
             Spacer(modifier = Modifier.height(20.dp))
 
 
-            //Profilbild mit Edit
+            //Profilbild mit Editbutton
 
             Box(
                 modifier = Modifier
@@ -112,12 +112,12 @@ fun ProfileScreen1 () {
             }
                 Box(
                     modifier = Modifier
-                        .offset(x = 36.dp,y = -24.dp)
+                        .offset(x = 36.dp,y = (-24).dp)
                 ) {
                     EditIconButton(
                         modifier = Modifier
-                            .size(24.dp)
-
+                            .size(24.dp),
+                        onClick = {println("hallo")}
                     )
                 }
 

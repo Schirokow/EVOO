@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -71,12 +72,13 @@ val imageToUse = event.imageResId ?: R.drawable.festival1
                     painter = painterResource(id = imageToUse),
                     contentDescription = event.title,
                     contentScale = ContentScale.Crop,
+                    //contentScale = ContentScale.Fit,
                     modifier = Modifier.fillMaxSize()
                 )
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color.Black.copy(alpha = 0.5f))
+                        .background(Color.Black.copy(alpha = 0.8f))
                         .align(Alignment.BottomStart)
                 ){
                     Column(

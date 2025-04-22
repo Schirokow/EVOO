@@ -23,23 +23,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import com.example.evoo.R
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
+import com.example.evoo.R
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.menu.MenuBar
 
-
 @Composable
-fun LoginScreen(navController: NavController) {
+fun RegistrationScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -58,6 +56,7 @@ fun LoginScreen(navController: NavController) {
                     )
                 )
         ) {
+            val userName = remember { mutableStateOf(TextFieldValue()) }
             val emailState = remember { mutableStateOf(TextFieldValue()) }
             val passwordState = remember { mutableStateOf(TextFieldValue()) }
 
@@ -68,7 +67,7 @@ fun LoginScreen(navController: NavController) {
                 verticalArrangement = Arrangement.Top
             ) {
                 Text(
-                    "Anmeldung",
+                    "Registrierung",
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     fontSize = 40.sp,
@@ -95,13 +94,25 @@ fun LoginScreen(navController: NavController) {
                         .align(Alignment.CenterHorizontally)
                 )
 
-                Spacer(modifier = Modifier.height(80.dp))
+                Spacer(modifier = Modifier.height(35.dp))
+
+                TextField(
+                    value = userName.value,
+                    onValueChange = { newText -> userName.value = newText },
+                    label = { Text("Benutzername") },
+                    placeholder = { Text("Benutzername") },
+                    singleLine = true,
+                    modifier = Modifier
+                        .padding(horizontal = 32.dp)
+                        .padding(top = 16.dp)
+                        .fillMaxWidth()
+                )
 
                 TextField(
                     value = emailState.value,
                     onValueChange = { newText -> emailState.value = newText },
-                    label = { Text("E-Mail oder Benutzername") },
-                    placeholder = { Text("E-Mail/Benutzername") },
+                    label = { Text("E-Mail") },
+                    placeholder = { Text("E-Mail") },
                     singleLine = true,
                     modifier = Modifier
                         .padding(horizontal = 32.dp)
@@ -119,10 +130,21 @@ fun LoginScreen(navController: NavController) {
                         .padding(top = 16.dp)
                         .fillMaxWidth()
                 )
-                Spacer(modifier = Modifier.height(64.dp))
+                TextField(
+                    value = passwordState.value,
+                    onValueChange = { newText -> passwordState.value = newText },
+                    label = { Text("Passwort wiederholen") },
+                    placeholder = { Text("Passwort wiederholen") },
+                    singleLine = true,
+                    modifier = Modifier
+                        .padding(horizontal = 32.dp)
+                        .padding(top = 16.dp)
+                        .fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(35.dp))
 
                 ClickButton(
-                    text = "Anmelden",
+                    text = "Registrieren",
                     onClick = {},
                     modifier = Modifier
                         .padding(horizontal = 120.dp)
@@ -132,8 +154,8 @@ fun LoginScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 ClickButton(
-                    text = "Neues Konto",
-                    onClick = {navController.navigate("RegistrationScreen")},
+                    text = "Abbrechen",
+                    onClick = {navController.navigate("LoginScreen")},
                     modifier = Modifier
                         .padding(horizontal = 120.dp)
                         .fillMaxWidth()

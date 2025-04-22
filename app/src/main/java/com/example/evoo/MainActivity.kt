@@ -17,6 +17,7 @@ import com.example.evoo.ui.screens.FavoriteScreen
 import com.example.evoo.ui.screens.HomeScreen
 import com.example.evoo.ui.screens.LocationScreen
 import com.example.evoo.ui.screens.LoginScreen
+import com.example.evoo.ui.screens.RegistrationScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -40,6 +41,7 @@ fun Navigation(){
         composable ("FavoriteScreen"){ FavoriteScreen(navController)}
         composable ("LoginScreen"){ LoginScreen(navController) }
         composable ("LocationScreen"){ LocationScreen(navController)}
+        composable ("RegistrationScreen"){ RegistrationScreen(navController) }
         composable (
             "ContentDetailScreen/{index}",
             arguments = listOf(navArgument("index"){type = NavType.IntType})

@@ -67,6 +67,7 @@ fun LocationScreen(navController: NavController) {
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
+
                 OpenStreetMapWithLiveLocation()
             }
             MenuBar(navController)

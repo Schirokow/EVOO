@@ -13,11 +13,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.evoo.ui.screens.ContentDetailScreen
-import com.example.evoo.ui.screens.SettingScreen
 import com.example.evoo.ui.screens.HomeScreen
 import com.example.evoo.ui.screens.LocationScreen
 import com.example.evoo.ui.screens.LoginScreen
+import com.example.evoo.ui.screens.ProfileScreen1
 import com.example.evoo.ui.screens.RegistrationScreen
+import com.example.evoo.ui.screens.SettingScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -34,24 +35,37 @@ class MainActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun Navigation(){
+fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "HomeScreen"){
-        composable ("HomeScreen"){ HomeScreen(navController)}
-        composable ("SettingScreen"){ SettingScreen(navController)}
-        composable ("LoginScreen"){ LoginScreen(navController) }
-        composable ("LocationScreen"){ LocationScreen(navController)}
-        composable ("RegistrationScreen"){ RegistrationScreen(navController) }
-        composable (
+    NavHost(
+        navController = navController,
+        startDestination = "HomeScreen"
+    ) {
+        composable("HomeScreen") { HomeScreen(navController) }
+        composable("SettingScreen") { SettingScreen(navController) }
+        composable("LoginScreen") { LoginScreen(navController) }
+        composable("LocationScreen") { LocationScreen(navController) }
+        composable("RegistrationScreen") { RegistrationScreen(navController) }
+
+        composable(
             "ContentDetailScreen/{index}",
-            arguments = listOf(navArgument("index"){type = NavType.IntType})
-        ){ backStackEntry ->
-                val index = backStackEntry.arguments?.getInt("index") ?:0
-                ContentDetailScreen(navController, index)
-            }
+            arguments = listOf(navArgument("index") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val index = backStackEntry.arguments?.getInt("index") ?: 0
+            ContentDetailScreen(navController, index)
+        }
+
+        composable(
+            "ProfileScreen1/{userName}",
+            arguments = listOf(navArgument("userName") {
+                type = NavType.StringType
+            })
+        ) { backStackEntry ->
+            val userName = backStackEntry.arguments?.getString("userName")
+            ProfileScreen1(navController, userName)
+        }
     }
 }
-
 
 
 // Selbstdefinierte Farben für Hintergrund und Vordergrund.

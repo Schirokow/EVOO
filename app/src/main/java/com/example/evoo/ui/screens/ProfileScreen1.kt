@@ -23,34 +23,43 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.evoo.R
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.offset
 import androidx.compose.ui.layout.ContentScale
 import com.example.evoo.ui.components.button.EditIconButton
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.evoo.AccentColor
 import com.example.evoo.model.EventTab
 import com.example.evoo.model.sampleEvents
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.components.card.EventCard
+import com.example.evoo.ui.menu.MenuBar
+import com.example.evoo.users.UsersRepository
 
 
-@Preview(showBackground = true)
 @Composable
-fun ProfileScreen1 () {
-    var selectedTab by remember {mutableStateOf(EventTab.All)}
+fun ProfileScreen1 (navController: NavController, userName: String?) {
+    var selectedTab by remember { mutableStateOf(EventTab.All) }
     val displayedEvents = when (selectedTab) {
         EventTab.All -> sampleEvents
         EventTab.Favorites -> sampleEvents.take(2)
@@ -60,59 +69,80 @@ fun ProfileScreen1 () {
 
     val itemsPerRow = 3
 
+    // Finde den User in der Repository
+    val user = UsersRepository.userData.find { it.name == userName }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(TopLightBlue, BottomDarkBlue)
-                )
-            )
+            .background(AccentColor)
     ) {
-        Column(
+
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(WindowInsets.systemBars.asPaddingValues())
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(TopLightBlue, BottomDarkBlue)
+                    )
+                )
         ) {
-
-            Spacer(modifier = Modifier.height(50.dp))
-
-            // NameFeld
-
-            Text(
-                text = name.ifEmpty { "FirstUser1234" },
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = Color.White
+            Icon(
+                imageVector = Icons.Rounded.ArrowBack,
+                contentDescription = "Zurück",
+                tint = Color.White,
+                modifier = Modifier
+                    .align(alignment = Alignment.TopStart)
+                    .padding(24.dp)
+                    .size(34.dp)
+                    .clickable { navController.popBackStack() }
             )
 
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-
-            //Profilbild mit Edit
-
-            Box(
+            Column(
                 modifier = Modifier
-                    .size(100.dp)
-                    .clip(CircleShape)
-                    .background(Color.LightGray),
-                contentAlignment = Alignment.Center
+                    .fillMaxSize()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.avatar2),
-                    contentDescription = "ProfilePicture",
+
+                Spacer(modifier = Modifier.height(50.dp))
+
+                // NameFeld
+
+                Text(
+                    text = "Willkommen ${user?.name}",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    color = Color.White
+                )
+
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+
+                //Profilbild mit Edit
+
+                Box(
                     modifier = Modifier
                         .size(100.dp)
                         .clip(CircleShape)
-                        .border(4.dp, Color.White, CircleShape),
-                    contentScale = ContentScale.Crop
-                )
-            }
+                        .background(Color.LightGray),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = user?.profilePicture ?: R.drawable.default_avatar),
+                        contentDescription = "ProfilePicture",
+                        modifier = Modifier
+                            .size(100.dp)
+                            .clip(CircleShape)
+                            .border(4.dp, Color.White, CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                }
                 Box(
                     modifier = Modifier
-                        .offset(x = 36.dp,y = -24.dp)
+                        .offset(x = 36.dp, y = -24.dp)
                 ) {
                     EditIconButton(
                         modifier = Modifier
@@ -121,60 +151,63 @@ fun ProfileScreen1 () {
                     )
                 }
 
-            Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(5.dp))
 
-            ClickButton(
-                text = "Edit Profile",
-                onClick = {},
-                modifier = Modifier
-            )
+                ClickButton(
+                    text = "Edit Profile",
+                    onClick = {},
+                    modifier = Modifier
+                )
 
-            TabRow(
-                selectedTabIndex = selectedTab.ordinal,
-                modifier = Modifier.fillMaxWidth(),
-                containerColor = Color.Transparent
-            ) {
-                EventTab.entries.forEach { tab ->
-                    Tab(
-                        selected = selectedTab == tab,
-                        onClick = { selectedTab = tab },
-                        icon = {
-                            Icon(
-                                imageVector = tab.icon,
-                                contentDescription = tab.label,
-                                tint = if (selectedTab == tab) Color.White else Color.DarkGray
-                            )
-                        }
-                    )
+                TabRow(
+                    selectedTabIndex = selectedTab.ordinal,
+                    modifier = Modifier.fillMaxWidth(),
+                    containerColor = Color.Transparent
+                ) {
+                    EventTab.entries.forEach { tab ->
+                        Tab(
+                            selected = selectedTab == tab,
+                            onClick = { selectedTab = tab },
+                            icon = {
+                                Icon(
+                                    imageVector = tab.icon,
+                                    contentDescription = tab.label,
+                                    tint = if (selectedTab == tab) Color.White else Color.DarkGray
+                                )
+                            }
+                        )
+                    }
                 }
-            }
-            //HorizontalDivider(
-              //  color = Color.LightGray,
+                //HorizontalDivider(
+                //  color = Color.LightGray,
                 //thickness = 5.dp,
                 //modifier = Modifier.padding(vertical = 8.dp)
-            //)
+                //)
 
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(itemsPerRow),
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(itemsPerRow),
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
 
-                    ){
-                        items(displayedEvents) { event ->
-                            EventCard(
-                                event = event,
-                                onClick = {},
-                                isLarge = true,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(1f)
-                            )
-                        }
+                ) {
+                    items(displayedEvents) { event ->
+                        EventCard(
+                            event = event,
+                            onClick = {},
+                            isLarge = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(1f)
+                        )
                     }
                 }
             }
-            }
+            MenuBar(navController)
+        }
+
+    }
 
 
+}

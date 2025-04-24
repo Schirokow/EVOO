@@ -1,6 +1,6 @@
 package com.example.evoo.ui.components.card
 
-import android.app.usage.UsageEvents
+
 import androidx.compose.ui.Alignment
 import com.example.evoo.model.Event
 
@@ -36,11 +36,11 @@ fun PreviewEventCard(){
     val event = Event(
         title = "Smooth Sound",
         date = "05.05.2025, 20:25 Uhr" ,
-        description = "Free Entry - All Welcome"
+        description = "Free Entry - All Welcome",
+        imageResId = R.drawable.festival1
     )
     EventCard(
         event = event,
-        imageResId = R.drawable.festival1,
         onClick = {} ,
         isLarge = true
     )
@@ -52,20 +52,23 @@ fun EventCard(
     modifier : Modifier = Modifier,
     onClick: () -> Unit,
     isLarge : Boolean = false,
-    imageResId : Int
 ){
-    val cardSize = if (isLarge) 200.dp else 100.dp
+
+val cardSize = if (isLarge) 200.dp else 100.dp
+val imageToUse = event.imageResId ?: R.drawable.festival1
 
     Card(
             shape = RoundedCornerShape(8.dp),
             elevation = CardDefaults.cardElevation(4.dp),
             modifier = modifier
                 .size(cardSize)
+                //.fillMaxWidth()
+                //.aspectRatio(1f)
                 .clickable(onClick = onClick)
         ){
             Box{
                 Image(
-                    painter = painterResource(id = imageResId),
+                    painter = painterResource(id = imageToUse),
                     contentDescription = event.title,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
@@ -82,22 +85,22 @@ fun EventCard(
                     Text(
                     text = event.title,
                     color = Color.White,
-                    fontSize = if (isLarge) 16.sp else 12.sp
+                    fontSize = if (isLarge) 14.sp else 10.sp
                     )
                         Spacer(modifier = Modifier.height(4.dp))
 
                         Text(
                             text = event.date ?: "No Date",
                             color = Color.White,
-                            fontSize = if (isLarge) 14.sp else 10.sp
+                            fontSize = if (isLarge) 12.sp else 8.sp
                         )
                         Spacer(modifier = Modifier.height(4.dp))
 
-                        Text(
-                            text = event.description,
-                            color = Color.White,
-                            fontSize = if (isLarge) 14.sp else 10.sp
-                                )
+                        //Text(
+                          //  text = event.description,
+                            //color = Color.White,
+                            //fontSize = if (isLarge) 12.sp else 8.sp
+                              //  )
 
                 }
 

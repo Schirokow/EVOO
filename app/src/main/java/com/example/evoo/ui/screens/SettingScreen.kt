@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.evoo.AccentColor
@@ -20,7 +21,7 @@ import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.menu.MenuBar
 
 @Composable
-fun FavoriteScreen(navController: NavController){
+fun SettingScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -41,7 +42,7 @@ fun FavoriteScreen(navController: NavController){
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ){
-                Text("Favorite", fontSize = 50.sp)
+                Text("Settings", fontSize = 50.sp, color = Color.White)
             }
             // Menu Bar
             MenuBar(navController)

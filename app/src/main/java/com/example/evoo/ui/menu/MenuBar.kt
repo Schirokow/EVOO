@@ -77,12 +77,12 @@ fun MenuBar(navController: NavController){
                         .clickable{navController.navigate("LoginScreen")}
                 )
                 Icon(
-                    imageVector = Icons.Rounded.Favorite,
-                    contentDescription = "Favorite",
+                    imageVector = Icons.Rounded.Settings,
+                    contentDescription = "Settings",
                     tint = Color.White,
                     modifier = Modifier
                         .size(34.dp)
-                        .clickable{navController.navigate("FavoriteScreen")}
+                        .clickable{navController.navigate("SettingScreen")}
                 )
             }
         }

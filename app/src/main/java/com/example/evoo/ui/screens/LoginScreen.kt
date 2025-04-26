@@ -48,6 +48,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import com.example.evoo.users.AuthManager
 
 
 @Composable
@@ -189,7 +190,15 @@ fun LoginScreen(navController: NavController) {
                             // Eingabefelder leeren
                             emailState.value = TextFieldValue("")
                             passwordState.value = TextFieldValue("")
-                            navController.navigate("ProfileScreen1/${user.name}")
+                            AuthManager.login(user) // Benutzer setzen
+                            navController.navigate("ProfileScreen1/${user.name}") {
+                                //Löscht den gesamten Back-Stack
+                                popUpTo(navController.graph.startDestinationId) {
+                                    inclusive = true
+                                }
+                                //Verhindert Mehrfachinstanzen
+                                launchSingleTop = true
+                            }
                     } else{
                             loginError = true
                     }

@@ -54,6 +54,7 @@ import com.example.evoo.model.sampleEvents
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.components.card.EventCard
 import com.example.evoo.ui.menu.MenuBar
+import com.example.evoo.users.AuthManager
 import com.example.evoo.users.UsersRepository
 
 
@@ -157,6 +158,16 @@ fun ProfileScreen1 (navController: NavController, userName: String?) {
                     text = "Edit Profile",
                     onClick = {},
                     modifier = Modifier
+                )
+
+                ClickButton(
+                    text = "Abmelden",
+                    onClick = {
+                        AuthManager.logout() //Zustand zurücksetzen
+                        navController.navigate("LoginScreen") {
+                            popUpTo("HomeScreen") { inclusive = true } //Löscht Back-Stack
+                        }
+                    }
                 )
 
                 TabRow(

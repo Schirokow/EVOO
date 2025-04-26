@@ -82,7 +82,7 @@ fun HomeScreen(navController: NavController){
                 //LogoImage()   // Function um Logo auf dem Screen darzustellen.
             }
             // Menu Bar
-            MenuBar(navController)
+            MenuBar(navController = navController)
         }
     }
 }

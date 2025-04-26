@@ -19,6 +19,7 @@ import com.example.evoo.ui.screens.LoginScreen
 import com.example.evoo.ui.screens.ProfileScreen1
 import com.example.evoo.ui.screens.RegistrationScreen
 import com.example.evoo.ui.screens.SettingScreen
+import com.example.evoo.users.AuthManager
 
 
 class MainActivity : ComponentActivity() {
@@ -36,10 +37,18 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun Navigation() {
+
     val navController = rememberNavController()
+    val currentUser = AuthManager.currentUser
+    val startDestination = if (currentUser != null) {
+        "ProfileScreen1/${currentUser.name}" //Direkt zum Profil
+    } else {
+        "LoginScreen"
+    }
+
     NavHost(
         navController = navController,
-        startDestination = "HomeScreen"
+        startDestination = startDestination //Dynamische Startseite
     ) {
         composable("HomeScreen") { HomeScreen(navController) }
         composable("SettingScreen") { SettingScreen(navController) }

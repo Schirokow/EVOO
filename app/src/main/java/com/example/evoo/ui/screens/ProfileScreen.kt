@@ -75,7 +75,7 @@ fun ProfileScreen() {
 
             //Profilbild
             Image(
-                painter = painterResource (id = R.drawable.profile_placeholder),
+                painter = painterResource (id = R.drawable.avatar2),
                 contentDescription = "ProfilePicture",
                 modifier = Modifier
                     .size(100.dp)

@@ -10,28 +10,20 @@ data class User(
     val profilePicture: Int = R.drawable.default_avatar
 )
 
-object UsersRepository{
-    var userData = mutableListOf(
-        User(
-            name = "Alex",
-            email = "alex@test.de",
-            password = "1234"
-        ),
-        User(
-            name = "Sergei",
-            email = "sergei@test.de",
-            password = "12345"
-        ),
-        User(
-            name = "Anna",
-            email = "anna@test.de",
-            password = "123456",
-            profilePicture = R.drawable.avatar2
-        ),
-        User(
-            name = "Max",
-            email = "max@test.de",
-            password = "1234567"
-        ),
-    )
+object UsersRepository {
+    var userData: MutableList<User>
+        get() = PreferencesManager.loadUsers().toMutableList()
+        set(value) = PreferencesManager.saveUsers(value)
+
+    init {
+        // Initiale Testdaten nur beim ersten Start hinzufügen
+        if (userData.isEmpty()) {
+            userData = mutableListOf(
+                User("Alex", "alex@test.de", "1234"),
+                User("Sergei", "sergei@test.de", "12345"),
+                User("Anna", "anna@test.de", "123456", R.drawable.avatar2),
+                User("Max", "max@test.de", "1234567")
+            )
+        }
+    }
 }

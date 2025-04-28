@@ -20,6 +20,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,13 +41,15 @@ import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.menu.MenuBar
-import com.example.evoo.ui.screens.FestivalRepository.festivalImages
+import com.example.evoo.eventRepository.EventRepository.festivalData
+import com.example.evoo.ui.components.buttons.ClickButton
+
 
 @Composable
 fun ContentDetailScreen(navController: NavController, index: Int){
 
     // Holt die FestivalData aus der gemeinsamen Liste
-    val festivalData = festivalImages[index]
+    val festivalData = festivalData[index]
 
     Box(
         modifier = Modifier
@@ -84,10 +88,19 @@ fun ContentDetailScreen(navController: NavController, index: Int){
                     .clickable{ }
             )
 
+            ClickButton(
+                text = "Auf der Karte",
+                onClick = {navController.navigate("LocationScreen")},
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 24.dp, start = 120.dp, end = 120.dp)
+                    .fillMaxWidth()
+            )
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 70.dp),
+                    .padding(top = 100.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Titel
@@ -95,20 +108,26 @@ fun ContentDetailScreen(navController: NavController, index: Int){
                     text = festivalData.title,
                     style = MaterialTheme.typography.headlineLarge,
                     color = Color.White,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = 10.dp)
                 )
 
                 // Bild
-                Image(
-                    painter = painterResource(id = festivalData.imageRes),
-                    contentDescription = null,
+                Card (
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
-                        .fillMaxHeight(0.5f)
-                        //.padding(16.dp)
-                        .clip(RoundedCornerShape(12.dp)),
-                    contentScale = ContentScale.FillBounds
-                )
+                        .fillMaxHeight(0.5f),
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(12.dp)
+                ){
+                    Image(
+                        painter = painterResource(id = festivalData.imageId),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentScale = ContentScale.FillBounds
+                    )
+                }
+
 
                 // Beschreibung
                 Text(
@@ -128,19 +147,11 @@ fun ContentDetailScreen(navController: NavController, index: Int){
 
                 // Location
                 Text(
-                    text = "Veranstaltungsort: ${festivalData.location}",
+                    text = "Ort: ${festivalData.location}",
                     style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
                     color = Color.White,
                     modifier = Modifier.padding(16.dp)
                 )
-
-                Spacer(modifier = Modifier.height(20.dp))
-                Button(
-                    onClick = {navController.navigate("LocationScreen")}
-                ) {
-                    Text(text = "Auf der Karte zeigen")
-                }
-
 
             }
 
@@ -149,3 +160,5 @@ fun ContentDetailScreen(navController: NavController, index: Int){
         }
     }
 }
+
+

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountCircle
+import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Settings
@@ -73,18 +74,20 @@ fun MenuBar(navController: NavController){
                     tint = Color.White,
                     modifier = Modifier
                         .size(34.dp)
-                        .clickable{navController.navigate("AccountScreen")}
+                        .clickable{navController.navigate("LoginScreen")}
                 )
                 Icon(
-                    imageVector = Icons.Rounded.Settings,
-                    contentDescription = "Settings",
+                    imageVector = Icons.Rounded.Favorite,
+                    contentDescription = "Favorite",
                     tint = Color.White,
                     modifier = Modifier
                         .size(34.dp)
-                        .clickable{navController.navigate("SettingScreen")}
+                        .clickable{navController.navigate("FavoriteScreen")}
                 )
             }
         }
     }
 
 }
+
+

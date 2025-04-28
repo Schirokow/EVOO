@@ -12,11 +12,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.evoo.ui.screens.AccountScreen
 import com.example.evoo.ui.screens.ContentDetailScreen
+import com.example.evoo.ui.screens.FavoriteScreen
 import com.example.evoo.ui.screens.HomeScreen
 import com.example.evoo.ui.screens.LocationScreen
-import com.example.evoo.ui.screens.SettingScreen
+import com.example.evoo.ui.screens.LoginScreen
+import com.example.evoo.ui.screens.RegistrationScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -37,9 +38,10 @@ fun Navigation(){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "HomeScreen"){
         composable ("HomeScreen"){ HomeScreen(navController)}
-        composable ("SettingScreen"){ SettingScreen(navController)}
-        composable ("AccountScreen"){ AccountScreen(navController)}
+        composable ("FavoriteScreen"){ FavoriteScreen(navController)}
+        composable ("LoginScreen"){ LoginScreen(navController) }
         composable ("LocationScreen"){ LocationScreen(navController)}
+        composable ("RegistrationScreen"){ RegistrationScreen(navController) }
         composable (
             "ContentDetailScreen/{index}",
             arguments = listOf(navArgument("index"){type = NavType.IntType})

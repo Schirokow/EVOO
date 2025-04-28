@@ -44,7 +44,7 @@ fun HeaderBar() {
         ){
 
             Image(
-                painter = painterResource(id = R.drawable.logo_evoover1),
+                painter = painterResource(id = R.drawable.logo),
                 contentDescription = "Evoo Logo",
                 modifier = Modifier
                     .size(120.dp)

@@ -52,9 +52,10 @@ fun AnyeBottomBar(
     ) {
         BottomAppBar(
             modifier = Modifier
-                .align(Alignment.BottomCenter),
+                .align(Alignment.BottomCenter)
+                .height( 48.dp),
                 //.padding(16.dp) ,
-            containerColor = Color.Gray
+            containerColor = BottomDarkBlue.copy(alpha = 0.85f)
         ) {
 
             Row(
@@ -97,9 +98,9 @@ fun AnyeBottomBar(
         }
         Box(
             modifier = Modifier
-                .size(96.dp)
+                .size(84.dp)
                 .align(Alignment.BottomCenter)
-                .offset(y = (-25).dp)
+                .offset(y = (-5).dp)
                 .background(BottomDarkBlue, CircleShape)
                 .clickable {onAnyeClick()}
                 .shadow(4.dp, CircleShape ),
@@ -108,7 +109,7 @@ fun AnyeBottomBar(
             Image(
                 painter = painterResource(id = R.drawable.logo_anye),
                 contentDescription = "AnyE Logo",
-                modifier = Modifier.size(58.dp)
+                modifier = Modifier.size(48.dp)
             )
         }
     }}

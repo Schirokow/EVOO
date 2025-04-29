@@ -75,7 +75,7 @@ fun ProfileScreen1 () {
         },
         containerColor = Color.Transparent
 
-    ) { innerPadding ->
+    ) //{ //innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()

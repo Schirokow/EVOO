@@ -84,12 +84,12 @@ fun ProfileScreen1 () {
                         colors = listOf(TopLightBlue, BottomDarkBlue)
                     )
                 )
-                .padding(innerPadding)
+                //.padding(innerPadding)
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
+                    .fillMaxSize(),
+                    //.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -173,7 +173,9 @@ fun ProfileScreen1 () {
 
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(itemsPerRow),
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
                     contentPadding = PaddingValues(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)

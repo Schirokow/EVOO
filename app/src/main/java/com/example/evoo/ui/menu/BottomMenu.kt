@@ -47,14 +47,14 @@ fun AnyeBottomBar(
     onAnyeClick: () -> Unit
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
+       modifier = Modifier
+           .fillMaxWidth()
     ) {
         BottomAppBar(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(16.dp) ,
-            containerColor = BottomDarkBlue
+                .align(Alignment.BottomCenter),
+                //.padding(16.dp) ,
+            containerColor = Color.Gray
         ) {
 
             Row(

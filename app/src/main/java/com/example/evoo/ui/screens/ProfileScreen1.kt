@@ -36,6 +36,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -45,136 +46,153 @@ import com.example.evoo.model.EventTab
 import com.example.evoo.model.sampleEvents
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.components.card.EventCard
+import com.example.evoo.ui.menu.AnyeBottomBar
 
 
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreen1 () {
-    var selectedTab by remember {mutableStateOf(EventTab.All)} // speichert den ausgewählten Tab
-    val displayedEvents = when (selectedTab) { // entscheidet die Anzeige abhängig vom ausgewählten Tab
-        EventTab.All -> sampleEvents
-        EventTab.Favorites -> sampleEvents.take(2)
-        EventTab.Liked -> sampleEvents.takeLast(2)
-    }
+    var selectedTab by remember { mutableStateOf(EventTab.All) } // speichert den ausgewählten Tab
+    val displayedEvents =
+        when (selectedTab) { // entscheidet die Anzeige abhängig vom ausgewählten Tab
+            EventTab.All -> sampleEvents
+            EventTab.Favorites -> sampleEvents.take(2)
+            EventTab.Liked -> sampleEvents.takeLast(2)
+        }
     var name by remember { mutableStateOf("") }
 
     val itemsPerRow = 3
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(TopLightBlue, BottomDarkBlue)
-                )
+    Scaffold(
+        bottomBar = {
+            AnyeBottomBar(
+                onHomeClick = {},
+                onSearchClick = {},
+                onProfileClick = {},
+                onSettingsClick = {},
+                onAnyeClick = {}
             )
-    ) {
-        Column(
+        },
+        containerColor = Color.Transparent
+
+    ) { innerPadding ->
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(TopLightBlue, BottomDarkBlue)
+                    )
+                )
+                .padding(innerPadding)
         ) {
-
-            Spacer(modifier = Modifier.height(50.dp))
-
-            // NameFeld
-
-            Text(
-                text = name.ifEmpty { "FirstUser1234" },
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = Color.White
-            )
-
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-
-            //Profilbild mit Editbutton
-
-            Box(
+            Column(
                 modifier = Modifier
-                    .size(100.dp)
-                    .clip(CircleShape)
-                    .background(Color.LightGray),
-                contentAlignment = Alignment.Center
+                    .fillMaxSize()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.avatar2),
-                    contentDescription = "ProfilePicture",
+
+                Spacer(modifier = Modifier.height(50.dp))
+
+                // NameFeld
+
+                Text(
+                    text = name.ifEmpty { "FirstUser1234" },
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    color = Color.White
+                )
+
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+
+                //Profilbild mit Editbutton
+
+                Box(
                     modifier = Modifier
                         .size(100.dp)
                         .clip(CircleShape)
-                        .border(4.dp, Color.White, CircleShape),
-                    contentScale = ContentScale.Crop
-                )
-            }
+                        .background(Color.LightGray),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.avatar2),
+                        contentDescription = "ProfilePicture",
+                        modifier = Modifier
+                            .size(100.dp)
+                            .clip(CircleShape)
+                            .border(4.dp, Color.White, CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                }
                 Box(
                     modifier = Modifier
-                        .offset(x = 36.dp,y = (-24).dp)
+                        .offset(x = 36.dp, y = (-24).dp)
                 ) {
                     EditIconButton(
                         modifier = Modifier
                             .size(24.dp),
-                        onClick = {println("hallo")}
+                        onClick = { println("hallo") }
                     )
                 }
 
-            Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(5.dp))
 
-            ClickButton(
-                text = "Edit Profile",
-                onClick = {},
-                modifier = Modifier
-            )
+                ClickButton(
+                    text = "Edit Profile",
+                    onClick = {},
+                    modifier = Modifier
+                )
 
-            TabRow(
-                selectedTabIndex = selectedTab.ordinal,
-                modifier = Modifier.fillMaxWidth(),
-                containerColor = Color.Transparent
-            ) {
-                EventTab.entries.forEach { tab ->
-                    Tab(
-                        selected = selectedTab == tab,
-                        onClick = { selectedTab = tab },
-                        icon = {
-                            Icon(
-                                imageVector = tab.icon,
-                                contentDescription = tab.label,
-                                tint = if (selectedTab == tab) Color.White else Color.DarkGray
-                            )
-                        }
-                    )
+                TabRow(
+                    selectedTabIndex = selectedTab.ordinal,
+                    modifier = Modifier.fillMaxWidth(),
+                    containerColor = Color.Transparent
+                ) {
+                    EventTab.entries.forEach { tab ->
+                        Tab(
+                            selected = selectedTab == tab,
+                            onClick = { selectedTab = tab },
+                            icon = {
+                                Icon(
+                                    imageVector = tab.icon,
+                                    contentDescription = tab.label,
+                                    tint = if (selectedTab == tab) Color.White else Color.DarkGray
+                                )
+                            }
+                        )
+                    }
                 }
-            }
-            //HorizontalDivider(
-              //  color = Color.LightGray,
+                //HorizontalDivider(
+                //  color = Color.LightGray,
                 //thickness = 5.dp,
                 //modifier = Modifier.padding(vertical = 8.dp)
-            //)
+                //)
 
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(itemsPerRow),
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(itemsPerRow),
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
 
-                    ){
-                        items(displayedEvents) { event ->
-                            EventCard(
-                                event = event,
-                                onClick = {},
-                                isLarge = true,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(1f)
-                            )
-                        }
+                ) {
+                    items(displayedEvents) { event ->
+                        EventCard(
+                            event = event,
+                            onClick = {},
+                            isLarge = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(1f)
+                        )
                     }
                 }
             }
-            }
+        }
+    }
+}
 
 

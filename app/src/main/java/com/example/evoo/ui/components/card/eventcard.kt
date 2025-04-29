@@ -10,11 +10,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-<<<<<<< HEAD
-import androidx.compose.foundation.layout.aspectRatio
-=======
-
->>>>>>> BottomBar
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -71,11 +66,10 @@ fun EventCard(
     onClick: () -> Unit,
     isLarge : Boolean = false,
 ){
-<<<<<<< HEAD
+
 var isLiked by remember { mutableStateOf(false) }
 var isFavorited by remember { mutableStateOf (false)}
-=======
->>>>>>> 2240d7528492ebd40603dc5d2e31a55f41d8cc88
+
 
 val cardSize = if (isLarge) 200.dp else 100.dp
 val imageToUse = event.imageResId ?: R.drawable.festival1

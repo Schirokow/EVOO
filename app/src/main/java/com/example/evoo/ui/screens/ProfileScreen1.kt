@@ -9,7 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
@@ -75,7 +75,8 @@ fun ProfileScreen1 () {
         },
         containerColor = Color.Transparent
 
-    ) //{ //innerPadding ->
+    ) { innerPadding ->
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -84,7 +85,7 @@ fun ProfileScreen1 () {
                         colors = listOf(TopLightBlue, BottomDarkBlue)
                     )
                 )
-                //.padding(innerPadding)
+
         ) {
             Column(
                 modifier = Modifier

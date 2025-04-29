@@ -22,30 +22,32 @@ import com.example.evoo.R
 import com.example.evoo.ui.theme.colorthemetype.BottomDarkBlue
 import androidx.compose.foundation.Image
 import androidx.compose.ui.draw.shadow
+import androidx.navigation.NavController
 
 @Preview
 @Composable
 fun PreviewAnyeBottomBar() {
-    AnyeBottomBar(
-        onHomeClick = {},
-        onSearchClick = {},
-        onProfileClick = {},
-        onSettingsClick = {},
-        onAnyeClick = {}
-    )
+    //AnyeBottomBar(
+      // onHomeClick = {},
+       //onSearchClick = {},
+        //onProfileClick = {},
+        //onSettingsClick = {},
+        //onAnyeClick = {}
+   // )
 }
 
 
 
 
 @Composable
-fun AnyeBottomBar(
-    onHomeClick: () -> Unit,
-    onSearchClick: () -> Unit,
-    onProfileClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    onAnyeClick: () -> Unit
-) {
+fun AnyeBottomBar(navController: NavController)
+    //onHomeClick: () -> Unit,
+    //onSearchClick: () -> Unit,
+    //onProfileClick: () -> Unit,
+    //onSettingsClick: () -> Unit,
+    //onAnyeClick: () -> Unit
+//)
+{
     Box(
        modifier = Modifier
            .fillMaxWidth()
@@ -53,7 +55,7 @@ fun AnyeBottomBar(
         BottomAppBar(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .height( 48.dp),
+                .height(48.dp),
                 //.padding(16.dp) ,
             containerColor = BottomDarkBlue.copy(alpha = 0.85f)
         ) {
@@ -63,14 +65,14 @@ fun AnyeBottomBar(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onHomeClick) {
+                IconButton(onClick = { navController.navigate("HomeScreen")}) {
                     Icon(
                         imageVector = Icons.Filled.Home,
                         contentDescription = "Home",
                         tint = Color.White
                     )
                 }
-                IconButton(onClick = onSearchClick) {
+                IconButton(onClick = {}) {
                     Icon(
                         imageVector = Icons.Filled.Search,
                         contentDescription = "Search",
@@ -80,14 +82,14 @@ fun AnyeBottomBar(
 
                 Spacer(modifier = Modifier.width(56.dp))
 
-                IconButton(onClick = onProfileClick) {
+                IconButton(onClick = { navController.navigate("ProfileScreen1") }) {
                     Icon(
                         imageVector = Icons.Filled.Person,
                         contentDescription = "Profile",
                         tint = Color.White
                     )
                 }
-                IconButton(onClick = onSettingsClick) {
+                IconButton(onClick = {}) {
                     Icon(
                         imageVector = Icons.Filled.Settings,
                         contentDescription = "Settings",
@@ -102,8 +104,8 @@ fun AnyeBottomBar(
                 .align(Alignment.BottomCenter)
                 .offset(y = (-5).dp)
                 .background(BottomDarkBlue, CircleShape)
-                .clickable {onAnyeClick()}
-                .shadow(4.dp, CircleShape ),
+                .clickable { navController.navigate("LocationScreen") }
+                .shadow(4.dp, CircleShape),
             contentAlignment = Alignment.Center
         ) {
             Image(

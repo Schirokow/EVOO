@@ -82,6 +82,7 @@ fun LoginScreen(navController: NavController) {
                     .clickable { navController.popBackStack() }
             )
 
+            // State-Management mit Jetpack Compose
             val emailState = remember { mutableStateOf(TextFieldValue()) }
             val passwordState = remember { mutableStateOf(TextFieldValue()) }
 
@@ -190,7 +191,7 @@ fun LoginScreen(navController: NavController) {
                             // Eingabefelder leeren
                             emailState.value = TextFieldValue("")
                             passwordState.value = TextFieldValue("")
-                            AuthManager.login(user) // Benutzer setzen
+                            AuthManager.login(user) // Benutzer setzen, Globaler Login
                             navController.navigate("ProfileScreen1/${user.name}") {
                                 //Löscht den gesamten Back-Stack
                                 popUpTo(navController.graph.startDestinationId) {
@@ -200,7 +201,7 @@ fun LoginScreen(navController: NavController) {
                                 launchSingleTop = true
                             }
                     } else{
-                            loginError = true
+                            loginError = true // Zeigt Fehlerdialog
                     }
                     },
                     modifier = Modifier
@@ -223,3 +224,14 @@ fun LoginScreen(navController: NavController) {
 
     }
 }
+
+//Anmeldeflow:
+//
+//Nutzer gibt Email/Passwort ein
+//Button-Click löst Suche in userData aus
+//
+//Bei Erfolg:
+//AuthManager aktualisiert globalen State
+//Navigation zum Profil mit Username als Parameter
+//Back-Stack wird gelöscht (kein Zurück zum Login)
+//Bei Fehler: AlertDialog wird angezeigt

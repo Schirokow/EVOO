@@ -218,8 +218,8 @@ fun RegistrationScreen(navController: NavController) {
                                 registrationError = RegistrationError.INVALID_EMAIL
                             else -> {
                                 // Registrierung erfolgreich
-                                UsersRepository.userData = UsersRepository.userData.apply { add(user) }
-                                AuthManager.login(user)
+                                UsersRepository.userData = UsersRepository.userData.apply { add(user) } // Fügt Benutzer hinzu
+                                AuthManager.login(user) // Automatischer Login
                                 navController.navigate("ProfileScreen1/${user.name}") {
                                     popUpTo(navController.graph.startDestinationId) {
                                         inclusive = true
@@ -252,10 +252,12 @@ fun RegistrationScreen(navController: NavController) {
 
 
 
-// Hilfsfunktion für E-Mail-Validierung
+// Hilfsfunktion für E-Mail-Validierung mit Regex
 private fun isValidEmail(email: String): Boolean {
-    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() //vordefinierte Regex-Muster Patterns.EMAIL_ADDRESS
 }
+//Die Funktion isValidEmail verwendet ein Regex-Muster, um das Format der E-Mail zu prüfen.
+//Nur wenn das Muster passt, wird die Registrierung fortgesetzt.
 
 // Fehlertypen
 enum class RegistrationError(val message: String) {
@@ -267,3 +269,15 @@ enum class RegistrationError(val message: String) {
     USERNAME_EXISTS("Benutzername bereits vergeben"),
     INVALID_EMAIL("Ungültiges E-Mail-Format")
 }
+
+//Registrierungsflow:
+//
+//Prüfung aller Eingabefelder
+//Eindeutigkeitsprüfung von Email/Benutzername
+//Passwortmatch-Check
+//E-Mail-Formatvalidierung mit Android-internem Pattern
+//
+//Bei Erfolg:
+//Benutzer wird Repository hinzugefügt
+//Automatische Anmeldung
+//Persistenz durch saveUsers()

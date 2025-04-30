@@ -76,6 +76,12 @@ fun Navigation() {
     }
 }
 
+//Navigationsmechanismus:
+//
+//{userName}: Platzhalter für Parameter
+//navArgument: Definiert den erwarteten Typ
+//backStackEntry.arguments: Zugriff auf übergebene Parameter
+//Sicherer Zugriff mit Elvis-Operator: ?: "Default"
 
 // Selbstdefinierte Farben für Hintergrund und Vordergrund.
 val BackgroundColor = Color(0xFF20587B)

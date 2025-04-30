@@ -38,3 +38,11 @@
     </application>
 
 </manifest>
+
+<!--    App-Konfiguration:-->
+<!--    android:name=".App" Wichtig für Application-Klasse-->
+<!--    Definiert MainActivity als Einstiegspunkt.-->
+<!--    Vergibt notwendige Berechtigungen (z.B. Internetzugriff).-->
+<!--    Kritische Punkte:-->
+<!--    android:name=".App" verbindet die Application-Klasse-->
+<!--    LAUNCHER-Kategorie definiert den Startpunkt-->

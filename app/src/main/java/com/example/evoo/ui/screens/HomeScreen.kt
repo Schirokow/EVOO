@@ -28,6 +28,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,49 +46,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.evoo.AccentColor
+import com.example.evoo.BackgroundColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
 import com.example.evoo.eventRepository.EventRepository.festivalData
+import com.example.evoo.ui.menu.AnyeBottomBar
 import com.example.evoo.ui.menu.MenuBar
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.example.evoo.ui.screens.EventContent
 
 
 // Startseite
-@Composable
-fun HomeScreen(navController: NavController){
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AccentColor)
-    ){
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
-                .background(brush = Brush.verticalGradient(colors = listOf(
-                    TopLightBlue,
-                    BottomDarkBlue
-                )))
-        ){
-            // Funktion für die Vorschau.
-            EventContent(navController)
-
-            Box (
-                modifier = Modifier
-                    .padding(top = 6.dp)
-            )
-            {
-                //LogoImage()   // Function um Logo auf dem Screen darzustellen.
-            }
-            // Menu Bar
-            MenuBar(navController)
-        }
-    }
-}
-
-
 @Composable
 fun EventContent(navController: NavController) {
 
@@ -173,7 +144,7 @@ fun EventContent(navController: NavController) {
                             .clickable{
                                 navController.navigate("ContentDetailScreen/$index")
                                 Log.d("LazyVerticalGrid", "let Block -> Vergrößertes Bild mit selectedFestivalData index: $index angeklickt und zum ContentDetailScreen umgeleitet.")
-                                      },
+                            },
                         shape = RoundedCornerShape(16.dp),
                         elevation = CardDefaults.cardElevation(12.dp)
                     ){
@@ -198,7 +169,7 @@ fun EventContent(navController: NavController) {
                         .padding(24.dp)
                         .size(34.dp)
                         .clickable{ selectedFestivalData = null}
-                    )
+                )
 
                 Icon(
                     imageVector = Icons.Rounded.FavoriteBorder,
@@ -216,6 +187,52 @@ fun EventContent(navController: NavController) {
     }
 
 }
+
+@Composable
+fun HomeScreen(navController: NavController) {
+    Scaffold(
+        bottomBar = {
+            AnyeBottomBar(navController)
+        },
+        containerColor = AccentColor
+    ) { innerPadding ->
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(AccentColor)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(WindowInsets.systemBars.asPaddingValues()) // Eine Function um den Content unter der Status Bar anzuzeigen.
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                TopLightBlue,
+                                BottomDarkBlue
+                            )
+                        )
+                    )
+            ) {
+
+                // Funktion für die Vorschau.
+                EventContent(navController)
+            }
+            Box(
+                modifier = Modifier
+                    .padding(top = 6.dp)
+            )
+            {
+                //LogoImage()   // Function um Logo auf dem Screen darzustellen.
+            }
+            // Menu Bar
+            //AnyeBottomBar(navController)
+        }
+    }
+}
+
+
 
 val BackgroundColor = Color(0xFF20587B)
 

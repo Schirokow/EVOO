@@ -23,8 +23,9 @@ import com.example.evoo.ui.theme.colorthemetype.BottomDarkBlue
 import androidx.compose.foundation.Image
 import androidx.compose.ui.draw.shadow
 import androidx.navigation.NavController
+import android.util.Log
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PreviewAnyeBottomBar() {
     //AnyeBottomBar(
@@ -82,7 +83,9 @@ fun AnyeBottomBar(navController: NavController)
 
                 Spacer(modifier = Modifier.width(56.dp))
 
-                IconButton(onClick = { navController.navigate("ProfileScreen1") }) {
+                IconButton(onClick = {
+                    Log.d("Navigation","Navigating to ProfileScreen1")
+                    navController.navigate("ProfileScreen1") }) {
                     Icon(
                         imageVector = Icons.Filled.Person,
                         contentDescription = "Profile",

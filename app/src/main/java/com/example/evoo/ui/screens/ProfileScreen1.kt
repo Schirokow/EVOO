@@ -50,7 +50,7 @@ import com.example.evoo.ui.components.card.EventCard
 import com.example.evoo.ui.menu.AnyeBottomBar
 import androidx.navigation.NavController
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun ProfileScreen1 () {
 

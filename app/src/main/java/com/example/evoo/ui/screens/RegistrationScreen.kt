@@ -47,9 +47,13 @@ import com.example.evoo.ui.menu.MenuBar
 import com.example.evoo.users.AuthManager
 import com.example.evoo.users.User
 import com.example.evoo.users.UsersRepository
+import android.util.Log
+
+private const val TAG = "RegistrationScreen"
 
 @Composable
 fun RegistrationScreen(navController: NavController) {
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -70,13 +74,17 @@ fun RegistrationScreen(navController: NavController) {
         ) {
             Icon(
                 imageVector = Icons.Rounded.ArrowBack,
-                contentDescription = "Zurück",
+                contentDescription = "ArrowBack",
                 tint = Color.White,
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
                     .padding(24.dp)
                     .size(34.dp)
-                    .clickable { navController.popBackStack() }
+                    .clickable {
+                        navController.popBackStack()
+                        Log.d(TAG,"Navigation: Returning to previous screen")
+                    }
+
             )
 
             val userNameState = remember { mutableStateOf(TextFieldValue()) }
@@ -87,12 +95,16 @@ fun RegistrationScreen(navController: NavController) {
             var registrationError by remember { mutableStateOf<RegistrationError?>(null) }
 
             if (registrationError != null) {
+                Log.w(TAG, "Registration error: ${registrationError?.name} - ${registrationError?.message}")
                 AlertDialog(
                     onDismissRequest = { registrationError = null },
                     title = { Text("Registrierungsfehler") },
                     text = { Text(registrationError!!.message) },
                     confirmButton = {
-                        Button(onClick = { registrationError = null }) {
+                        Button(onClick = {
+                            Log.d(TAG, "Dismissed error dialog: ${registrationError?.name}")
+                            registrationError = null
+                        }) {
                             Text("OK")
                         }
                     }
@@ -193,6 +205,7 @@ fun RegistrationScreen(navController: NavController) {
                         .padding(horizontal = 120.dp)
                         .fillMaxWidth(),
                     onClick = {
+                        Log.d(TAG, "Attempting registration...")
                         val user = User(
                             name = userNameState.value.text,
                             email = emailState.value.text,
@@ -218,6 +231,7 @@ fun RegistrationScreen(navController: NavController) {
                                 registrationError = RegistrationError.INVALID_EMAIL
                             else -> {
                                 // Registrierung erfolgreich
+                                Log.i(TAG, "Registration successful for user: ${user.name}")
                                 UsersRepository.userData = UsersRepository.userData.apply { add(user) } // Fügt Benutzer hinzu
                                 AuthManager.login(user) // Automatischer Login
                                 navController.navigate("ProfileScreen1/${user.name}") {
@@ -233,7 +247,10 @@ fun RegistrationScreen(navController: NavController) {
 
                 ClickButton(
                     text = "Abbrechen",
-                    onClick = {navController.navigate("LoginScreen")},
+                    onClick = {
+                        Log.d(TAG, "Registration cancelled, navigating to login")
+                        navController.navigate("LoginScreen")
+                              },
                     modifier = Modifier
                         .padding(horizontal = 120.dp)
                         .fillMaxWidth()

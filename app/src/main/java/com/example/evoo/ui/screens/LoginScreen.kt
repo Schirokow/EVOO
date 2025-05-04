@@ -1,5 +1,6 @@
 package com.example.evoo.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -50,6 +51,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import com.example.evoo.users.AuthManager
 
+private const val TAG = "LoginScreen"
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -79,7 +81,10 @@ fun LoginScreen(navController: NavController) {
                     .align(alignment = Alignment.TopStart)
                     .padding(24.dp)
                     .size(34.dp)
-                    .clickable { navController.popBackStack() }
+                    .clickable {
+                        Log.d(TAG, "Navigation: Returning to previous screen")
+                        navController.popBackStack()
+                    }
             )
 
             // State-Management mit Jetpack Compose
@@ -88,8 +93,10 @@ fun LoginScreen(navController: NavController) {
 
             var loginError by remember { mutableStateOf(false) }
             if (loginError) {
+                Log.w(TAG, "Showing login error dialog")
                 AlertDialog(
                     onDismissRequest = {
+                        Log.d(TAG, "Dismissed login error dialog")
                         // Schließt den Dialog wenn der Benutzer außerhalb tippt
                         loginError = false
                     },
@@ -106,6 +113,7 @@ fun LoginScreen(navController: NavController) {
                     confirmButton = {
                         Button(
                             onClick = {
+                                Log.d(TAG, "User acknowledged login error")
                                 loginError = false
                             }
                         ) {
@@ -182,16 +190,24 @@ fun LoginScreen(navController: NavController) {
                         val email = emailState.value.text
                         val password = passwordState.value.text
 
+                        Log.d(TAG, "Login attempt started.")
+
                         val user = userData.find{
                             (it.email == email || it.name == email) && it.password == password
                         }
 
                         if (user != null) {
+                            Log.i(TAG, "Login successful for user: ${user.name}")
                             loginError = false
                             // Eingabefelder leeren
                             emailState.value = TextFieldValue("")
                             passwordState.value = TextFieldValue("")
-                            AuthManager.login(user) // Benutzer setzen, Globaler Login
+
+                            AuthManager.login(user).also {
+                                Log.d(TAG, "AuthManager login state updated")
+                            } // Benutzer setzen, Globaler Login
+
+                            Log.d(TAG, "Navigating to profile: ${user.name}")
                             navController.navigate("ProfileScreen1/${user.name}") {
                                 //Löscht den gesamten Back-Stack
                                 popUpTo(navController.graph.startDestinationId) {
@@ -201,6 +217,7 @@ fun LoginScreen(navController: NavController) {
                                 launchSingleTop = true
                             }
                     } else{
+                            Log.w(TAG, "Login failed for email: ${email.take(3)}... (invalid credentials)")
                             loginError = true // Zeigt Fehlerdialog
                     }
                     },
@@ -213,7 +230,10 @@ fun LoginScreen(navController: NavController) {
 
                 ClickButton(
                     text = "Neues Konto",
-                    onClick = {navController.navigate("RegistrationScreen")},
+                    onClick = {
+                        Log.d(TAG, "Navigating to registration screen")
+                        navController.navigate("RegistrationScreen")
+                              },
                     modifier = Modifier
                         .padding(horizontal = 120.dp)
                         .fillMaxWidth()

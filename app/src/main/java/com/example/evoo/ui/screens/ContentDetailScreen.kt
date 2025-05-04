@@ -1,5 +1,6 @@
 package com.example.evoo.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -44,12 +45,17 @@ import com.example.evoo.ui.menu.MenuBar
 import com.example.evoo.eventRepository.EventRepository.festivalData
 import com.example.evoo.ui.components.buttons.ClickButton
 
+private const val TAG = "ContentDetailScreen"
+
 
 @Composable
 fun ContentDetailScreen(navController: NavController, index: Int){
+    Log.d(TAG, "Screen initialized with index: $index")
 
     // Holt die FestivalData aus der gemeinsamen Liste
-    val festivalData = festivalData[index]
+    val festivalData = festivalData[index].also {
+        Log.i(TAG, "Loaded festival data: ${it.title.take(15)}...")
+    }
 
     Box(
         modifier = Modifier
@@ -74,7 +80,10 @@ fun ContentDetailScreen(navController: NavController, index: Int){
                     .align(alignment = Alignment.TopStart)
                     .padding(24.dp)
                     .size(34.dp)
-                    .clickable { navController.popBackStack() }
+                    .clickable {
+                        Log.d(TAG, "Navigation: Returning to previous screen")
+                        navController.popBackStack()
+                    }
             )
 
             Icon(
@@ -85,12 +94,17 @@ fun ContentDetailScreen(navController: NavController, index: Int){
                     .align(alignment = Alignment.TopEnd)
                     .padding(24.dp)
                     .size(34.dp)
-                    .clickable{ }
+                    .clickable{
+                        Log.i(TAG, "Favorite clicked for: ${festivalData.title.take(15)}...")
+                    }
             )
 
             ClickButton(
                 text = "Auf der Karte",
-                onClick = {navController.navigate("LocationScreen")},
+                onClick = {
+                    Log.d(TAG, "Navigating to location screen")
+                    navController.navigate("LocationScreen")
+                          },
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .padding(top = 24.dp, start = 120.dp, end = 120.dp)
@@ -103,6 +117,7 @@ fun ContentDetailScreen(navController: NavController, index: Int){
                     .padding(top = 100.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Log.d(TAG, "Rendering content for: ${festivalData.title.take(15)}...")
                 // Titel
                 Text(
                     text = festivalData.title,
@@ -156,7 +171,9 @@ fun ContentDetailScreen(navController: NavController, index: Int){
             }
 
             // Menu Bar
-            MenuBar(navController)
+            MenuBar(navController).also {
+                Log.d(TAG, "MenuBar composable rendered")
+            }
         }
     }
 }

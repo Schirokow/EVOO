@@ -53,10 +53,13 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+private const val TAG = "HomeScreen"
 
 // Startseite
 @Composable
 fun HomeScreen(navController: NavController){
+    Log.d(TAG, "Home screen initialized")
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -82,7 +85,9 @@ fun HomeScreen(navController: NavController){
                 //LogoImage()   // Function um Logo auf dem Screen darzustellen.
             }
             // Menu Bar
-            MenuBar(navController = navController)
+            MenuBar(navController = navController).also {
+                Log.d(TAG, "MenuBar composable rendered")
+            }
         }
     }
 }
@@ -90,9 +95,13 @@ fun HomeScreen(navController: NavController){
 
 @Composable
 fun EventContent(navController: NavController) {
-
+    val TAG = "EventContent"
     // State, um ausgewählte FestivalData zu speichern
-    var selectedFestivalData by remember { mutableStateOf<Int?>(null) }
+    var selectedFestivalData by remember { mutableStateOf<Int?>(null).also {
+        Log.d(TAG, "Selected festival state initialized")
+    } }
+
+    Log.d(TAG, "Rendering festival grid with ${festivalData.size} items")
 
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
@@ -100,10 +109,9 @@ fun EventContent(navController: NavController) {
         columns = GridCells.Fixed(2)
     ){
         items (festivalData.size){ index ->
-            Log.d("LazyVerticalGrid", "items -> Value in index: $index, Value in festivalData.size: ${festivalData.size}")
-            Log.d("LazyVerticalGrid", "items -> Value in festivalData[index]: ${festivalData[index]}")
+
             val festivalData = festivalData[index]
-            Log.d("LazyVerticalGrid", "items -> Value in festivalData: ${festivalData}")
+
 
             Box(
                 modifier = Modifier
@@ -114,9 +122,9 @@ fun EventContent(navController: NavController) {
                     modifier = Modifier
                         .fillMaxSize()
                         .clickable{
+                            Log.d(TAG, "Festival card clicked - index: $index, title: ${festivalData.title.take(15)}...")
                             selectedFestivalData = index
-                            Log.d("LazyVerticalGrid", "Card -> Value in index: $index, Value in selectedFestivalData: $selectedFestivalData")
-                        },
+                                  },
                     shape = RoundedCornerShape(16.dp),
                     elevation = CardDefaults.cardElevation(12.dp)
                 ) {
@@ -140,9 +148,9 @@ fun EventContent(navController: NavController) {
 
     // Overlay für vergrößertes Bild, wenn selectedFestivalData nicht null ist
     selectedFestivalData?.let { index ->
-        Log.d("LazyVerticalGrid", "let Block -> Value in selectedFestivalData: $selectedFestivalData, Value in index: $index")
+        Log.d(TAG, "Showing detail overlay for index: $index")
         val festivalData = festivalData[index] // Datenobjekt via Index
-        Log.d("LazyVerticalGrid", "let Block -> Value in festivalData: $festivalData")
+
         Surface(
             color = BackgroundColor.copy(alpha = 0.9f), // Farbe von Hintergrund
             modifier = Modifier.fillMaxSize(),
@@ -171,8 +179,8 @@ fun EventContent(navController: NavController) {
                             .fillMaxWidth(0.9f)
                             .fillMaxHeight(0.5f)
                             .clickable{
+                                Log.d(TAG, "Navigating to detail screen for index: $index")
                                 navController.navigate("ContentDetailScreen/$index")
-                                Log.d("LazyVerticalGrid", "let Block -> Vergrößertes Bild mit selectedFestivalData index: $index angeklickt und zum ContentDetailScreen umgeleitet.")
                                       },
                         shape = RoundedCornerShape(16.dp),
                         elevation = CardDefaults.cardElevation(12.dp)
@@ -197,7 +205,10 @@ fun EventContent(navController: NavController) {
                         .align(alignment = Alignment.TopStart)
                         .padding(24.dp)
                         .size(34.dp)
-                        .clickable{ selectedFestivalData = null}
+                        .clickable{
+                            Log.d(TAG, "Close button clicked, hiding detail view")
+                            selectedFestivalData = null
+                        }
                     )
 
                 Icon(
@@ -208,7 +219,9 @@ fun EventContent(navController: NavController) {
                         .align(alignment = Alignment.TopEnd)
                         .padding(24.dp)
                         .size(34.dp)
-                        .clickable{ }
+                        .clickable{
+                            Log.i(TAG, "Favorite button clicked for index: $index")
+                        }
                 )
             }
 

@@ -1,5 +1,6 @@
 package com.example.evoo.ui.screens
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
@@ -57,18 +58,30 @@ import com.example.evoo.ui.menu.MenuBar
 import com.example.evoo.users.AuthManager
 import com.example.evoo.users.UsersRepository
 
+private const val TAG = "ProfileScreen1"
 
 @Composable
 fun ProfileScreen1 (navController: NavController, userName: String?) {
     var selectedTab by remember { mutableStateOf(EventTab.All) }
     val displayedEvents = when (selectedTab) {
-        EventTab.All -> sampleEvents
-        EventTab.Favorites -> sampleEvents.take(2)
-        EventTab.Liked -> sampleEvents.takeLast(2)
+        EventTab.All -> {
+            Log.d(TAG, "Displaying all events")
+            sampleEvents
+        }
+        EventTab.Favorites -> {
+            Log.d(TAG, "Displaying favorite events")
+            sampleEvents.take(2)
+        }
+        EventTab.Liked -> {
+            Log.d(TAG, "Displaying liked events")
+            sampleEvents.takeLast(2)
+        }
     }
     var name by remember { mutableStateOf("") }
 
     val itemsPerRow = 3
+
+    Log.d(TAG, "Profile screen loaded for user: ${userName?.take(3)}...")
 
     // Finde den User in der Repository
     val user = UsersRepository.userData.find { it.name == userName }
@@ -97,7 +110,10 @@ fun ProfileScreen1 (navController: NavController, userName: String?) {
                     .align(alignment = Alignment.TopStart)
                     .padding(24.dp)
                     .size(34.dp)
-                    .clickable { navController.popBackStack() }
+                    .clickable {
+                        Log.d(TAG, "Navigation: Returning to previous screen")
+                        navController.popBackStack()
+                    }
             )
 
             Column(
@@ -163,6 +179,7 @@ fun ProfileScreen1 (navController: NavController, userName: String?) {
                 ClickButton(
                     text = "Abmelden",
                     onClick = {
+                        Log.i(TAG, "User logout initiated")
                         AuthManager.logout() //Zustand zurücksetzen
                         navController.navigate("LoginScreen") {
                             popUpTo("HomeScreen") { inclusive = true } //Löscht Back-Stack
@@ -178,7 +195,10 @@ fun ProfileScreen1 (navController: NavController, userName: String?) {
                     EventTab.entries.forEach { tab ->
                         Tab(
                             selected = selectedTab == tab,
-                            onClick = { selectedTab = tab },
+                            onClick = {
+                                Log.d(TAG, "Tab changed to: ${tab.name}")
+                                selectedTab = tab
+                                      },
                             icon = {
                                 Icon(
                                     imageVector = tab.icon,
@@ -206,7 +226,9 @@ fun ProfileScreen1 (navController: NavController, userName: String?) {
                     items(displayedEvents) { event ->
                         EventCard(
                             event = event,
-                            onClick = {},
+                            onClick = {
+                                Log.d(TAG, "Event clicked: ${event.title.take(15)}...")
+                            },
                             isLarge = true,
                             modifier = Modifier
                                 .fillMaxWidth()

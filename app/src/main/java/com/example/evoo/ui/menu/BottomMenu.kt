@@ -21,15 +21,16 @@ import androidx.compose.foundation.layout.Box
 import com.example.evoo.R
 import com.example.evoo.ui.theme.colorthemetype.BottomDarkBlue
 import androidx.compose.foundation.Image
-import androidx.compose.ui.draw.shadow
 import androidx.navigation.NavController
 import android.util.Log
+
+
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewAnyeBottomBar() {
     //AnyeBottomBar(
-      // onHomeClick = {},
+       //onHomeClick = {},
        //onSearchClick = {},
         //onProfileClick = {},
         //onSettingsClick = {},
@@ -106,15 +107,17 @@ fun AnyeBottomBar(navController: NavController)
                 .size(84.dp)
                 .align(Alignment.BottomCenter)
                 .offset(y = (-5).dp)
-                .background(BottomDarkBlue, CircleShape)
-                .clickable { navController.navigate("LocationScreen") }
-                .shadow(4.dp, CircleShape),
+                .background(BottomDarkBlue.copy(alpha = 0.85f), CircleShape)
+                .clickable { navController.navigate("LocationScreen") },
+                //.shadow(2.dp, CircleShape),
             contentAlignment = Alignment.Center
         ) {
             Image(
                 painter = painterResource(id = R.drawable.logo_anye),
                 contentDescription = "AnyE Logo",
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier
+                    .size(48.dp)
+                    .offset(y = 2.dp)
             )
         }
     }}

@@ -19,7 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+
 import androidx.compose.ui.unit.dp
 import com.example.evoo.R
 import androidx.compose.foundation.border
@@ -41,6 +41,7 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.example.evoo.model.EventTab
@@ -48,9 +49,9 @@ import com.example.evoo.model.sampleEvents
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.components.card.EventCard
 import com.example.evoo.ui.menu.AnyeBottomBar
-import androidx.navigation.NavController
 
-//@Preview(showBackground = true)
+
+@Preview(showBackground = true)
 @Composable
 fun ProfileScreen1 () {
 
@@ -70,12 +71,12 @@ fun ProfileScreen1 () {
     Scaffold(
         bottomBar = {
             AnyeBottomBar(navController)
-                //onHomeClick = {},
-                //onSearchClick = {},
-                //onProfileClick = {},
-                //onSettingsClick = {},
-                //onAnyeClick = {}
-          //  )
+            //onHomeClick = {},
+            //onSearchClick = {},
+            //onProfileClick = {},
+            //onSettingsClick = {},
+            //onAnyeClick = {}
+            //  )
         },
         containerColor = Color.Transparent
 
@@ -94,7 +95,7 @@ fun ProfileScreen1 () {
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
-                    //.padding(16.dp),
+                //.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 

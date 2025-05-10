@@ -1,11 +1,13 @@
 package com.example.evoo.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -43,11 +45,9 @@ import com.example.evoo.BottomDarkBlue
 import com.example.evoo.R
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.components.buttons.ClickButton
-import com.example.evoo.ui.menu.MenuBar
 import com.example.evoo.users.AuthManager
 import com.example.evoo.users.User
 import com.example.evoo.users.UsersRepository
-import android.util.Log
 
 private const val TAG = "RegistrationScreen"
 
@@ -72,20 +72,35 @@ fun RegistrationScreen(navController: NavController) {
                     )
                 )
         ) {
-            Icon(
-                imageVector = Icons.Rounded.ArrowBack,
-                contentDescription = "ArrowBack",
-                tint = Color.White,
-                modifier = Modifier
-                    .align(alignment = Alignment.TopStart)
-                    .padding(24.dp)
-                    .size(34.dp)
-                    .clickable {
-                        navController.popBackStack()
-                        Log.d(TAG,"Navigation: Returning to previous screen")
-                    }
+            Row (
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ){
+                Icon(
+                    imageVector = Icons.Rounded.ArrowBack,
+                    contentDescription = "ArrowBack",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .padding(start = 24.dp, top = 24.dp, bottom = 24.dp)
+                        .size(34.dp)
+                        .clickable {
+                            Log.d(TAG, "Navigating to LoginScreen")
+                            navController.navigate("LoginScreen")
+                        }
 
-            )
+                )
+                Text(
+                    text = "Login",
+                    fontSize = 20.sp,
+                    color = Color.White,
+                    modifier = Modifier
+                        .clickable{
+                            Log.d(TAG, "Navigating to LoginScreen")
+                            navController.navigate("LoginScreen")
+                        }
+                )
+            }
+
 
             val userNameState = remember { mutableStateOf(TextFieldValue()) }
             val emailState = remember { mutableStateOf(TextFieldValue()) }
@@ -119,21 +134,12 @@ fun RegistrationScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-                Text(
-                    "Registrierung",
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 40.sp,
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                        .align(Alignment.CenterHorizontally)
-                )
 
                 Image(
                     painter = painterResource(id = R.drawable.logo_anye),
                     contentDescription = "App Logo",
                     modifier = Modifier
-                        .padding(top = 60.dp)
+                        .padding(top = 120.dp)
                         .size(120.dp)
                         .align(Alignment.CenterHorizontally)
                 )

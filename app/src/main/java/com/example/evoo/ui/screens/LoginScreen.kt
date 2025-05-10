@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -18,6 +19,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -29,27 +33,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import com.example.evoo.R
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
+import com.example.evoo.R
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.menu.MenuBar
-import com.example.evoo.users.UsersRepository.userData
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import com.example.evoo.users.AuthManager
+import com.example.evoo.users.UsersRepository.userData
 
 private const val TAG = "LoginScreen"
 
@@ -73,19 +72,35 @@ fun LoginScreen(navController: NavController) {
                     )
                 )
         ) {
-            Icon(
-                imageVector = Icons.Rounded.ArrowBack,
-                contentDescription = "Zurück",
-                tint = Color.White,
-                modifier = Modifier
-                    .align(alignment = Alignment.TopStart)
-                    .padding(24.dp)
-                    .size(34.dp)
-                    .clickable {
-                        Log.d(TAG, "Navigation: Returning to previous screen")
-                        navController.popBackStack()
-                    }
-            )
+            Row (
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ){
+                Icon(
+                    imageVector = Icons.Rounded.ArrowBack,
+                    contentDescription = "Zurück",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .padding(start = 24.dp, top = 24.dp, bottom = 24.dp)
+                        .size(34.dp)
+                        .clickable {
+                            Log.d(TAG, "Navigating to registration screen")
+                            navController.navigate("RegistrationScreen")
+                        }
+                )
+
+                Text(
+                    text = "Neues Konto",
+                    fontSize = 20.sp,
+                    color = Color.White,
+                    modifier = Modifier
+                        .clickable{
+                            Log.d(TAG, "Navigating to registration screen")
+                            navController.navigate("RegistrationScreen")
+                        }
+                )
+            }
+
 
             // State-Management mit Jetpack Compose
             val emailState = remember { mutableStateOf(TextFieldValue()) }
@@ -129,21 +144,13 @@ fun LoginScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-                Text(
-                    "Anmeldung",
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 40.sp,
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                        .align(Alignment.CenterHorizontally)
-                )
+
 
                 Image(
                     painter = painterResource(id = R.drawable.logo_anye),
                     contentDescription = "App Logo",
                     modifier = Modifier
-                        .padding(top = 60.dp)
+                        .padding(top = 120.dp)
                         .size(120.dp)
                         .align(Alignment.CenterHorizontally)
                 )
@@ -181,6 +188,15 @@ fun LoginScreen(navController: NavController) {
                         .padding(horizontal = 32.dp)
                         .padding(top = 16.dp)
                         .fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "Passwort vergessen?",
+                    fontSize = 20.sp,
+                    color = Color.White,
+                    modifier = Modifier
+                        .padding(start = 150.dp)
+                        .clickable{/* TODO */}
                 )
                 Spacer(modifier = Modifier.height(64.dp))
 
@@ -226,18 +242,7 @@ fun LoginScreen(navController: NavController) {
                         .fillMaxWidth()
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
 
-                ClickButton(
-                    text = "Neues Konto",
-                    onClick = {
-                        Log.d(TAG, "Navigating to registration screen")
-                        navController.navigate("RegistrationScreen")
-                              },
-                    modifier = Modifier
-                        .padding(horizontal = 120.dp)
-                        .fillMaxWidth()
-                )
             }
             MenuBar(navController)
         }

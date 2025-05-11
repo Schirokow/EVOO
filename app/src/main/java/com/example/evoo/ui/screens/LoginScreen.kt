@@ -46,6 +46,7 @@ import com.example.evoo.BottomDarkBlue
 import com.example.evoo.R
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.components.buttons.ClickButton
+import com.example.evoo.ui.menu.AnyeBottomBar
 import com.example.evoo.ui.menu.MenuBar
 import com.example.evoo.users.AuthManager
 import com.example.evoo.users.UsersRepository.userData
@@ -244,7 +245,8 @@ fun LoginScreen(navController: NavController) {
 
 
             }
-            MenuBar(navController)
+            //MenuBar(navController)
+            AnyeBottomBar(navController)
         }
 
     }

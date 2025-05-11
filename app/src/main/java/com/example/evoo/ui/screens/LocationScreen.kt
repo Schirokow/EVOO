@@ -35,6 +35,7 @@ import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BackgroundColor
+import com.example.evoo.ui.menu.AnyeBottomBar
 import com.example.evoo.ui.menu.MenuBar
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -70,7 +71,8 @@ fun LocationScreen(navController: NavController) {
 
                 OpenStreetMapWithLiveLocation()
             }
-            MenuBar(navController)
+            //MenuBar(navController)
+            AnyeBottomBar(navController)
         }
     }
 }

@@ -24,6 +24,7 @@ import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
+import com.example.evoo.ui.menu.AnyeBottomBar
 import com.example.evoo.ui.menu.MenuBar
 
 @Composable
@@ -60,7 +61,8 @@ fun SettingScreen(navController: NavController){
                 Text("Settings", fontSize = 50.sp, color = Color.White)
             }
             // Menu Bar
-            MenuBar(navController)
+            //MenuBar(navController)
+            AnyeBottomBar(navController)
         }
     }
 }

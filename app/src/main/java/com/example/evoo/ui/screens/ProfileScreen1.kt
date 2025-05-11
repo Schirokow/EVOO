@@ -54,6 +54,7 @@ import com.example.evoo.model.EventTab
 import com.example.evoo.model.sampleEvents
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.components.card.EventCard
+import com.example.evoo.ui.menu.AnyeBottomBar
 import com.example.evoo.ui.menu.MenuBar
 import com.example.evoo.users.AuthManager
 import com.example.evoo.users.UsersRepository
@@ -237,7 +238,8 @@ fun ProfileScreen1 (navController: NavController, userName: String?) {
                     }
                 }
             }
-            MenuBar(navController)
+            //MenuBar(navController)
+            AnyeBottomBar(navController)
         }
 
     }

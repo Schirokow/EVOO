@@ -48,6 +48,7 @@ import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
 import com.example.evoo.eventRepository.EventRepository.festivalData
+import com.example.evoo.ui.menu.AnyeBottomBar
 import com.example.evoo.ui.menu.MenuBar
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -85,9 +86,10 @@ fun HomeScreen(navController: NavController){
                 //LogoImage()   // Function um Logo auf dem Screen darzustellen.
             }
             // Menu Bar
-            MenuBar(navController = navController).also {
-                Log.d(TAG, "MenuBar composable rendered")
-            }
+//            MenuBar(navController = navController).also {
+//                Log.d(TAG, "MenuBar composable rendered")
+//            }
+            AnyeBottomBar(navController)
         }
     }
 }

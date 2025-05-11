@@ -1,0 +1,133 @@
+package com.example.evoo.ui.menu
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.layout.Box
+import com.example.evoo.R
+import com.example.evoo.ui.theme.colorthemetype.BottomDarkBlue
+import androidx.compose.foundation.Image
+import androidx.navigation.NavController
+import android.util.Log
+import androidx.compose.ui.platform.LocalContext
+import com.example.evoo.users.AuthManager
+
+@Composable
+fun rememberFakeNavController(): NavController {
+    // Ein leerer Dummy-NavController zur Vorschau
+    return NavController(LocalContext.current)
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewAnyeBottomBar() {
+    AnyeBottomBar(
+        navController = rememberFakeNavController()
+    )
+}
+
+
+
+
+@Composable
+fun AnyeBottomBar(navController: NavController)
+//onHomeClick: () -> Unit,
+//onSearchClick: () -> Unit,
+//onProfileClick: () -> Unit,
+//onSettingsClick: () -> Unit,
+//onAnyeClick: () -> Unit
+//)
+{
+    val currentUser = AuthManager.currentUser //Aktuellen Benutzer abrufen
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        BottomAppBar(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .height(48.dp),
+            //.padding(16.dp) ,
+            containerColor = BottomDarkBlue.copy(alpha = 0.85f)
+        ) {
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = { navController.navigate("HomeScreen")}) {
+                    Icon(
+                        imageVector = Icons.Filled.Home,
+                        contentDescription = "Home",
+                        tint = Color.White
+                    )
+                }
+                IconButton(onClick = {}) {
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = "Search",
+                        tint = Color.White
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(56.dp))
+
+                IconButton(onClick = {
+                    Log.d("Navigation","Navigating to ProfileScreen1")
+                    if (currentUser != null) {
+                        // Navigiere zum Profil mit Benutzernamen
+                        navController.navigate("ProfileScreen1/${currentUser.name}")
+                    } else {
+                        // Fallback zur Login-Seite
+                        navController.navigate("LoginScreen")
+                    } }) {
+                    Icon(
+                        imageVector = Icons.Filled.Person,
+                        contentDescription = "Profile",
+                        tint = Color.White
+                    )
+                }
+                IconButton(onClick = {navController.navigate("SettingScreen")}) {
+                    Icon(
+                        imageVector = Icons.Filled.Settings,
+                        contentDescription = "Settings",
+                        tint = Color.White
+                    )
+                }
+            }
+        }
+        Box(
+            modifier = Modifier
+                .size(84.dp)
+                .align(Alignment.BottomCenter)
+                .offset(y = (-5).dp)
+                .background(BottomDarkBlue.copy(alpha = 0.85f), CircleShape)
+                .clickable { navController.navigate("LocationScreen") },
+            //.shadow(2.dp, CircleShape),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.logo_anye),
+                contentDescription = "AnyE Logo",
+                modifier = Modifier
+                    .size(48.dp)
+                    .offset(y = 2.dp)
+            )
+        }
+    }}

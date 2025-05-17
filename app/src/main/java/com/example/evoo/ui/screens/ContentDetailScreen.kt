@@ -44,6 +44,7 @@ import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.menu.MenuBar
 import com.example.evoo.eventRepository.EventRepository.festivalData
 import com.example.evoo.ui.components.buttons.ClickButton
+import com.example.evoo.ui.menu.AnyeBottomBar
 
 private const val TAG = "ContentDetailScreen"
 
@@ -171,9 +172,10 @@ fun ContentDetailScreen(navController: NavController, index: Int){
             }
 
             // Menu Bar
-            MenuBar(navController).also {
-                Log.d(TAG, "MenuBar composable rendered")
-            }
+//            MenuBar(navController).also {
+//                Log.d(TAG, "MenuBar composable rendered")
+//            }
+            AnyeBottomBar(navController)
         }
     }
 }

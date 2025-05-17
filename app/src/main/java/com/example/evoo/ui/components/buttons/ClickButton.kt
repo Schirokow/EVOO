@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.evoo.TopLightBlue
 
 @Preview(showBackground = true)
 @Composable
@@ -30,7 +31,7 @@ fun ClickButton(
         modifier = modifier
             .indication(interactionSource = remember { MutableInteractionSource() },
                 indication = LocalIndication.current),
-             colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray , contentColor = Color.Black)
+             colors = ButtonDefaults.buttonColors(containerColor = TopLightBlue, contentColor = Color.White)
      ,
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 10.dp,

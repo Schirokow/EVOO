@@ -19,6 +19,7 @@ import com.example.evoo.ui.screens.LocationScreen
 import com.example.evoo.ui.screens.LoginScreen
 import com.example.evoo.ui.screens.ProfileScreen1
 import com.example.evoo.ui.screens.RegistrationScreen
+import com.example.evoo.ui.screens.SearchScreen
 import com.example.evoo.ui.screens.SettingScreen
 import com.example.evoo.users.AuthManager
 
@@ -65,6 +66,10 @@ fun Navigation() {
         composable("SettingScreen") {
             Log.d(TAG, "Navigating to SettingScreen")
             SettingScreen(navController)
+        }
+        composable("SearchScreen") {
+            Log.d(TAG, "Navigating to SearchScreen")
+            SearchScreen(navController)
         }
         composable("LoginScreen") {
             Log.d(TAG, "Navigating to LoginScreen")

@@ -31,7 +31,7 @@ import com.example.evoo.ui.menu.AnyeBottomBar
 import com.example.evoo.ui.menu.MenuBar
 
 @Composable
-fun SettingScreen(navController: NavController){
+fun SearchScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -56,6 +56,7 @@ fun SettingScreen(navController: NavController){
                     .size(34.dp)
                     .clickable { navController.popBackStack() }
             )
+
             Row (
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
@@ -63,7 +64,7 @@ fun SettingScreen(navController: NavController){
                     .fillMaxWidth()
                     .padding(top = 24.dp)
             ){
-                Text("Settings", fontSize = 30.sp, color = Color.White)
+                Text("Search", fontSize = 30.sp, color = Color.White)
             }
 
             // Menu Bar
@@ -72,5 +73,3 @@ fun SettingScreen(navController: NavController){
         }
     }
 }
-
-

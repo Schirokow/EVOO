@@ -75,10 +75,11 @@ fun AnyeBottomBar(navController: NavController)
                     Icon(
                         imageVector = Icons.Filled.Home,
                         contentDescription = "Home",
-                        tint = Color.White
+                        tint = Color.White,
+
                     )
                 }
-                IconButton(onClick = {}) {
+                IconButton(onClick = {navController.navigate("SearchScreen")}) {
                     Icon(
                         imageVector = Icons.Filled.Search,
                         contentDescription = "Search",

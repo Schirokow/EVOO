@@ -139,7 +139,7 @@ fun RegistrationScreen(navController: NavController) {
                     painter = painterResource(id = R.drawable.logo_anye),
                     contentDescription = "App Logo",
                     modifier = Modifier
-                        .padding(top = 120.dp)
+                        .padding(top = 100.dp)
                         .size(120.dp)
                         .align(Alignment.CenterHorizontally)
                 )

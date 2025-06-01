@@ -22,6 +22,7 @@ import com.example.evoo.ui.screens.RegistrationScreen
 import com.example.evoo.ui.screens.SearchScreen
 import com.example.evoo.ui.screens.SettingScreen
 import com.example.evoo.users.AuthManager
+import android.content.pm.ActivityInfo
 
 private const val TAG = "MainActivity"
 
@@ -30,6 +31,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "Activity created")
         enableEdgeToEdge()
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT // ODER LANDSCAPE -> Fixiert den Bildschirm in einer Position
         setContent {
             Log.d(TAG, "Composing UI content")
             Navigation()

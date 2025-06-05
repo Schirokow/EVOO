@@ -1,6 +1,7 @@
-package com.example.evoo.ui.screens
+package com.example.evoo.presentation.screens
 
 import android.util.Log
+import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -277,7 +278,7 @@ fun RegistrationScreen(navController: NavController) {
 
 // Hilfsfunktion für E-Mail-Validierung mit Regex
 private fun isValidEmail(email: String): Boolean {
-    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() //vordefinierte Regex-Muster Patterns.EMAIL_ADDRESS
+    return Patterns.EMAIL_ADDRESS.matcher(email).matches() //vordefinierte Regex-Muster Patterns.EMAIL_ADDRESS
 }
 //Die Funktion isValidEmail verwendet ein Regex-Muster, um das Format der E-Mail zu prüfen.
 //Nur wenn das Muster passt, wird die Registrierung fortgesetzt.

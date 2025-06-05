@@ -24,9 +24,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.evoo.R
-import com.example.evoo.ui.screens.BottomDarkBlue
-import com.example.evoo.ui.screens.ForegroundColor
-import com.example.evoo.ui.screens.TopLightBlue
+import com.example.evoo.presentation.screens.BottomDarkBlue
+import com.example.evoo.presentation.screens.ForegroundColor
+import com.example.evoo.presentation.screens.TopLightBlue
 
 
 

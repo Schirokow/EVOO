@@ -1,7 +1,7 @@
 
 
 // ProfileScreen.kt
-package com.example.evoo.ui.screens
+package com.example.evoo.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.ui.graphics.Brush

@@ -1,4 +1,4 @@
-package com.example.evoo.ui.screens
+package com.example.evoo.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,7 +27,6 @@ import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.R
 import com.example.evoo.TopLightBlue
-import com.example.evoo.ui.components.header.LogoImage
 import com.example.evoo.ui.menu.MenuBar
 
 @Composable

@@ -13,14 +13,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.evoo.ui.screens.ContentDetailScreen
-import com.example.evoo.ui.screens.HomeScreen
-import com.example.evoo.ui.screens.LocationScreen
-import com.example.evoo.ui.screens.LoginScreen
-import com.example.evoo.ui.screens.ProfileScreen1
-import com.example.evoo.ui.screens.RegistrationScreen
-import com.example.evoo.ui.screens.SearchScreen
-import com.example.evoo.ui.screens.SettingScreen
+import com.example.evoo.presentation.screens.ContentDetailScreen
+import com.example.evoo.presentation.screens.HomeScreen
+import com.example.evoo.presentation.screens.LocationScreen
+import com.example.evoo.presentation.screens.LoginScreen
+import com.example.evoo.presentation.screens.ProfileScreen1
+import com.example.evoo.presentation.screens.RegistrationScreen
+import com.example.evoo.presentation.screens.SearchScreen
+import com.example.evoo.presentation.screens.SettingScreen
 import com.example.evoo.users.AuthManager
 import android.content.pm.ActivityInfo
 

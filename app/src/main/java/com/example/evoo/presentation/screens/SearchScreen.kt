@@ -1,4 +1,4 @@
-package com.example.evoo.ui.screens
+package com.example.evoo.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,7 +28,6 @@ import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.menu.AnyeBottomBar
-import com.example.evoo.ui.menu.MenuBar
 
 @Composable
 fun SearchScreen(navController: NavController){

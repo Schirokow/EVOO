@@ -36,7 +36,7 @@ import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
-import com.example.evoo.eventRepository.EventRepository.festivalData
+import com.example.evoo.data.EventRepository.festivalData
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.menu.AnyeBottomBar
 

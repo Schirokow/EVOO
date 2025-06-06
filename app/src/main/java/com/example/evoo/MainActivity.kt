@@ -21,7 +21,7 @@ import com.example.evoo.presentation.screens.ProfileScreen1
 import com.example.evoo.presentation.screens.RegistrationScreen
 import com.example.evoo.presentation.screens.SearchScreen
 import com.example.evoo.presentation.screens.SettingScreen
-import com.example.evoo.users.AuthManager
+import com.example.evoo.business.AuthManager
 import android.content.pm.ActivityInfo
 
 private const val TAG = "MainActivity"

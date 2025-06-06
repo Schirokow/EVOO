@@ -1,13 +1,10 @@
-package com.example.evoo.model
+package com.example.evoo.data
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
-
-
-
 
 enum class EventTab (
     val label: String,

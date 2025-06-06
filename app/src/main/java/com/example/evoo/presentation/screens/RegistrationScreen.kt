@@ -46,9 +46,9 @@ import com.example.evoo.BottomDarkBlue
 import com.example.evoo.R
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.components.buttons.ClickButton
-import com.example.evoo.users.AuthManager
-import com.example.evoo.users.User
-import com.example.evoo.users.UsersRepository
+import com.example.evoo.business.AuthManager
+import com.example.evoo.data.User
+import com.example.evoo.data.UsersRepository
 
 private const val TAG = "RegistrationScreen"
 

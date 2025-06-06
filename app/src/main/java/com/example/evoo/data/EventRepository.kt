@@ -1,4 +1,4 @@
-package com.example.evoo.eventRepository
+package com.example.evoo.data
 
 import com.example.evoo.R
 

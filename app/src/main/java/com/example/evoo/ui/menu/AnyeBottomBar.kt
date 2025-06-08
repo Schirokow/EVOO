@@ -23,7 +23,14 @@ import com.example.evoo.ui.theme.colorthemetype.BottomDarkBlue
 import androidx.compose.foundation.Image
 import androidx.navigation.NavController
 import android.util.Log
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.evoo.business.AuthManager
 
 @Composable
@@ -54,6 +61,26 @@ fun AnyeBottomBar(navController: NavController)
 {
     val currentUser = AuthManager.currentUser //Aktuellen Benutzer abrufen
 
+    // Zustände für jedes Icon einzeln
+    val (homeSelected, setHomeSelected) = remember { mutableStateOf(false) }
+    val (searchSelected, setSearchSelected) = remember { mutableStateOf(false) }
+    val (profileSelected, setProfileSelected) = remember { mutableStateOf(false) }
+    val (settingsSelected, setSettingsSelected) = remember { mutableStateOf(false) }
+    val (locationSelected, setLocationSelected) = remember { mutableStateOf(false) }
+
+    // Aktuelle Route für dynamische Farbsteuerung
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    // Farbzustände basierend auf aktueller Route aktualisieren
+    LaunchedEffect(currentRoute) {
+        setHomeSelected(currentRoute == "HomeScreen")
+        setSearchSelected(currentRoute == "SearchScreen")
+        setProfileSelected(currentRoute?.startsWith("ProfileScreen1") == true)
+        setSettingsSelected(currentRoute == "SettingScreen")
+        setLocationSelected(currentRoute == "LocationScreen")
+    }
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter
@@ -71,11 +98,11 @@ fun AnyeBottomBar(navController: NavController)
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { navController.navigate("HomeScreen")}) {
+                IconButton(onClick = { navController.navigate("HomeScreen") }) {
                     Icon(
                         imageVector = Icons.Filled.Home,
                         contentDescription = "Home",
-                        tint = Color.White,
+                        tint = if (homeSelected) Color.Yellow else Color.White
 
                     )
                 }
@@ -83,7 +110,7 @@ fun AnyeBottomBar(navController: NavController)
                     Icon(
                         imageVector = Icons.Filled.Search,
                         contentDescription = "Search",
-                        tint = Color.White
+                        tint = if (searchSelected) Color.Yellow else Color.White
                     )
                 }
 
@@ -101,14 +128,14 @@ fun AnyeBottomBar(navController: NavController)
                     Icon(
                         imageVector = Icons.Filled.Person,
                         contentDescription = "Profile",
-                        tint = Color.White
+                        tint = if (profileSelected) Color.Yellow else Color.White
                     )
                 }
                 IconButton(onClick = {navController.navigate("SettingScreen")}) {
                     Icon(
                         imageVector = Icons.Filled.Settings,
                         contentDescription = "Settings",
-                        tint = Color.White
+                        tint = if (settingsSelected) Color.Yellow else Color.White
                     )
                 }
             }
@@ -128,7 +155,12 @@ fun AnyeBottomBar(navController: NavController)
                 contentDescription = "AnyE Logo",
                 modifier = Modifier
                     .size(48.dp)
-                    .offset(y = 2.dp)
+                    .offset(y = 2.dp),
+                    colorFilter = if (locationSelected) {
+                    ColorFilter.tint(Color.Yellow)
+                } else {
+                    ColorFilter.tint(Color.White)
+                }
             )
         }
     }}

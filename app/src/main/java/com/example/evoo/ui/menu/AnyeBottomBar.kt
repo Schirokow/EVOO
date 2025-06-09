@@ -76,7 +76,11 @@ fun AnyeBottomBar(navController: NavController)
     LaunchedEffect(currentRoute) {
         setHomeSelected(currentRoute == "HomeScreen")
         setSearchSelected(currentRoute == "SearchScreen")
-        setProfileSelected(currentRoute?.startsWith("ProfileScreen1") == true)
+        setProfileSelected(
+            currentRoute?.startsWith("ProfileScreen1") == true ||
+                    currentRoute == "LoginScreen" ||
+                    currentRoute == "RegisterScreen"
+        )
         setSettingsSelected(currentRoute == "SettingScreen")
         setLocationSelected(currentRoute == "LocationScreen")
     }

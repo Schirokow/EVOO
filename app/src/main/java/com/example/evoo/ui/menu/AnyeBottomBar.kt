@@ -24,7 +24,7 @@ import androidx.compose.foundation.Image
 import androidx.navigation.NavController
 import android.util.Log
 import androidx.compose.ui.platform.LocalContext
-import com.example.evoo.users.AuthManager
+import com.example.evoo.business.AuthManager
 
 @Composable
 fun rememberFakeNavController(): NavController {

@@ -2,7 +2,7 @@ package com.example.evoo.ui.components.card
 
 
 import androidx.compose.ui.Alignment
-import com.example.evoo.model.Event
+import com.example.evoo.data.Event
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

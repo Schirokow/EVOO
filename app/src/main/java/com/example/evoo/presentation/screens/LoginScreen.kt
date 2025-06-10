@@ -1,4 +1,4 @@
-package com.example.evoo.ui.screens
+package com.example.evoo.presentation.screens
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -47,9 +47,8 @@ import com.example.evoo.R
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.menu.AnyeBottomBar
-import com.example.evoo.ui.menu.MenuBar
-import com.example.evoo.users.AuthManager
-import com.example.evoo.users.UsersRepository.userData
+import com.example.evoo.business.AuthManager
+import com.example.evoo.data.UsersRepository.userData
 
 private const val TAG = "LoginScreen"
 

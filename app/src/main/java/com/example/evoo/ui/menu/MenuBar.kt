@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountCircle
-import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Settings
@@ -27,8 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.evoo.BackgroundColor
-import com.example.evoo.ForegroundColor
-import com.example.evoo.users.AuthManager
+import com.example.evoo.business.AuthManager
 
 @Composable
 fun MenuBar(navController: NavController){

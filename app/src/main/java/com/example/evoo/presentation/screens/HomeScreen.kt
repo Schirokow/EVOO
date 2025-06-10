@@ -1,4 +1,4 @@
-package com.example.evoo.ui.screens
+package com.example.evoo.presentation.screens
 
 import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
@@ -47,12 +47,8 @@ import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
-import com.example.evoo.eventRepository.EventRepository.festivalData
+import com.example.evoo.data.EventRepository.festivalData
 import com.example.evoo.ui.menu.AnyeBottomBar
-import com.example.evoo.ui.menu.MenuBar
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 private const val TAG = "HomeScreen"
 

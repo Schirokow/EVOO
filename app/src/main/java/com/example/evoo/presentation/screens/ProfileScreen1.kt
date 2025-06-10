@@ -1,4 +1,4 @@
-package com.example.evoo.ui.screens
+package com.example.evoo.presentation.screens
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
@@ -49,15 +49,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.evoo.AccentColor
-import com.example.evoo.model.EventTab
-import com.example.evoo.model.sampleEvents
+import com.example.evoo.data.EventTab
+import com.example.evoo.data.sampleEvents
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.components.card.EventCard
 import com.example.evoo.ui.menu.AnyeBottomBar
 import com.example.evoo.ui.theme.colorthemetype.BottomDarkBlue
 import com.example.evoo.ui.theme.colorthemetype.TopLightBlue
-import com.example.evoo.users.AuthManager
-import com.example.evoo.users.UsersRepository
+import com.example.evoo.business.AuthManager
+import com.example.evoo.data.UsersRepository
 
 private const val TAG = "ProfileScreen1"
 

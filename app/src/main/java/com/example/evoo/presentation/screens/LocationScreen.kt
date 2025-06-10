@@ -1,6 +1,7 @@
-package com.example.evoo.ui.screens
+package com.example.evoo.presentation.screens
 
 
+import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -29,14 +30,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BackgroundColor
 import com.example.evoo.ui.menu.AnyeBottomBar
-import com.example.evoo.ui.menu.MenuBar
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -100,7 +99,7 @@ fun OpenStreetMapWithLiveLocation() {
     }
 
     val locationPermissionState = rememberPermissionState(
-        android.Manifest.permission.ACCESS_FINE_LOCATION
+        Manifest.permission.ACCESS_FINE_LOCATION
     )
 
     var lastLocation by remember { mutableStateOf<GeoPoint?>(null) }
@@ -197,6 +196,7 @@ fun LocationHandler(onLocationUpdate: (Location) -> Unit) {
         }
 
         val locationRequest = LocationRequest.create().apply {
+            // Korrektur: Verwenden Sie die Eigenschaften direkt statt der statischen Methoden
             interval = 5000
             fastestInterval = 2000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -204,7 +204,7 @@ fun LocationHandler(onLocationUpdate: (Location) -> Unit) {
 
         if (ActivityCompat.checkSelfPermission(
                 context,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             fusedLocationClient.requestLocationUpdates(

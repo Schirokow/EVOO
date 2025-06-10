@@ -13,16 +13,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.evoo.presentation.screens.ContentDetailScreen
-import com.example.evoo.presentation.screens.HomeScreen
-import com.example.evoo.presentation.screens.LocationScreen
-import com.example.evoo.presentation.screens.LoginScreen
-import com.example.evoo.presentation.screens.ProfileScreen1
-import com.example.evoo.presentation.screens.RegistrationScreen
-import com.example.evoo.presentation.screens.SearchScreen
-import com.example.evoo.presentation.screens.SettingScreen
-import com.example.evoo.business.AuthManager
-import android.content.pm.ActivityInfo
+import com.example.evoo.ui.screens.ContentDetailScreen
+import com.example.evoo.ui.screens.HomeScreen
+import com.example.evoo.ui.screens.LocationScreen
+import com.example.evoo.ui.screens.LoginScreen
+import com.example.evoo.ui.screens.ProfileScreen1
+import com.example.evoo.ui.screens.RegistrationScreen
+import com.example.evoo.ui.screens.SettingScreen
+import com.example.evoo.users.AuthManager
 
 private const val TAG = "MainActivity"
 
@@ -31,7 +29,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "Activity created")
         enableEdgeToEdge()
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT // ODER LANDSCAPE -> Fixiert den Bildschirm in einer Position
         setContent {
             Log.d(TAG, "Composing UI content")
             Navigation()
@@ -68,10 +65,6 @@ fun Navigation() {
         composable("SettingScreen") {
             Log.d(TAG, "Navigating to SettingScreen")
             SettingScreen(navController)
-        }
-        composable("SearchScreen") {
-            Log.d(TAG, "Navigating to SearchScreen")
-            SearchScreen(navController)
         }
         composable("LoginScreen") {
             Log.d(TAG, "Navigating to LoginScreen")

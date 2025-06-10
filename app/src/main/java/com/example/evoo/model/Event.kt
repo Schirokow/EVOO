@@ -1,4 +1,4 @@
-package com.example.evoo.data
+package com.example.evoo.model
 
 import com.example.evoo.R
 

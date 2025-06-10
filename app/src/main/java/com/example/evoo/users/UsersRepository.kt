@@ -1,7 +1,6 @@
-package com.example.evoo.data
+package com.example.evoo.users
 
 import com.example.evoo.R
-import com.example.evoo.business.PreferencesManager
 
 
 data class User(

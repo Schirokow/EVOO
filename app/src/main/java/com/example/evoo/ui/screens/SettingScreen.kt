@@ -1,14 +1,11 @@
-package com.example.evoo.presentation.screens
+package com.example.evoo.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
@@ -28,9 +25,10 @@ import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.menu.AnyeBottomBar
+import com.example.evoo.ui.menu.MenuBar
 
 @Composable
-fun SearchScreen(navController: NavController){
+fun SettingScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -56,19 +54,17 @@ fun SearchScreen(navController: NavController){
                     .clickable { navController.popBackStack() }
             )
 
-            Row (
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 24.dp)
+            Box (
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
             ){
-                Text("Search", fontSize = 30.sp, color = Color.White)
+                Text("Settings", fontSize = 50.sp, color = Color.White)
             }
-
             // Menu Bar
             //MenuBar(navController)
             AnyeBottomBar(navController)
         }
     }
 }
+
+

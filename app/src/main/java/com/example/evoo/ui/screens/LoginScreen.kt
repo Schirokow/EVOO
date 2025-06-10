@@ -1,4 +1,4 @@
-package com.example.evoo.presentation.screens
+package com.example.evoo.ui.screens
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -47,8 +47,9 @@ import com.example.evoo.R
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.menu.AnyeBottomBar
-import com.example.evoo.business.AuthManager
-import com.example.evoo.data.UsersRepository.userData
+import com.example.evoo.ui.menu.MenuBar
+import com.example.evoo.users.AuthManager
+import com.example.evoo.users.UsersRepository.userData
 
 private const val TAG = "LoginScreen"
 
@@ -150,7 +151,7 @@ fun LoginScreen(navController: NavController) {
                     painter = painterResource(id = R.drawable.logo_anye),
                     contentDescription = "App Logo",
                     modifier = Modifier
-                        .padding(top = 100.dp)
+                        .padding(top = 120.dp)
                         .size(120.dp)
                         .align(Alignment.CenterHorizontally)
                 )
@@ -164,7 +165,7 @@ fun LoginScreen(navController: NavController) {
                         .align(Alignment.CenterHorizontally)
                 )
 
-                Spacer(modifier = Modifier.height(50.dp))
+                Spacer(modifier = Modifier.height(80.dp))
 
                 TextField(
                     value = emailState.value,
@@ -198,7 +199,7 @@ fun LoginScreen(navController: NavController) {
                         .padding(start = 150.dp)
                         .clickable{/* TODO */}
                 )
-                Spacer(modifier = Modifier.height(50.dp))
+                Spacer(modifier = Modifier.height(64.dp))
 
                 ClickButton(
                     text = "Anmelden",
@@ -241,7 +242,6 @@ fun LoginScreen(navController: NavController) {
                         .padding(horizontal = 120.dp)
                         .fillMaxWidth()
                 )
-                Spacer(modifier = Modifier.weight(1f))
 
 
             }

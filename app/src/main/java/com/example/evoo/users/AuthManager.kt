@@ -1,9 +1,8 @@
-package com.example.evoo.business
+package com.example.evoo.users
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.example.evoo.data.User
 
 object AuthManager {
     // Reaktive State-Variable für aktuellen Benutzer
@@ -20,3 +19,12 @@ object AuthManager {
         currentUser = null
     }
 }
+
+//AuthManager (Authentifizierungszustand)
+//Zweck: Verwaltet den globalen Anmeldezustand.
+//private set: Externe Klassen können currentUser nicht direkt setzen.
+
+//Funktionsablauf bei Login:
+//login(user) wird aufgerufen
+//currentUser-Änderung wird an alle Compose-Components propagiert
+//UI-Elemente, die currentUser beobachten, werden neu gezeichnet

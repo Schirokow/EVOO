@@ -20,7 +20,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.evoo.R
 import androidx.compose.foundation.border
@@ -55,7 +54,8 @@ import com.example.evoo.model.sampleEvents
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.components.card.EventCard
 import com.example.evoo.ui.menu.AnyeBottomBar
-import com.example.evoo.ui.menu.MenuBar
+import com.example.evoo.ui.theme.colorthemetype.BottomDarkBlue
+import com.example.evoo.ui.theme.colorthemetype.TopLightBlue
 import com.example.evoo.users.AuthManager
 import com.example.evoo.users.UsersRepository
 

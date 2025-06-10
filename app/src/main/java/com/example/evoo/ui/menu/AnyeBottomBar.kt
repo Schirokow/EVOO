@@ -117,7 +117,7 @@ fun AnyeBottomBar(navController: NavController)
                 .size(84.dp)
                 .align(Alignment.BottomCenter)
                 .offset(y = (-5).dp)
-                .background(BottomDarkBlue.copy(alpha = 0.85f), CircleShape)
+                .background(BottomDarkBlue, CircleShape)
                 .clickable { navController.navigate("LocationScreen") },
             //.shadow(2.dp, CircleShape),
             contentAlignment = Alignment.Center

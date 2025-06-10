@@ -108,7 +108,6 @@ fun Navigation() {
     }
 }
 
-
 //Navigationsmechanismus:
 //
 //{userName}: Platzhalter für Parameter

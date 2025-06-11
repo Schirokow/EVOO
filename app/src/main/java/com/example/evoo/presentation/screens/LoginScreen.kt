@@ -150,7 +150,7 @@ fun LoginScreen(navController: NavController) {
                     painter = painterResource(id = R.drawable.logo_anye),
                     contentDescription = "App Logo",
                     modifier = Modifier
-                        .padding(top = 120.dp)
+                        .padding(top = 100.dp)
                         .size(120.dp)
                         .align(Alignment.CenterHorizontally)
                 )
@@ -164,7 +164,7 @@ fun LoginScreen(navController: NavController) {
                         .align(Alignment.CenterHorizontally)
                 )
 
-                Spacer(modifier = Modifier.height(80.dp))
+                Spacer(modifier = Modifier.height(60.dp))
 
                 TextField(
                     value = emailState.value,
@@ -198,7 +198,7 @@ fun LoginScreen(navController: NavController) {
                         .padding(start = 150.dp)
                         .clickable{/* TODO */}
                 )
-                Spacer(modifier = Modifier.height(64.dp))
+                Spacer(modifier = Modifier.height(50.dp))
 
                 ClickButton(
                     text = "Anmelden",

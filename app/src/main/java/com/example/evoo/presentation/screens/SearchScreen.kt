@@ -32,7 +32,7 @@ import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.menu.AnyeBottomBar
 
 @Composable
-fun SettingScreen(navController: NavController){
+fun SearchScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -61,7 +61,7 @@ fun SettingScreen(navController: NavController){
                         .clickable { navController.popBackStack() }
                 )
                 Spacer(modifier = Modifier.width(70.dp))
-                Text("Settings",
+                Text("Search",
                     fontSize = 30.sp, color = Color.White,
                 )
             }
@@ -72,5 +72,3 @@ fun SettingScreen(navController: NavController){
         }
     }
 }
-
-

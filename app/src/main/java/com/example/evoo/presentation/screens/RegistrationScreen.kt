@@ -140,7 +140,7 @@ fun RegistrationScreen(navController: NavController) {
                     painter = painterResource(id = R.drawable.logo_anye),
                     contentDescription = "App Logo",
                     modifier = Modifier
-                        .padding(top = 120.dp)
+                        .padding(top = 100.dp)
                         .size(120.dp)
                         .align(Alignment.CenterHorizontally)
                 )
@@ -154,7 +154,7 @@ fun RegistrationScreen(navController: NavController) {
                         .align(Alignment.CenterHorizontally)
                 )
 
-                Spacer(modifier = Modifier.height(35.dp))
+                Spacer(modifier = Modifier.height(30.dp))
 
                 TextField(
                     value = userNameState.value,
@@ -203,7 +203,7 @@ fun RegistrationScreen(navController: NavController) {
                         .padding(top = 16.dp)
                         .fillMaxWidth()
                 )
-                Spacer(modifier = Modifier.height(35.dp))
+                Spacer(modifier = Modifier.height(30.dp))
 
 
                 ClickButton(

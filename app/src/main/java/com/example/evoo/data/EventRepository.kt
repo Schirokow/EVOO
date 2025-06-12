@@ -1,6 +1,8 @@
 package com.example.evoo.data
 
 import com.example.evoo.R
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 
 data class FestivalData(
     val imageId: Int,
@@ -10,10 +12,10 @@ data class FestivalData(
     val location: String
 )
 
-object EventRepository{
 
-    // Liste aller Events
-    var festivalData = mutableListOf(
+
+// Liste aller Events
+private var festivalData = mutableListOf(
         FestivalData(
             imageId = R.drawable.festival1,
             title = "Summer Festival",
@@ -183,4 +185,7 @@ object EventRepository{
             location = "Airport Nürnberg"
         ),
     )
+
+fun festivalDataFlow(): Flow<List<FestivalData>> = flow {
+    emit(festivalData)
 }

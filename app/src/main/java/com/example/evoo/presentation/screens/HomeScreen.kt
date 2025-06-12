@@ -31,6 +31,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,11 +45,12 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
-import com.example.evoo.data.EventRepository.festivalData
+import com.example.evoo.presentation.viewmodels.HomeViewModel
 import com.example.evoo.ui.menu.AnyeBottomBar
 
 private const val TAG = "HomeScreen"
@@ -74,17 +77,6 @@ fun HomeScreen(navController: NavController){
             // Funktion für die Vorschau.
             EventContent(navController)
 
-            Box (
-                modifier = Modifier
-                    .padding(top = 6.dp)
-            )
-            {
-                //LogoImage()   // Function um Logo auf dem Screen darzustellen.
-            }
-            // Menu Bar
-//            MenuBar(navController = navController).also {
-//                Log.d(TAG, "MenuBar composable rendered")
-//            }
             AnyeBottomBar(navController)
         }
     }
@@ -92,8 +84,16 @@ fun HomeScreen(navController: NavController){
 
 
 @Composable
-fun EventContent(navController: NavController) {
+fun EventContent(navController: NavController,viewModel: HomeViewModel = viewModel()) {
+
     val TAG = "EventContent"
+
+    val festivalData by viewModel.festivalData.collectAsState()
+
+    // FestivalData beim ersten Erscheinen laden
+    LaunchedEffect(Unit) {
+        viewModel.loadFestivalData()
+    }
     // State, um ausgewählte FestivalData zu speichern
     var selectedFestivalData by remember { mutableStateOf<Int?>(null).also {
         Log.d(TAG, "Selected festival state initialized")

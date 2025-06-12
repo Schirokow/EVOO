@@ -50,6 +50,7 @@ import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
+import com.example.evoo.presentation.viewmodels.AppModule
 import com.example.evoo.presentation.viewmodels.HomeViewModel
 import com.example.evoo.ui.menu.AnyeBottomBar
 
@@ -60,6 +61,8 @@ import com.example.evoo.ui.menu.AnyeBottomBar
 fun HomeScreen(navController: NavController){
     val TAG = "HomeScreen"
     Log.d(TAG, "Home screen initialized")
+
+    val viewModel: HomeViewModel = viewModel(factory = AppModule.homeViewModelFactory)
 
     Box(
         modifier = Modifier
@@ -76,7 +79,7 @@ fun HomeScreen(navController: NavController){
                 )))
         ){
             // Funktion für die Vorschau.
-            EventContent(navController)
+            EventContent(navController, viewModel)
 
             AnyeBottomBar(navController)
         }
@@ -85,7 +88,7 @@ fun HomeScreen(navController: NavController){
 
 
 @Composable
-fun EventContent(navController: NavController,viewModel: HomeViewModel = viewModel()) {
+fun EventContent(navController: NavController,viewModel: HomeViewModel) {
 
     val TAG = "EventContent"
 

@@ -1,8 +1,8 @@
 package com.example.evoo.data
 
 import com.example.evoo.R
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 data class FestivalData(
     val imageId: Int,
@@ -188,4 +188,15 @@ private var festivalData = mutableListOf(
 
 fun festivalDataFlow(): Flow<List<FestivalData>> = flow {
     emit(festivalData)
+}
+
+interface FestivalRepository {
+    suspend fun getFestivals(): List<FestivalData>
+}
+
+class FestivalRepositoryImpl : FestivalRepository {
+    override suspend fun getFestivals(): List<FestivalData> {
+        // Hier käme normalerweise API/Datenbank-Zugriff
+        return festivalData // Ihre vorhandene Liste
+    }
 }

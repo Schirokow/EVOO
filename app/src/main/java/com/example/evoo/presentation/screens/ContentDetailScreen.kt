@@ -42,42 +42,65 @@ import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
+import com.example.evoo.presentation.viewmodels.AppModule
 import com.example.evoo.presentation.viewmodels.ContentDetailViewModel
 import com.example.evoo.presentation.viewmodels.HomeViewModel
 
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.menu.AnyeBottomBar
 
-private const val TAG = "ContentDetailScreen"
 
 
 @Composable
-fun ContentDetailScreen(navController: NavController, index: Int,viewModel: ContentDetailViewModel = viewModel()){
+fun ContentDetailScreen(navController: NavController, index: Int){
+    val TAG = "ContentDetailScreen"
     Log.d(TAG, "Screen initialized with index: $index")
 
-    // FestivalData beim ersten Erscheinen laden
-    LaunchedEffect(Unit) {
-        viewModel.loadFestivalData()
+    val viewModel: ContentDetailViewModel = viewModel(factory = AppModule.detailViewModelFactory)
+
+
+    LaunchedEffect(index) {
+        viewModel.loadFestival(index)
     }
 
-    // Holen der Festival-Daten aus dem StateFlow
-    val festivalList by viewModel.festivalData.collectAsState()
+    // FestivalData beim ersten Erscheinen laden
+//    LaunchedEffect(Unit) {
+//        viewModel.loadFestivalData()
+//    }
 
-    // Sicherstellen, dass der Index gültig ist
-    if (index < 0 || index >= festivalList.size) {
+    // Holen der Festival-Daten aus dem StateFlow
+//    val festivalList by viewModel.festivalData.collectAsState()
+
+    val festival by viewModel.festival.collectAsState()
+    if (festival == null) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Red),
             contentAlignment = Alignment.Center
         ) {
-            Text("Ungültiger Festival-Index", color = Color.White, fontSize = 24.sp)
+            Text("Festival nicht gefunden", color = Color.White, fontSize = 24.sp)
         }
         return
     }
 
+    val festivalData = festival!!
+
+    // Sicherstellen, dass der Index gültig ist
+//    if (index < 0 || index >= festival.size) {
+//        Box(
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .background(Color.Red),
+//            contentAlignment = Alignment.Center
+//        ) {
+//            Text("Ungültiger Festival-Index", color = Color.White, fontSize = 24.sp)
+//        }
+//        return
+//    }
+
     // Das spezifische Festival basierend auf dem Index holen
-    val festivalData = festivalList[index]
+
 
 
 
@@ -150,7 +173,7 @@ fun ContentDetailScreen(navController: NavController, index: Int,viewModel: Cont
                 Log.d(TAG, "Rendering content for: ${festivalData.title.take(15)}...")
                 // Titel
                 Text(
-                    text = festivalData.title,
+                    text = festivalData.title.toString(),
                     style = MaterialTheme.typography.headlineLarge,
                     color = Color.White,
                     modifier = Modifier.padding(bottom = 10.dp)

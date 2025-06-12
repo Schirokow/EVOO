@@ -85,7 +85,7 @@ fun Navigation() {
         }
 
         composable(
-            "ContentDetailScreen/{index}",
+            route = "ContentDetailScreen/{index}",
             arguments = listOf(navArgument("index") { type = NavType.IntType })
         ) { backStackEntry ->
             val index = backStackEntry.arguments?.getInt("index") ?: 0

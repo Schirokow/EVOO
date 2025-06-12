@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-
-class HomeViewModel : ViewModel() {
+class ContentDetailViewModel : ViewModel() {
 
     // StateFlow für FestivalData hinzufügen
     private val _festivalData = MutableStateFlow<List<FestivalData>>(emptyList())
     val festivalData: StateFlow<List<FestivalData>> = _festivalData.asStateFlow()
+
 
     // FestivalData laden und im StateFlow speichern
     fun loadFestivalData() {
@@ -24,4 +24,5 @@ class HomeViewModel : ViewModel() {
             }
         }
     }
+
 }

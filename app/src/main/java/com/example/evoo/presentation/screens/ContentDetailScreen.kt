@@ -24,6 +24,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -32,11 +37,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
-import com.example.evoo.data.EventRepository.festivalData
+import com.example.evoo.presentation.viewmodels.ContentDetailViewModel
+import com.example.evoo.presentation.viewmodels.HomeViewModel
+
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.menu.AnyeBottomBar
 
@@ -44,13 +52,40 @@ private const val TAG = "ContentDetailScreen"
 
 
 @Composable
-fun ContentDetailScreen(navController: NavController, index: Int){
+fun ContentDetailScreen(navController: NavController, index: Int,viewModel: ContentDetailViewModel = viewModel()){
     Log.d(TAG, "Screen initialized with index: $index")
 
-    // Holt die FestivalData aus der gemeinsamen Liste
-    val festivalData = festivalData[index].also {
-        Log.i(TAG, "Loaded festival data: ${it.title.take(15)}...")
+    // FestivalData beim ersten Erscheinen laden
+    LaunchedEffect(Unit) {
+        viewModel.loadFestivalData()
     }
+
+    // Holen der Festival-Daten aus dem StateFlow
+    val festivalList by viewModel.festivalData.collectAsState()
+
+    // Sicherstellen, dass der Index gültig ist
+    if (index < 0 || index >= festivalList.size) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Red),
+            contentAlignment = Alignment.Center
+        ) {
+            Text("Ungültiger Festival-Index", color = Color.White, fontSize = 24.sp)
+        }
+        return
+    }
+
+    // Das spezifische Festival basierend auf dem Index holen
+    val festivalData = festivalList[index]
+
+
+
+    // Holt die FestivalData aus der gemeinsamen Liste
+//    val festivalData = festivalData[index].also {
+//        Log.i(TAG, "Loaded festival data: ${it.title.take(15)}...")
+//    }
+
 
     Box(
         modifier = Modifier
@@ -165,10 +200,6 @@ fun ContentDetailScreen(navController: NavController, index: Int){
 
             }
 
-            // Menu Bar
-//            MenuBar(navController).also {
-//                Log.d(TAG, "MenuBar composable rendered")
-//            }
             AnyeBottomBar(navController)
         }
     }

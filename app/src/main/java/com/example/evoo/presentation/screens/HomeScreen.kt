@@ -53,11 +53,12 @@ import com.example.evoo.TopLightBlue
 import com.example.evoo.presentation.viewmodels.HomeViewModel
 import com.example.evoo.ui.menu.AnyeBottomBar
 
-private const val TAG = "HomeScreen"
+
 
 // Startseite
 @Composable
 fun HomeScreen(navController: NavController){
+    val TAG = "HomeScreen"
     Log.d(TAG, "Home screen initialized")
 
     Box(

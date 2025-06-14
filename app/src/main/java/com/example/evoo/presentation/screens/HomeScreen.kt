@@ -20,12 +20,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -63,6 +65,7 @@ fun HomeScreen(navController: NavController){
     Log.d(TAG, "Home screen initialized")
 
     val viewModel: HomeViewModel = viewModel(factory = AppModule.homeViewModelFactory)
+    val festivalData by viewModel.festivalData.collectAsState()
 
     Box(
         modifier = Modifier
@@ -94,10 +97,14 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
 
     val festivalData by viewModel.festivalData.collectAsState()
 
-    // FestivalData beim ersten Erscheinen laden
-    LaunchedEffect(Unit) {
-        viewModel.loadFestivalData()
+    // Schutz vor leeren Listen
+    if (festivalData.isEmpty()) {
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+        return
     }
+
     // State, um ausgewählte FestivalData zu speichern
     var selectedFestivalData by remember { mutableStateOf<Int?>(null).also {
         Log.d(TAG, "Selected festival state initialized")
@@ -110,7 +117,7 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
         contentPadding = PaddingValues(vertical = 16.dp),
         columns = GridCells.Fixed(2)
     ){
-        items (festivalData.size){ index ->
+        itemsIndexed(festivalData){ index, festival ->
 
             val festivalData = festivalData[index]
 

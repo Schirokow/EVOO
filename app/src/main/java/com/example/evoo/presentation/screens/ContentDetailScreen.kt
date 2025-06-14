@@ -1,5 +1,6 @@
 package com.example.evoo.presentation.screens
 
+import android.R.attr.id
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -60,16 +61,10 @@ fun ContentDetailScreen(navController: NavController, index: Int){
 
 
     LaunchedEffect(index) {
+        Log.d(TAG, "Loading festival for index: $index")
         viewModel.loadFestival(index)
     }
 
-    // FestivalData beim ersten Erscheinen laden
-//    LaunchedEffect(Unit) {
-//        viewModel.loadFestivalData()
-//    }
-
-    // Holen der Festival-Daten aus dem StateFlow
-//    val festivalList by viewModel.festivalData.collectAsState()
 
     val festival by viewModel.festival.collectAsState()
     if (festival == null) {
@@ -83,32 +78,6 @@ fun ContentDetailScreen(navController: NavController, index: Int){
         }
         return
     }
-
-    val festivalData = festival!!
-
-    // Sicherstellen, dass der Index gültig ist
-//    if (index < 0 || index >= festival.size) {
-//        Box(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .background(Color.Red),
-//            contentAlignment = Alignment.Center
-//        ) {
-//            Text("Ungültiger Festival-Index", color = Color.White, fontSize = 24.sp)
-//        }
-//        return
-//    }
-
-    // Das spezifische Festival basierend auf dem Index holen
-
-
-
-
-    // Holt die FestivalData aus der gemeinsamen Liste
-//    val festivalData = festivalData[index].also {
-//        Log.i(TAG, "Loaded festival data: ${it.title.take(15)}...")
-//    }
-
 
     Box(
         modifier = Modifier
@@ -148,7 +117,7 @@ fun ContentDetailScreen(navController: NavController, index: Int){
                     .padding(24.dp)
                     .size(34.dp)
                     .clickable{
-                        Log.i(TAG, "Favorite clicked for: ${festivalData.title.take(15)}...")
+                        Log.i(TAG, "Favorite clicked for: ${festival?.title?.take(15)}...")
                     }
             )
 
@@ -170,10 +139,10 @@ fun ContentDetailScreen(navController: NavController, index: Int){
                     .padding(top = 100.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Log.d(TAG, "Rendering content for: ${festivalData.title.take(15)}...")
+                Log.d(TAG, "Rendering content for: ${festival?.title?.take(15)}...")
                 // Titel
                 Text(
-                    text = festivalData.title.toString(),
+                    text = festival?.title.toString(),
                     style = MaterialTheme.typography.headlineLarge,
                     color = Color.White,
                     modifier = Modifier.padding(bottom = 10.dp)
@@ -188,7 +157,7 @@ fun ContentDetailScreen(navController: NavController, index: Int){
                     elevation = CardDefaults.cardElevation(12.dp)
                 ){
                     Image(
-                        painter = painterResource(id = festivalData.imageId),
+                        painter = painterResource(id = festival?.imageId ?: 0),
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxSize(),
@@ -199,7 +168,7 @@ fun ContentDetailScreen(navController: NavController, index: Int){
 
                 // Beschreibung
                 Text(
-                    text = "Beschreibung: ${festivalData.description}",
+                    text = "Beschreibung: ${festival?.description}",
                     style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
                     color = Color.White,
                     modifier = Modifier.padding(16.dp)
@@ -207,7 +176,7 @@ fun ContentDetailScreen(navController: NavController, index: Int){
 
                 // Datum
                 Text(
-                    text = "Datum: ${festivalData.datum}",
+                    text = "Datum: ${festival?.datum}",
                     style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
                     color = Color.White,
                     modifier = Modifier.padding(16.dp)
@@ -215,7 +184,7 @@ fun ContentDetailScreen(navController: NavController, index: Int){
 
                 // Location
                 Text(
-                    text = "Ort: ${festivalData.location}",
+                    text = "Ort: ${festival?.location}",
                     style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
                     color = Color.White,
                     modifier = Modifier.padding(16.dp)

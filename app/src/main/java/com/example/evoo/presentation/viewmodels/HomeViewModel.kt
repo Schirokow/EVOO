@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.evoo.business.usecases.GetFestivalsUseCase
 import com.example.evoo.data.FestivalData
-import com.example.evoo.data.festivalDataFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,18 +16,13 @@ class HomeViewModel(private val getFestivalsUseCase: GetFestivalsUseCase) : View
     private val _festivalData = MutableStateFlow<List<FestivalData>>(emptyList())
     val festivalData: StateFlow<List<FestivalData>> = _festivalData.asStateFlow()
 
-    // FestivalData laden und im StateFlow speichern
-//    fun loadFestivalData() {
-//        viewModelScope.launch {
-//            festivalDataFlow().collect { festivalDataList ->
-//                _festivalData.value = festivalDataList
-//            }
-//        }
-//    }
-
-    fun loadFestivalData() {
+    // Kontinuierlicher Flow
+    init {
         viewModelScope.launch {
-            _festivalData.value = getFestivalsUseCase()
+            getFestivalsUseCase.invokeFlow().collect { festivals ->
+                _festivalData.value = festivals
+            }
         }
     }
+
 }

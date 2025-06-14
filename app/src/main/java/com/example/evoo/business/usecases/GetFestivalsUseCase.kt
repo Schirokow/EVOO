@@ -2,17 +2,45 @@ package com.example.evoo.business.usecases
 
 import com.example.evoo.data.FestivalData
 import com.example.evoo.data.FestivalRepository
+import kotlinx.coroutines.flow.Flow
+
+/* MVVM
+presentation/
+├── screens/
+│   ├── HomeScreen.kt
+│   ├── DetailScreen.kt
+│   └── ...
+├── viewmodels/
+│   ├── HomeViewModel.kt
+│   └── DetailViewModel.kt
+domain/
+├── repository/
+│   └── FestivalRepository.kt
+├── model/
+│   └── FestivalData.kt
+└── usercases/
+├── GetFestivalsUseCase.kt
+└── GetFestivalUseCase.kt
+data/
+├── repository/
+│   └── FestivalRepositoryImpl.kt
+└── source/
+└── FestivalDataSource.kt (optional)
+
+ */
 
 class GetFestivalsUseCase(private val repository: FestivalRepository) {
-    suspend operator fun invoke(): List<FestivalData> {
-        return repository.getFestivals()
+
+
+    // Für kontinuierlichen Flow
+     fun invokeFlow(): Flow<List<FestivalData>> {
+        return repository.getFestivalsFlow()
     }
 }
 
-// Optional: Use Case für einzelnes Festival
-class GetFestivalUseCase(private val repository: FestivalRepository) {
-    suspend operator fun invoke(index: Int): FestivalData? {
-        val festivals = repository.getFestivals()
-        return if (index in festivals.indices) festivals[index] else null
+class GetFestivalByIdUseCase(private val repository: FestivalRepository) {
+    operator fun invoke(id: Int): Flow<FestivalData?> {
+        return repository.getFestivalByIdFlow(id)
     }
 }
+

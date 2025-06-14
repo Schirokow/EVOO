@@ -38,9 +38,9 @@ class GetFestivalsUseCase(private val repository: FestivalRepository) {
     }
 }
 
-class GetFestivalByIdUseCase(private val repository: FestivalRepository) {
-    operator fun invoke(id: Int): Flow<FestivalData?> {
-        return repository.getFestivalByIdFlow(id)
+class GetFestivalByIndexUseCase(private val repository: FestivalRepository) {
+    operator fun invoke(index: Int): Flow<FestivalData?> {
+        return repository.getFestivalByIndexFlow(index)
     }
 }
 

@@ -192,7 +192,7 @@ fun festivalDataFlow(): Flow<List<FestivalData>> = flow {
 
 interface FestivalRepository {
     fun getFestivalsFlow(): Flow<List<FestivalData>>
-    fun getFestivalByIdFlow(id: Int): Flow<FestivalData?>
+    fun getFestivalByIndexFlow(index: Int): Flow<FestivalData?>
 }
 
 class FestivalRepositoryImpl : FestivalRepository {
@@ -200,9 +200,9 @@ class FestivalRepositoryImpl : FestivalRepository {
 // Hier käme normalerweise API/Datenbank-Zugriff
 override fun getFestivalsFlow(): Flow<List<FestivalData>> = festivalDataFlow()
 
-override fun getFestivalByIdFlow(id: Int): Flow<FestivalData?> = flow {
+override fun getFestivalByIndexFlow(index: Int): Flow<FestivalData?> = flow {
         festivalDataFlow().collect { festivals ->
-            emit(festivals.getOrNull(id))
+            emit(festivals.getOrNull(index))
         }
     }
 

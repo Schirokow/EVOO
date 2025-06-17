@@ -52,6 +52,7 @@ import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
+import com.example.evoo.data.FestivalData
 import com.example.evoo.presentation.viewmodels.AppModule
 import com.example.evoo.presentation.viewmodels.HomeViewModel
 import com.example.evoo.ui.menu.AnyeBottomBar
@@ -65,7 +66,6 @@ fun HomeScreen(navController: NavController){
     Log.d(TAG, "Home screen initialized")
 
     val viewModel: HomeViewModel = viewModel(factory = AppModule.homeViewModelFactory)
-    val festivalData by viewModel.festivalData.collectAsState()
 
     Box(
         modifier = Modifier
@@ -95,10 +95,10 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
 
     val TAG = "EventContent"
 
-    val festivalData by viewModel.festivalData.collectAsState()
+    val festivalDataList by viewModel.festivalData.collectAsState()
 
     // Schutz vor leeren Listen
-    if (festivalData.isEmpty()) {
+    if (festivalDataList.isEmpty()) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
@@ -106,21 +106,18 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
     }
 
     // State, um ausgewählte FestivalData zu speichern
-    var selectedFestivalData by remember { mutableStateOf<Int?>(null).also {
+    var selectedFestivalData by remember { mutableStateOf<FestivalData?>(null).also {
         Log.d(TAG, "Selected festival state initialized")
     } }
 
-    Log.d(TAG, "Rendering festival grid with ${festivalData.size} items")
+    Log.d(TAG, "Rendering festival grid with ${festivalDataList.size} items")
 
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(vertical = 16.dp),
         columns = GridCells.Fixed(2)
     ){
-        itemsIndexed(festivalData){ index, festival ->
-
-            val festivalData = festivalData[index]
-
+        itemsIndexed(festivalDataList){ index, festival ->
 
             Box(
                 modifier = Modifier
@@ -131,14 +128,14 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                     modifier = Modifier
                         .fillMaxSize()
                         .clickable{
-                            Log.d(TAG, "Festival card clicked - index: $index, title: ${festivalData.title.take(15)}...")
-                            selectedFestivalData = index
+                            Log.d(TAG, "Festival card clicked - id: ${festival.id}, title: ${festival.title.take(15)}...")
+                            selectedFestivalData = festival
                                   },
                     shape = RoundedCornerShape(16.dp),
                     elevation = CardDefaults.cardElevation(12.dp)
                 ) {
                     Image(
-                        painter = painterResource(id = festivalData.imageId),
+                        painter = painterResource(id = festival.imageId),
                         contentDescription = null,
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier
@@ -156,9 +153,9 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
     )
 
     // Overlay für vergrößertes Bild, wenn selectedFestivalData nicht null ist
-    selectedFestivalData?.let { index ->
-        Log.d(TAG, "Showing detail overlay for index: $index")
-        val festivalData = festivalData[index] // Datenobjekt via Index
+    selectedFestivalData?.let { festival ->
+        Log.d(TAG, "Showing detail overlay for id: ${festival.id}")
+//        val festivalData = festivalData // Datenobjekt via Index
 
         Surface(
             color = BackgroundColor.copy(alpha = 0.9f), // Farbe von Hintergrund
@@ -176,7 +173,7 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                 ){
 
                     Text(
-                        text = festivalData.title,
+                        text = festival.title,
                         style = MaterialTheme.typography.headlineMedium,
                         color = Color.White,
                         modifier = Modifier.padding(bottom = 8.dp)
@@ -188,14 +185,14 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                             .fillMaxWidth(0.9f)
                             .fillMaxHeight(0.5f)
                             .clickable{
-                                Log.d(TAG, "Navigating to detail screen for index: $index")
-                                navController.navigate("ContentDetailScreen/$index")
+                                Log.d(TAG, "Navigating to detail screen for id: ${festival.id}")
+                                navController.navigate("ContentDetailScreen/${festival.id}")
                                       },
                         shape = RoundedCornerShape(16.dp),
                         elevation = CardDefaults.cardElevation(12.dp)
                     ){
                         Image(
-                            painter = painterResource(id = festivalData.imageId),
+                            painter = painterResource(id = festival.imageId),
                             contentDescription = "Vergrößertes Bild",
                             contentScale = ContentScale.FillBounds,
                             modifier = Modifier
@@ -229,7 +226,7 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                         .padding(24.dp)
                         .size(34.dp)
                         .clickable{
-                            Log.i(TAG, "Favorite button clicked for index: $index")
+                            Log.i(TAG, "Favorite button clicked for id: ${festival.id}")
                         }
                 )
             }

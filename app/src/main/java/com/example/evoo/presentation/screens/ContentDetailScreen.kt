@@ -53,16 +53,16 @@ import com.example.evoo.ui.menu.AnyeBottomBar
 
 
 @Composable
-fun ContentDetailScreen(navController: NavController, index: Int){
+fun ContentDetailScreen(navController: NavController, id: Int){
     val TAG = "ContentDetailScreen"
-    Log.d(TAG, "Screen initialized with index: $index")
+    Log.d(TAG, "Screen initialized with id: $id")
 
     val viewModel: ContentDetailViewModel = viewModel(factory = AppModule.detailViewModelFactory)
 
 
-    LaunchedEffect(index) {
-        Log.d(TAG, "Loading festival for index: $index")
-        viewModel.loadFestival(index)
+    LaunchedEffect(id) {
+        Log.d(TAG, "Loading festival for id: $id")
+        viewModel.loadFestival(id)
     }
 
 

@@ -33,7 +33,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,10 +52,8 @@ import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
 import com.example.evoo.data.FestivalData
-import com.example.evoo.presentation.viewmodels.AppModule
 import com.example.evoo.presentation.viewmodels.HomeViewModel
 import com.example.evoo.ui.menu.AnyeBottomBar
-
 
 
 // Startseite
@@ -65,7 +62,7 @@ fun HomeScreen(navController: NavController){
     val TAG = "HomeScreen"
     Log.d(TAG, "Home screen initialized")
 
-    val viewModel: HomeViewModel = viewModel(factory = AppModule.homeViewModelFactory)
+    val viewModel: HomeViewModel = viewModel()
 
     Box(
         modifier = Modifier
@@ -155,7 +152,6 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
     // Overlay für vergrößertes Bild, wenn selectedFestivalData nicht null ist
     selectedFestivalData?.let { festival ->
         Log.d(TAG, "Showing detail overlay for id: ${festival.id}")
-//        val festivalData = festivalData // Datenobjekt via Index
 
         Surface(
             color = BackgroundColor.copy(alpha = 0.9f), // Farbe von Hintergrund

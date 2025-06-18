@@ -1,6 +1,5 @@
 package com.example.evoo.presentation.screens
 
-import android.R.attr.id
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,9 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -43,13 +40,9 @@ import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
-import com.example.evoo.presentation.viewmodels.AppModule
 import com.example.evoo.presentation.viewmodels.ContentDetailViewModel
-import com.example.evoo.presentation.viewmodels.HomeViewModel
-
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.menu.AnyeBottomBar
-
 
 
 @Composable
@@ -57,14 +50,12 @@ fun ContentDetailScreen(navController: NavController, id: Int){
     val TAG = "ContentDetailScreen"
     Log.d(TAG, "Screen initialized with id: $id")
 
-    val viewModel: ContentDetailViewModel = viewModel(factory = AppModule.detailViewModelFactory)
-
+    val viewModel: ContentDetailViewModel = viewModel()
 
     LaunchedEffect(id) {
         Log.d(TAG, "Loading festival for id: $id")
         viewModel.loadFestival(id)
     }
-
 
     val festival by viewModel.festival.collectAsState()
     if (festival == null) {
@@ -164,7 +155,6 @@ fun ContentDetailScreen(navController: NavController, id: Int){
                         contentScale = ContentScale.FillBounds
                     )
                 }
-
 
                 // Beschreibung
                 Text(

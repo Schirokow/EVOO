@@ -13,15 +13,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.evoo.business.AuthManager
 import com.example.evoo.presentation.screens.ContentDetailScreen
 import com.example.evoo.presentation.screens.HomeScreen
 import com.example.evoo.presentation.screens.LocationScreen
 import com.example.evoo.presentation.screens.LoginScreen
 import com.example.evoo.presentation.screens.ProfileScreen1
 import com.example.evoo.presentation.screens.RegistrationScreen
-import com.example.evoo.presentation.screens.SettingScreen
-import com.example.evoo.business.AuthManager
 import com.example.evoo.presentation.screens.SearchScreen
+import com.example.evoo.presentation.screens.SettingScreen
 
 private const val TAG = "MainActivity"
 
@@ -45,19 +45,20 @@ fun Navigation() {
     val TAG = "AppNavigation"
     val navController = rememberNavController()
     val currentUser = AuthManager.currentUser
-    val startDestination = if (currentUser != null) {
-        Log.i(TAG, "User authenticated: ${currentUser.name.take(3)}...")
-        "ProfileScreen1/${currentUser.name}" //Direkt zum Profil
-    } else {
-        Log.i(TAG, "No authenticated user found")
-        "LoginScreen"
-    }
+//    val startDestination = if (currentUser != null) {
+//        Log.i(TAG, "User authenticated: ${currentUser.name.take(3)}...")
+//        "ProfileScreen1/${currentUser.name}" //Direkt zum Profil
+//    } else {
+//        Log.i(TAG, "No authenticated user found")
+//        "LoginScreen"
+//    }
 
-    Log.d(TAG, "Initializing navigation with start destination: $startDestination")
+//    Log.d(TAG, "Initializing navigation with start destination: $startDestination")
 
     NavHost(
         navController = navController,
-        startDestination = startDestination //Dynamische Startseite
+//        startDestination = startDestination //Dynamische Startseite
+        startDestination = "LocationScreen"
     ) {
         composable("HomeScreen") {
             Log.d(TAG, "Navigating to HomeScreen")

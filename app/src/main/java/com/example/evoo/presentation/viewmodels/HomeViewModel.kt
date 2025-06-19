@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 
-class HomeViewModel(private val getFestivalsUseCase: GetFestivalsUseCase = GetFestivalsUseCase()) : ViewModel() {
-
+class HomeViewModel: ViewModel() {
+    private val getFestivalsUseCase: GetFestivalsUseCase = GetFestivalsUseCase()
     // StateFlow für FestivalData hinzufügen
     private val _festivalData = MutableStateFlow<List<FestivalData>>(emptyList())
     val festivalData: StateFlow<List<FestivalData>> = _festivalData.asStateFlow()

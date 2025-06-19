@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ContentDetailViewModel(private val getFestivalsUseCase: GetFestivalsUseCase = GetFestivalsUseCase()) : ViewModel() {
-
+class ContentDetailViewModel: ViewModel() {
+    private val getFestivalsUseCase: GetFestivalsUseCase = GetFestivalsUseCase()
     private val _festival = MutableStateFlow<FestivalData?>(null)
     val festival: StateFlow<FestivalData?> = _festival.asStateFlow()
 

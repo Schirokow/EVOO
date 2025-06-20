@@ -45,8 +45,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.data.EventTab
@@ -56,13 +59,14 @@ import com.example.evoo.ui.components.card.EventCard
 import com.example.evoo.ui.menu.AnyeBottomBar
 import com.example.evoo.ui.theme.colorthemetype.BottomDarkBlue
 import com.example.evoo.ui.theme.colorthemetype.TopLightBlue
-import com.example.evoo.business.AuthManager
+//import com.example.evoo.business.AuthManager
 import com.example.evoo.data.UsersRepository
+import com.example.evoo.presentation.viewmodels.LoginViewModel
 
 private const val TAG = "ProfileScreen1"
 
 @Composable
-fun ProfileScreen1 (navController: NavController, userName: String?) {
+fun ProfileScreen1 (navController: NavController, userId: Int?) {
     var selectedTab by remember { mutableStateOf(EventTab.All) }
     val displayedEvents = when (selectedTab) {
         EventTab.All -> {
@@ -82,10 +86,13 @@ fun ProfileScreen1 (navController: NavController, userName: String?) {
 
     val itemsPerRow = 3
 
-    Log.d(TAG, "Profile screen loaded for user: ${userName?.take(3)}...")
+    Log.d(TAG, "Profile screen loaded for user: $userId")
+
+    val viewModel: LoginViewModel = viewModel()
+    val userData by viewModel.users.collectAsState()
 
     // Finde den User in der Repository
-    val user = UsersRepository.userData.find { it.name == userName }
+    val user = userData.find { it.id == userId }
 
     Box(
         modifier = Modifier
@@ -181,7 +188,7 @@ fun ProfileScreen1 (navController: NavController, userName: String?) {
                     text = "Abmelden",
                     onClick = {
                         Log.i(TAG, "User logout initiated")
-                        AuthManager.logout() //Zustand zurücksetzen
+//                        AuthManager.logout() //Zustand zurücksetzen
                         navController.navigate("LoginScreen") {
                             popUpTo("HomeScreen") { inclusive = true } //Löscht Back-Stack
                         }

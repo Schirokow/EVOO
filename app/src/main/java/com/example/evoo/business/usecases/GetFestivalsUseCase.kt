@@ -43,5 +43,29 @@ class GetFestivalsUseCase {
     }
 }
 
+//class GetFestivalsUseCase: FestivalRepository {
+//
+//    override fun getFestivalsFlow(): Flow<List<FestivalData>> {
+//        return festivalDataFlow()
+//    }
+//
+//    override fun getFestivalByIdFlow(id: Int): Flow<FestivalData?> = flow {
+//        festivalDataFlow().collect { festivals ->
+//            val festivalId = festivals.find { it.id == id }
+//            emit(festivalId)
+//        }
+//    }
+//}
+
+//class GetFestivalsUseCase(private val festival: FestivalRepository){
+//    fun getFestivalsFlow(): Flow<List<FestivalData>>{
+//        return festival.getFestivalsFlow()
+//    }
+//
+//    fun getFestivalByIdFlow(id: Int): Flow<FestivalData?>{
+//        return festival.getFestivalByIdFlow(id)
+//    }
+//}
+
 
 

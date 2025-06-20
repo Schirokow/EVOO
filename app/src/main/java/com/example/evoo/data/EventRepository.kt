@@ -231,6 +231,4 @@ override fun getFestivalByIdFlow(id: Int): Flow<FestivalData?> = flow {
             emit(festivalId)
         }
     }
-
-
 }

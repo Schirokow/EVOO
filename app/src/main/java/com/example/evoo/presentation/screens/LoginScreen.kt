@@ -25,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +41,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
@@ -47,8 +49,11 @@ import com.example.evoo.R
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.menu.AnyeBottomBar
-import com.example.evoo.business.AuthManager
-import com.example.evoo.data.UsersRepository.userData
+//import com.example.evoo.business.AuthManager
+import com.example.evoo.presentation.viewmodels.HomeViewModel
+import com.example.evoo.presentation.viewmodels.LoginViewModel
+
+//import com.example.evoo.data.UsersRepository.userData
 
 private const val TAG = "LoginScreen"
 
@@ -100,6 +105,10 @@ fun LoginScreen(navController: NavController) {
                         }
                 )
             }
+
+            val viewModel: LoginViewModel = viewModel()
+
+            val userData by viewModel.users.collectAsState()
 
 
             // State-Management mit Jetpack Compose
@@ -219,12 +228,12 @@ fun LoginScreen(navController: NavController) {
                             emailState.value = TextFieldValue("")
                             passwordState.value = TextFieldValue("")
 
-                            AuthManager.login(user).also {
-                                Log.d(TAG, "AuthManager login state updated")
-                            } // Benutzer setzen, Globaler Login
+//                            AuthManager.login(user).also {
+//                                Log.d(TAG, "AuthManager login state updated")
+//                            } // Benutzer setzen, Globaler Login
 
                             Log.d(TAG, "Navigating to profile: ${user.name}")
-                            navController.navigate("ProfileScreen1/${user.name}") {
+                            navController.navigate("ProfileScreen1/${user.id}") {
                                 //Löscht den gesamten Back-Stack
                                 popUpTo(navController.graph.startDestinationId) {
                                     inclusive = true
@@ -244,7 +253,7 @@ fun LoginScreen(navController: NavController) {
 
 
             }
-            //MenuBar(navController)
+
             AnyeBottomBar(navController)
         }
 

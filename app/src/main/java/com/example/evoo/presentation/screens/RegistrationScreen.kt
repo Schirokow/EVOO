@@ -26,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,15 +41,17 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.R
 import com.example.evoo.TopLightBlue
 import com.example.evoo.ui.components.buttons.ClickButton
-import com.example.evoo.business.AuthManager
+//import com.example.evoo.business.AuthManager
 import com.example.evoo.data.User
 import com.example.evoo.data.UsersRepository
+import com.example.evoo.presentation.viewmodels.LoginViewModel
 
 private const val TAG = "RegistrationScreen"
 
@@ -102,6 +105,8 @@ fun RegistrationScreen(navController: NavController) {
                 )
             }
 
+            val viewModel: LoginViewModel = viewModel()
+            val userData by viewModel.users.collectAsState()
 
             val userNameState = remember { mutableStateOf(TextFieldValue()) }
             val emailState = remember { mutableStateOf(TextFieldValue()) }
@@ -159,7 +164,7 @@ fun RegistrationScreen(navController: NavController) {
                 TextField(
                     value = userNameState.value,
                     onValueChange = { newText -> userNameState.value = newText },
-                    label = { Text("Benutzername") },
+//                    label = { Text("Benutzername") },
                     placeholder = { Text("Benutzername") },
                     singleLine = true,
                     modifier = Modifier
@@ -171,7 +176,7 @@ fun RegistrationScreen(navController: NavController) {
                 TextField(
                     value = emailState.value,
                     onValueChange = { newText -> emailState.value = newText },
-                    label = { Text("E-Mail") },
+//                    label = { Text("E-Mail") },
                     placeholder = { Text("E-Mail") },
                     singleLine = true,
                     modifier = Modifier
@@ -182,7 +187,7 @@ fun RegistrationScreen(navController: NavController) {
                 TextField(
                     value = passwordState.value,
                     onValueChange = { newText -> passwordState.value = newText },
-                    label = { Text("Passwort") },
+//                    label = { Text("Passwort") },
                     placeholder = { Text("Passwort") },
                     visualTransformation = PasswordVisualTransformation(),
                     singleLine = true,
@@ -194,7 +199,7 @@ fun RegistrationScreen(navController: NavController) {
                 TextField(
                     value = repeatPasswordState.value,
                     onValueChange = { repeatPasswordState.value = it },
-                    label = { Text("Passwort wiederholen") },
+//                    label = { Text("Passwort wiederholen") },
                     placeholder = { Text("Passwort wiederholen") },
                     visualTransformation = PasswordVisualTransformation(),
                     singleLine = true,
@@ -214,6 +219,7 @@ fun RegistrationScreen(navController: NavController) {
                     onClick = {
                         Log.d(TAG, "Attempting registration...")
                         val user = User(
+                            id = 0,
                             name = userNameState.value.text,
                             email = emailState.value.text,
                             password = passwordState.value.text
@@ -230,18 +236,18 @@ fun RegistrationScreen(navController: NavController) {
                                 registrationError = RegistrationError.EMPTY_PASSWORD
                             passwordState.value.text != repeatPasswordState.value.text ->
                                 registrationError = RegistrationError.PASSWORD_MISMATCH
-                            UsersRepository.userData.any { it.email == user.email } ->
+                            userData.any { it.email == user.email } ->
                                 registrationError = RegistrationError.EMAIL_EXISTS
-                            UsersRepository.userData.any { it.name == user.name } ->
+                            userData.any { it.name == user.name } ->
                                 registrationError = RegistrationError.USERNAME_EXISTS
                             !isValidEmail(user.email) ->
                                 registrationError = RegistrationError.INVALID_EMAIL
                             else -> {
                                 // Registrierung erfolgreich
-                                Log.i(TAG, "Registration successful for user: ${user.name}")
-                                UsersRepository.userData = UsersRepository.userData.apply { add(user) } // Fügt Benutzer hinzu
-                                AuthManager.login(user) // Automatischer Login
-                                navController.navigate("ProfileScreen1/${user.name}") {
+                                Log.i(TAG, "Registration successful for user Id: ${user.id}")
+                               viewModel.addUser(user) // Fügt Benutzer hinzu
+//                                AuthManager.login(user) // Automatischer Login
+                                navController.navigate("ProfileScreen1/${user.id}") {
                                     popUpTo(navController.graph.startDestinationId) {
                                         inclusive = true
                                     }
@@ -280,10 +286,10 @@ fun RegistrationScreen(navController: NavController) {
 private fun isValidEmail(email: String): Boolean {
     return Patterns.EMAIL_ADDRESS.matcher(email).matches() //vordefinierte Regex-Muster Patterns.EMAIL_ADDRESS
 }
-//Die Funktion isValidEmail verwendet ein Regex-Muster, um das Format der E-Mail zu prüfen.
-//Nur wenn das Muster passt, wird die Registrierung fortgesetzt.
-
-// Fehlertypen
+////Die Funktion isValidEmail verwendet ein Regex-Muster, um das Format der E-Mail zu prüfen.
+////Nur wenn das Muster passt, wird die Registrierung fortgesetzt.
+//
+//// Fehlertypen
 enum class RegistrationError(val message: String) {
     EMPTY_USERNAME("Bitte Benutzernamen eingeben"),
     EMPTY_EMAIL("Bitte E-Mail-Adresse eingeben"),

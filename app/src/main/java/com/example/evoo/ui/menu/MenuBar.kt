@@ -26,12 +26,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.evoo.BackgroundColor
-import com.example.evoo.business.AuthManager
+//import com.example.evoo.business.AuthManager
 
 @Composable
 fun MenuBar(navController: NavController){
 
-    val currentUser = AuthManager.currentUser //Aktuellen Benutzer abrufen
+//    val currentUser = AuthManager.currentUser //Aktuellen Benutzer abrufen
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -77,13 +77,13 @@ fun MenuBar(navController: NavController){
                     modifier = Modifier
                         .size(34.dp)
                         .clickable{
-                            if (currentUser != null) {
-                                // Navigiere zum Profil mit Benutzernamen
-                                navController.navigate("ProfileScreen1/${currentUser.name}")
-                            } else {
-                                // Fallback zur Login-Seite
-                                navController.navigate("LoginScreen")
-                            }
+//                            if (currentUser != null) {
+//                                // Navigiere zum Profil mit Benutzernamen
+//                                navController.navigate("ProfileScreen1/${currentUser.name}")
+//                            } else {
+//                                // Fallback zur Login-Seite
+//                                navController.navigate("LoginScreen")
+//                            }
                         }
                 )
                 Icon(

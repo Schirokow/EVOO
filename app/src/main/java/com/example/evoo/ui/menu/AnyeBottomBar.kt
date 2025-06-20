@@ -29,7 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.evoo.business.AuthManager
+//import com.example.evoo.business.AuthManager
 import androidx.compose.runtime.getValue
 
 @Composable
@@ -58,7 +58,7 @@ fun AnyeBottomBar(navController: NavController)
 //onAnyeClick: () -> Unit
 //)
 {
-    val currentUser = AuthManager.currentUser //Aktuellen Benutzer abrufen
+//    val currentUser = AuthManager.currentUser //Aktuellen Benutzer abrufen
 
     // Zustände für jedes Element
     val (homeSelected, setHomeSelected) = remember { mutableStateOf(false) }
@@ -122,13 +122,15 @@ fun AnyeBottomBar(navController: NavController)
 
                 IconButton(onClick = {
                     Log.d("Navigation","Navigating to ProfileScreen1")
-                    if (currentUser != null) {
-                        // Navigiere zum Profil mit Benutzernamen
-                        navController.navigate("ProfileScreen1/${currentUser.name}")
-                    } else {
-                        // Fallback zur Login-Seite
-                        navController.navigate("LoginScreen")
-                    } }) {
+                    navController.navigate("LoginScreen")
+//                    if (currentUser != null) {
+//                        // Navigiere zum Profil mit Benutzernamen
+//                        navController.navigate("ProfileScreen1/${currentUser.name}")
+//                    } else {
+//                        // Fallback zur Login-Seite
+//                        navController.navigate("LoginScreen")
+//                    }
+                }) {
                     Icon(
                         imageVector = Icons.Filled.Person,
                         contentDescription = "Profile",

@@ -13,7 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.evoo.business.AuthManager
+//import com.example.evoo.business.AuthManager
 import com.example.evoo.presentation.screens.ContentDetailScreen
 import com.example.evoo.presentation.screens.HomeScreen
 import com.example.evoo.presentation.screens.LocationScreen
@@ -44,7 +44,7 @@ fun Navigation() {
 
     val TAG = "AppNavigation"
     val navController = rememberNavController()
-    val currentUser = AuthManager.currentUser
+//    val currentUser = AuthManager.currentUser
 //    val startDestination = if (currentUser != null) {
 //        Log.i(TAG, "User authenticated: ${currentUser.name.take(3)}...")
 //        "ProfileScreen1/${currentUser.name}" //Direkt zum Profil
@@ -95,14 +95,14 @@ fun Navigation() {
         }
 
         composable(
-            "ProfileScreen1/{userName}",
-            arguments = listOf(navArgument("userName") {
-                type = NavType.StringType
+            "ProfileScreen1/{userId}",
+            arguments = listOf(navArgument("userId") {
+                type = NavType.IntType
             })
         ) { backStackEntry ->
-            val userName = backStackEntry.arguments?.getString("userName")
-            Log.d(TAG, "Navigating to ProfileScreen1 for user: ${userName?.take(3)}...")
-            ProfileScreen1(navController, userName)
+            val userId = backStackEntry.arguments?.getInt("userId") ?: 0
+            Log.d(TAG, "Navigating to ProfileScreen1 for user with id: $userId")
+            ProfileScreen1(navController, userId)
         }
     }
 }

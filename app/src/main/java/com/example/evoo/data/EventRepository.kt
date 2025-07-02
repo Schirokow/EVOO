@@ -8,13 +8,17 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "festivals")
 data class FestivalData(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0, // Eindeutige ID, automatisch generiert
     val imageId: Int,
     val title: String,
     val description: String,
     val datum: String,
     val location: String
 )
+// Erklärung:
+//@Entity(tableName = "festivals"): Markiert die Klasse als Datenbanktabelle mit dem Namen "festivals".
+//@PrimaryKey(autoGenerate = true): Definiert id als Primärschlüssel, der automatisch inkrementiert wird.
+//Die restlichen Felder (imageId, title, etc.) werden als Spalten in der Tabelle gespeichert.
 
 
 

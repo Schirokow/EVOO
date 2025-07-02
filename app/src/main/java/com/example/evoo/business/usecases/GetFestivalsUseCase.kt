@@ -31,17 +31,17 @@ data/
 
  */
 
-class GetFestivalsUseCase {
-    private val repository = FestivalRepositoryImpl()
-
-    fun getFestivalsFlow(): Flow<List<FestivalData>> {
-        return repository.getFestivalsFlow()
-    }
-
-    fun getFestivalByIdFlow(id: Int): Flow<FestivalData?> {
-        return repository.getFestivalByIdFlow(id)
-    }
-}
+//class GetFestivalsUseCase {
+//    private val repository = FestivalRepositoryImpl()
+//
+//    fun getFestivalsFlow(): Flow<List<FestivalData>> {
+//        return repository.getFestivalsFlow()
+//    }
+//
+//    fun getFestivalByIdFlow(id: Int): Flow<FestivalData?> {
+//        return repository.getFestivalByIdFlow(id)
+//    }
+//}
 
 //class GetFestivalsUseCase: FestivalRepository {
 //

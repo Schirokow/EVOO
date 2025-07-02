@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -51,6 +52,7 @@ import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
+import com.example.evoo.data.AppModule
 import com.example.evoo.data.FestivalData
 import com.example.evoo.presentation.viewmodels.HomeViewModel
 import com.example.evoo.ui.menu.AnyeBottomBar
@@ -62,7 +64,10 @@ fun HomeScreen(navController: NavController){
     val TAG = "HomeScreen"
     Log.d(TAG, "Home screen initialized")
 
-    val viewModel: HomeViewModel = viewModel()
+//    val viewModel: HomeViewModel = viewModel()
+
+    val context = LocalContext.current
+    val viewModel: HomeViewModel = viewModel(factory = AppModule.provideHomeViewModelFactory(context))
 
     Box(
         modifier = Modifier

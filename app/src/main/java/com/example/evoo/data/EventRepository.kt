@@ -3,9 +3,12 @@ package com.example.evoo.data
 import com.example.evoo.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "festivals")
 data class FestivalData(
-    val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val imageId: Int,
     val title: String,
     val description: String,

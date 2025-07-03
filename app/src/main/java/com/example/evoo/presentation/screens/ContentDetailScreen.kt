@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,6 +41,7 @@ import androidx.navigation.NavController
 import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
+import com.example.evoo.data.AppModule
 import com.example.evoo.presentation.viewmodels.ContentDetailViewModel
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.menu.AnyeBottomBar
@@ -50,7 +52,10 @@ fun ContentDetailScreen(navController: NavController, id: Int){
     val TAG = "ContentDetailScreen"
     Log.d(TAG, "Screen initialized with id: $id")
 
-    val viewModel: ContentDetailViewModel = viewModel()
+//    val viewModel: ContentDetailViewModel = viewModel()
+
+    val context = LocalContext.current
+    val viewModel: ContentDetailViewModel = viewModel(factory = AppModule.provideDetailViewModelFactory(context))
 
     LaunchedEffect(id) {
         Log.d(TAG, "Loading festival for id: $id")

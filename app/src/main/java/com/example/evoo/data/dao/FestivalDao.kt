@@ -9,13 +9,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FestivalDao {
     @Insert
-    suspend fun insert(festival: FestivalData) // Fügt ein Festival ein
+    suspend fun insert(festival: List<FestivalData>) // Fügt ein Festival ein
 
     @Query("SELECT * FROM festivals")
     fun getAllFestivals(): Flow<List<FestivalData>> // Gibt alle Festivals als Flow zurück
 
     @Query("SELECT * FROM festivals WHERE id = :festivalId")
     suspend fun getFestivalById(festivalId: Int): FestivalData? // Gibt ein Festival nach ID zurück
+
+    @Query("DELETE FROM festivals")
+    suspend fun deleteAllFestivals() // Methode zum Löschen aller Festivals
 }
 
 // Erklärung:
@@ -23,3 +26,4 @@ interface FestivalDao {
 //@Insert: Fügt ein FestivalData-Objekt in die Tabelle ein.
 //@Query("SELECT * FROM festivals"): Ruft alle Festivals ab. Flow ermöglicht reaktive Updates, wenn sich die Daten ändern.
 //@Query("SELECT * FROM festivals WHERE id = :festivalId"): Ruft ein bestimmtes Festival anhand seiner ID ab.
+//@Query("DELETE FROM festivals"): Führt einen SQL-Befehl aus, der alle Einträge in der festivals-Tabelle löscht.

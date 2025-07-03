@@ -3,7 +3,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.evoo.data.dao.FestivalDao
 
-@Database(entities = [FestivalData::class], version = 1)
+@Database(entities = [FestivalData::class], version = 1, exportSchema = false)
 abstract class FestivalDatabase : RoomDatabase() {
     abstract fun festivalDao(): FestivalDao
 }

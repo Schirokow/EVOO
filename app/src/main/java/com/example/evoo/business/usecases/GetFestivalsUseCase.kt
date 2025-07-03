@@ -3,6 +3,7 @@ package com.example.evoo.business.usecases
 import com.example.evoo.data.FestivalData
 import com.example.evoo.data.FestivalRepository
 import com.example.evoo.data.FestivalRepositoryImpl
+import com.example.evoo.data.FestivalRepositoryImplFlow
 import com.example.evoo.data.festivalDataFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -30,6 +31,13 @@ data/
 └── FestivalDataSource.kt (optional)
 
  */
+
+class GetFestivalsUseCase {
+    private val repository = FestivalRepositoryImplFlow()
+    fun getFestivalsFlow(): Flow<List<FestivalData>> {
+        return repository.getFestivalsFlow()
+    }
+}
 
 //class GetFestivalsUseCase {
 //    private val repository = FestivalRepositoryImpl()

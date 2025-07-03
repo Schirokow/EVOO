@@ -22,13 +22,15 @@ data class FestivalData(
 //Die restlichen Felder (imageId, title, etc.) werden als Spalten in der Tabelle gespeichert.
 
 interface FestivalRepository {
-    suspend fun insertFestival(festival: FestivalData)
+    suspend fun insertFestival(festival: List<FestivalData>)
     fun getFestivals(): Flow<List<FestivalData>>
     suspend fun getFestivalById(id: Int): FestivalData?
+
+    suspend fun deleteAllFestivals()
 }
 
 class FestivalRepositoryImpl(private val dao: FestivalDao) : FestivalRepository {
-    override suspend fun insertFestival(festival: FestivalData) {
+    override suspend fun insertFestival(festival: List<FestivalData>) {
         dao.insert(festival)
     }
 
@@ -38,6 +40,10 @@ class FestivalRepositoryImpl(private val dao: FestivalDao) : FestivalRepository 
 
     override suspend fun getFestivalById(id: Int): FestivalData? {
         return dao.getFestivalById(id)
+    }
+
+    override suspend fun deleteAllFestivals() {
+        dao.deleteAllFestivals()
     }
 }
 //Erklärung:
@@ -221,6 +227,14 @@ fun festivalDataFlow(): Flow<List<FestivalData>> = flow {
     emit(festivalData)
 }
 
+interface FestivalRepositoryFlow{
+    fun getFestivalsFlow(): Flow<List<FestivalData>>
+}
+
+class FestivalRepositoryImplFlow: FestivalRepositoryFlow{
+    override fun getFestivalsFlow(): Flow<List<FestivalData>> = festivalDataFlow()
+}
+
 //interface FestivalRepository {
 //    fun getFestivalsFlow(): Flow<List<FestivalData>>
 //    fun getFestivalByIdFlow(id: Int): Flow<FestivalData?>
@@ -238,3 +252,4 @@ fun festivalDataFlow(): Flow<List<FestivalData>> = flow {
 //        }
 //    }
 //}
+

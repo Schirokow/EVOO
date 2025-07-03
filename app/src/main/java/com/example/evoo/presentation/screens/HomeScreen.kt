@@ -6,18 +6,23 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -25,6 +30,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.FavoriteBorder
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -55,6 +61,7 @@ import com.example.evoo.TopLightBlue
 import com.example.evoo.data.AppModule
 import com.example.evoo.data.FestivalData
 import com.example.evoo.presentation.viewmodels.HomeViewModel
+import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.menu.AnyeBottomBar
 
 
@@ -68,6 +75,7 @@ fun HomeScreen(navController: NavController){
 
     val context = LocalContext.current
     val viewModel: HomeViewModel = viewModel(factory = AppModule.provideHomeViewModelFactory(context))
+    var showDeleteDialog by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -83,6 +91,28 @@ fun HomeScreen(navController: NavController){
                     BottomDarkBlue
                 )))
         ){
+                Row (
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    ClickButton(
+                        text = "Laden",
+                        onClick = {viewModel.loadAllFestivals()},
+                        modifier = Modifier
+                    )
+                Spacer(modifier = Modifier.width(20.dp))
+                    ClickButton(
+                        text = "Leeren",
+                        onClick = {viewModel.deleteAllFestivals()},
+                        modifier = Modifier
+                    )
+
+                }
+
+
             // Funktion für die Vorschau.
             EventContent(navController, viewModel)
 
@@ -115,7 +145,9 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
     Log.d(TAG, "Rendering festival grid with ${festivalDataList.size} items")
 
     LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 70.dp),
         contentPadding = PaddingValues(vertical = 16.dp),
         columns = GridCells.Fixed(2)
     ){

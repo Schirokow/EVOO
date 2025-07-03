@@ -11,6 +11,7 @@ interface FestivalDao {
     @Insert
     suspend fun insert(festival: List<FestivalData>) // Fügt ein Festival ein
 
+
     @Query("SELECT * FROM festivals")
     fun getAllFestivals(): Flow<List<FestivalData>> // Gibt alle Festivals als Flow zurück
 
@@ -19,6 +20,7 @@ interface FestivalDao {
 
     @Query("DELETE FROM festivals")
     suspend fun deleteAllFestivals() // Methode zum Löschen aller Festivals
+
 }
 
 // Erklärung:
@@ -27,3 +29,4 @@ interface FestivalDao {
 //@Query("SELECT * FROM festivals"): Ruft alle Festivals ab. Flow ermöglicht reaktive Updates, wenn sich die Daten ändern.
 //@Query("SELECT * FROM festivals WHERE id = :festivalId"): Ruft ein bestimmtes Festival anhand seiner ID ab.
 //@Query("DELETE FROM festivals"): Führt einen SQL-Befehl aus, der alle Einträge in der festivals-Tabelle löscht.
+

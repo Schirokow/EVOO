@@ -68,6 +68,7 @@ import com.example.evoo.data.AppModule
 import com.example.evoo.data.FestivalData
 import com.example.evoo.presentation.viewmodels.HomeViewModel
 import com.example.evoo.ui.components.buttons.ClickButton
+import com.example.evoo.ui.components.card.NewEventCard
 import com.example.evoo.ui.menu.AnyeBottomBar
 import kotlinx.coroutines.launch
 
@@ -248,33 +249,47 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
 
-                    Text(
-                        text = festival.title,
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = Color.White,
-                        modifier = Modifier.padding(bottom = 8.dp)
-                    )
-
-                    Card (
+//                    Text(
+//                        text = festival.title,
+//                        style = MaterialTheme.typography.headlineMedium,
+//                        color = Color.White,
+//                        modifier = Modifier.padding(bottom = 8.dp)
+//                    )
+                    NewEventCard(
+                        image = festival.imageId,
+                        title = festival.title,
+                        datum = festival.datum,
+                        onClick = {
+                            Log.d(TAG, "Navigating to detail screen for id: ${festival.id}")
+                                navController.navigate("ContentDetailScreen/${festival.id}")
+                        },
+                        isLarge = true,
                         modifier = Modifier
                             .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
                             .fillMaxWidth(0.9f)
                             .fillMaxHeight(0.5f)
-                            .clickable{
-                                Log.d(TAG, "Navigating to detail screen for id: ${festival.id}")
-                                navController.navigate("ContentDetailScreen/${festival.id}")
-                                      },
-                        shape = RoundedCornerShape(16.dp),
-                        elevation = CardDefaults.cardElevation(12.dp)
-                    ){
-                        Image(
-                            painter = painterResource(id = festival.imageId),
-                            contentDescription = "Vergrößertes Bild",
-                            contentScale = ContentScale.FillBounds,
-                            modifier = Modifier
-                                .fillMaxSize()
-                        )
-                    }
+                    )
+
+//                    Card (
+//                        modifier = Modifier
+//                            .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
+//                            .fillMaxWidth(0.9f)
+//                            .fillMaxHeight(0.5f)
+//                            .clickable{
+//                                Log.d(TAG, "Navigating to detail screen for id: ${festival.id}")
+//                                navController.navigate("ContentDetailScreen/${festival.id}")
+//                                      },
+//                        shape = RoundedCornerShape(16.dp),
+//                        elevation = CardDefaults.cardElevation(12.dp)
+//                    ){
+//                        Image(
+//                            painter = painterResource(id = festival.imageId),
+//                            contentDescription = "Vergrößertes Bild",
+//                            contentScale = ContentScale.FillBounds,
+//                            modifier = Modifier
+//                                .fillMaxSize()
+//                        )
+//                    }
 
 
                 }

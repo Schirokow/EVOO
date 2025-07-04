@@ -103,19 +103,19 @@ fun HomeScreen(navController: NavController){
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     ClickButton(
                         text = "Laden",
                         onClick = {viewModel.loadAllFestivals()},
-                        modifier = Modifier
+                        modifier = Modifier.width(150.dp)
                     )
 
                     ClickButton(
                         text = "Löschen",
                         onClick = {showDeleteDialog = true},
-                        modifier = Modifier
+                        modifier = Modifier.width(150.dp)
                     )
 
                 }

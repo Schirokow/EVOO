@@ -111,11 +111,11 @@ fun FavoriteScreen(navController: NavController){
 //                Text("Favoriten",
 //                    fontSize = 30.sp, color = Color.White,
 //                )
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.width(50.dp))
                 ClickButton(
                     text = "Alle löschen",
                     onClick = { showDeleteAllDialog = true },
-                    modifier = Modifier.padding(end = 8.dp)
+                    modifier = Modifier.width(150.dp)
                 )
             }
             if (favoriteFestivals.isEmpty()) {

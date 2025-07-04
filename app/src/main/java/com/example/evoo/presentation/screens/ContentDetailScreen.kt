@@ -6,6 +6,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,9 +16,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -63,6 +67,7 @@ fun ContentDetailScreen(navController: NavController, id: Int){
     }
 
     val festival by viewModel.festival.collectAsState()
+    val isFavorite by viewModel.isFavorite.collectAsState()
     if (festival == null) {
         Box(
             modifier = Modifier
@@ -70,6 +75,20 @@ fun ContentDetailScreen(navController: NavController, id: Int){
                 .background(Color.Red),
             contentAlignment = Alignment.Center
         ) {
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Icon(
+                    imageVector = Icons.Rounded.ArrowBack,
+                    contentDescription = "Zurück",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .padding(24.dp)
+                        .size(34.dp)
+                        .clickable { navController.popBackStack() }
+                )
+            }
             Text("Festival nicht gefunden", color = Color.White, fontSize = 24.sp)
         }
         return
@@ -105,15 +124,16 @@ fun ContentDetailScreen(navController: NavController, id: Int){
             )
 
             Icon(
-                imageVector = Icons.Rounded.FavoriteBorder,
+                imageVector = if (isFavorite) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
                 contentDescription = "Favorite",
-                tint = Color.White,
+                tint = if (isFavorite) Color.Yellow else Color.White,
                 modifier = Modifier
                     .align(alignment = Alignment.TopEnd)
                     .padding(24.dp)
                     .size(34.dp)
                     .clickable{
-                        Log.i(TAG, "Favorite clicked for: ${festival?.title?.take(15)}...")
+                        Log.i(TAG, "Favorite clicked for: ${festival!!.title.take(15)}...")
+                        viewModel.toggleFavorite(festival!!)
                     }
             )
 

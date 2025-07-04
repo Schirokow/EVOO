@@ -1,8 +1,10 @@
 package com.example.evoo.presentation.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.evoo.business.usecases.GetFestivalsUseCase
+import com.example.evoo.data.FavoriteRepository
 import com.example.evoo.data.FestivalData
 import com.example.evoo.data.FestivalRepository
 import kotlinx.coroutines.flow.Flow
@@ -30,7 +32,10 @@ import kotlinx.coroutines.launch
 //
 //}
 
-class HomeViewModel(private val repository: FestivalRepository) : ViewModel() {
+class HomeViewModel(
+    private val festivalRepository: FestivalRepository,
+    val favoriteRepository: FavoriteRepository
+) : ViewModel() {
     private val getFestivalsUseCase: GetFestivalsUseCase = GetFestivalsUseCase()
     private val _festivalData = MutableStateFlow<List<FestivalData>>(emptyList())
     val festivalData: StateFlow<List<FestivalData>> = _festivalData.asStateFlow()
@@ -38,7 +43,7 @@ class HomeViewModel(private val repository: FestivalRepository) : ViewModel() {
     init {
         viewModelScope.launch {
             // Festivals laden
-            repository.getFestivals().collect { festivals ->
+            festivalRepository.getFestivals().collect { festivals ->
                 _festivalData.value = festivals
             }
         }
@@ -48,15 +53,43 @@ class HomeViewModel(private val repository: FestivalRepository) : ViewModel() {
     fun loadAllFestivals(){
         viewModelScope.launch {
             getFestivalsUseCase.getFestivalsFlow().collect { festivals ->
-                repository.insertFestival(festivals)
+                festivalRepository.insertFestival(festivals)
             }
         }
     }
 
+//    fun deleteAllFestivals() {
+//        viewModelScope.launch {
+//            festivalRepository.deleteAllFestivals()
+//            _festivalData.value = emptyList() // UI sofort aktualisieren
+//        }
+//    }
+
     fun deleteAllFestivals() {
         viewModelScope.launch {
-            repository.deleteAllFestivals()
-            _festivalData.value = emptyList() // UI sofort aktualisieren
+            try {
+                festivalRepository.deleteAllFestivals()
+                _festivalData.value = emptyList()
+                Log.i("HomeViewModel", "All festivals deleted")
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "Error deleting festivals: ${e.message}")
+            }
+        }
+    }
+
+    fun toggleFavorite(festival: FestivalData) {
+        viewModelScope.launch {
+            try {
+                if (favoriteRepository.isFavorite(festival.id)) {
+                    favoriteRepository.removeFavorite(festival.id)
+                    Log.i("HomeViewModel", "Removed favorite: ${festival.id}")
+                } else {
+                    favoriteRepository.addFavorite(festival)
+                    Log.i("HomeViewModel", "Added favorite: ${festival.id}")
+                }
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "Error toggling favorite: ${e.message}")
+            }
         }
     }
 
@@ -118,7 +151,7 @@ class HomeViewModel(private val repository: FestivalRepository) : ViewModel() {
                 // Beispiel: Ein neues Festival hinzufügen
                 fun addFestival(festival: Flow<List<FestivalData>>) {
                     viewModelScope.launch {
-                        repository.insertFestival(festival as List<FestivalData>)
+                        festivalRepository.insertFestival(festival as List<FestivalData>)
                     }
                 }
             }

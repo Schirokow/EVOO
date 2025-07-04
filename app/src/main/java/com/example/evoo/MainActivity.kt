@@ -20,7 +20,7 @@ import com.example.evoo.presentation.screens.LocationScreen
 import com.example.evoo.presentation.screens.LoginScreen
 import com.example.evoo.presentation.screens.ProfileScreen1
 import com.example.evoo.presentation.screens.RegistrationScreen
-import com.example.evoo.presentation.screens.SearchScreen
+import com.example.evoo.presentation.screens.FavoriteScreen
 import com.example.evoo.presentation.screens.SettingScreen
 
 private const val TAG = "MainActivity"
@@ -68,9 +68,9 @@ fun Navigation() {
             Log.d(TAG, "Navigating to SettingScreen")
             SettingScreen(navController)
         }
-        composable("SearchScreen") {
-            Log.d(TAG, "Navigating to SearchScreen")
-            SearchScreen(navController)
+        composable("FavoriteScreen") {
+            Log.d(TAG, "Navigating to FavoriteScreen")
+            FavoriteScreen(navController)
         }
         composable("LoginScreen") {
             Log.d(TAG, "Navigating to LoginScreen")

@@ -67,6 +67,8 @@ import com.example.evoo.data.FestivalData
 import com.example.evoo.presentation.viewmodels.FavoriteViewModel
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.menu.AnyeBottomBar
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun FavoriteScreen(navController: NavController){
@@ -105,10 +107,10 @@ fun FavoriteScreen(navController: NavController){
                         .size(34.dp)
                         .clickable { navController.popBackStack() }
                 )
-                Spacer(modifier = Modifier.width(70.dp))
-                Text("Favoriten",
-                    fontSize = 30.sp, color = Color.White,
-                )
+//                Spacer(modifier = Modifier.width(70.dp))
+//                Text("Favoriten",
+//                    fontSize = 30.sp, color = Color.White,
+//                )
                 Spacer(modifier = Modifier.weight(1f))
                 ClickButton(
                     text = "Alle löschen",
@@ -245,7 +247,7 @@ fun FavoriteContent(navController: NavController, viewModel: FavoriteViewModel) 
                                     TAG,
                                     "Navigating to detail screen for id: ${festival.festivalId}"
                                 )
-                                navController.navigate("ContentDetailScreen/${festival.festivalId}")
+                                    navController.navigate("ContentDetailScreen/${festival.festivalId}")
                             },
                         shape = RoundedCornerShape(16.dp),
                         elevation = CardDefaults.cardElevation(12.dp)

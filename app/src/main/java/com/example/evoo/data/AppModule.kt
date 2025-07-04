@@ -9,6 +9,7 @@ import com.example.evoo.data.FavoriteRepository
 import com.example.evoo.data.FavoriteRepositoryImpl
 import com.example.evoo.presentation.viewmodels.ContentDetailViewModel
 import com.example.evoo.presentation.viewmodels.FavoriteViewModel
+
 import com.example.evoo.presentation.viewmodels.HomeViewModel
 
 object AppModule {
@@ -18,7 +19,8 @@ object AppModule {
 
     private fun provideFavoriteRepository(context: Context): FavoriteRepository {
         return FavoriteRepositoryImpl(DatabaseProvider.provideFavoriteDao(context))
-    }
+
+   }
 
     fun provideHomeViewModelFactory(context: Context): ViewModelProvider.Factory {
         return object : ViewModelProvider.Factory {

@@ -10,6 +10,7 @@ import com.example.evoo.data.dao.FestivalDao
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
+
 @Entity(tableName = "festivals")
 data class FestivalData(
     @PrimaryKey(autoGenerate = true) val id: Int = 0, // Eindeutige ID, automatisch generiert
@@ -24,6 +25,7 @@ data class FestivalData(
 //@PrimaryKey(autoGenerate = true): Definiert id als Primärschlüssel, der automatisch inkrementiert wird.
 //Die restlichen Felder (imageId, title, etc.) werden als Spalten in der Tabelle gespeichert.
 
+
 @Entity(tableName = "favorites")
 data class Favorite(
     @PrimaryKey val festivalId: Int, // Verweist auf die ID eines Festivals in der festivals-Tabelle
@@ -36,6 +38,7 @@ data class Favorite(
 //Erklärung:
 //Die favorites-Tabelle speichert nur die festivalId, die auf die id-Spalte der festivals-Tabelle verweist.
 //@PrimaryKey stellt sicher, dass jede festivalId eindeutig ist, um Duplikate zu vermeiden.
+
 
 interface FestivalRepository {
     suspend fun insertFestival(festival: List<FestivalData>)

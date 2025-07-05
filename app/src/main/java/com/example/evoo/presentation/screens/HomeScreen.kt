@@ -257,7 +257,8 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                 Column (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .align(Alignment.Center),
+                        .padding(top = 100.dp),
+//                        .align(Alignment.Center),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
 
@@ -280,7 +281,8 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                         modifier = Modifier
                             .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
                             .fillMaxWidth(0.9f)
-                            .fillMaxHeight(0.5f)
+//                            .fillMaxHeight(0.5f)
+                            .height(300.dp)
                     )
 
 //                    Card (

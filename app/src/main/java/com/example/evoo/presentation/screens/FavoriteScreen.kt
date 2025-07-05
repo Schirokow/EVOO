@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
@@ -241,7 +242,8 @@ fun FavoriteContent(navController: NavController, viewModel: FavoriteViewModel) 
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .align(Alignment.Center),
+                        .padding(top = 100.dp),
+//                        .align(Alignment.Center),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 //                    Text(
@@ -264,7 +266,8 @@ fun FavoriteContent(navController: NavController, viewModel: FavoriteViewModel) 
                         modifier = Modifier
                             .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
                             .fillMaxWidth(0.9f)
-                            .fillMaxHeight(0.5f)
+                            .height(300.dp)
+//                            .fillMaxHeight(0.5f)
                     )
 
 //                    Card(

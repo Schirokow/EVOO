@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -13,10 +14,12 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -149,63 +152,76 @@ fun ContentDetailScreen(navController: NavController, id: Int){
                     .fillMaxWidth()
             )
 
-            Column(
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = 100.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                contentPadding = PaddingValues(bottom = 80.dp) // Platz für AnyeBottomBar
             ) {
-                Log.d(TAG, "Rendering content for: ${festival?.title?.take(15)}...")
-                // Titel
-                Text(
-                    text = festival?.title.toString(),
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = Color.White,
-                    modifier = Modifier.padding(bottom = 10.dp)
-                )
+                item {
+                    Log.d(TAG, "Rendering content for: ${festival?.title?.take(15)}...")
 
-                // Bild
-                Card (
-                    modifier = Modifier
-                        .fillMaxWidth(0.9f)
-                        .fillMaxHeight(0.5f),
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.cardElevation(12.dp)
-                ){
-                    Image(
-                        painter = painterResource(id = festival?.imageId ?: 0),
-                        contentDescription = null,
+                    // Bild
+                    Card (
                         modifier = Modifier
-                            .fillMaxSize(),
-                        contentScale = ContentScale.FillBounds
+                            .fillMaxWidth(0.9f)
+//                            .fillMaxHeight(0.5f),
+                            .height(300.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        elevation = CardDefaults.cardElevation(12.dp)
+                    ){
+                        Image(
+                            painter = painterResource(id = festival?.imageId ?: 0),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            contentScale = ContentScale.FillBounds
+                        )
+                    }
+
+                    // Titel
+                    Text(
+                        text = festival?.title.toString(),
+                        style = MaterialTheme.typography.headlineLarge,
+                        color = Color.White,
+                        modifier = Modifier.padding(16.dp)
                     )
+
+                    // Beschreibung
+                    Text(
+                        text = "Beschreibung: ${festival?.description}",
+                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
+                        color = Color.White,
+                        modifier = Modifier.padding(16.dp)
+                    )
+
+                    // Datum
+                    Text(
+                        text = "Datum: ${festival?.datum}",
+                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
+                        color = Color.White,
+                        modifier = Modifier.padding(16.dp)
+                    )
+
+                    // Location
+                    Text(
+                        text = "Ort: ${festival?.location}",
+                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
+                        color = Color.White,
+                        modifier = Modifier.padding(16.dp)
+                    )
+
+                    // Spacer für minimale Scroll-Länge
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(500.dp)
+                    ) // Definiert die zusätzliche Scroll-Länge
+
+                }
                 }
 
-                // Beschreibung
-                Text(
-                    text = "Beschreibung: ${festival?.description}",
-                    style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
-                    color = Color.White,
-                    modifier = Modifier.padding(16.dp)
-                )
-
-                // Datum
-                Text(
-                    text = "Datum: ${festival?.datum}",
-                    style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
-                    color = Color.White,
-                    modifier = Modifier.padding(16.dp)
-                )
-
-                // Location
-                Text(
-                    text = "Ort: ${festival?.location}",
-                    style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
-                    color = Color.White,
-                    modifier = Modifier.padding(16.dp)
-                )
-
-            }
 
             AnyeBottomBar(navController)
         }

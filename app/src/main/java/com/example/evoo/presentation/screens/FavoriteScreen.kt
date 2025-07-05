@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
@@ -66,6 +67,7 @@ import com.example.evoo.data.Favorite
 import com.example.evoo.data.FestivalData
 import com.example.evoo.presentation.viewmodels.FavoriteViewModel
 import com.example.evoo.ui.components.buttons.ClickButton
+import com.example.evoo.ui.components.card.NewEventCard
 import com.example.evoo.ui.menu.AnyeBottomBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -186,28 +188,41 @@ fun FavoriteContent(navController: NavController, viewModel: FavoriteViewModel) 
                     .padding(6.dp)
                     .aspectRatio(1f)
             ) {
-                Card(
+              
+                NewEventCard(
+                    image = festival.imageId,
+                    title = festival.title,
+                    datum = festival.datum,
+                    onClick = {
+                        Log.d(TAG, "Festival card clicked - id: ${festival.festivalId}, title: ${festival.title.take(15)}...")
+                        selectedFestivalData = festival
+                    },
+                    isLarge = true,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .clickable {
-                            Log.d(
-                                TAG,
-                                "Festival card clicked - id: ${festival.festivalId}, title: ${
-                                    festival.title.take(15)
-                                }..."
-                            )
-                            selectedFestivalData = festival
-                        },
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.cardElevation(12.dp)
-                ) {
-                    Image(
-                        painter = painterResource(id = festival.imageId),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
+                )
+
+//                Card(
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .clickable {
+//                            Log.d(
+//                                TAG,
+//                                "Festival card clicked - id: ${festival.festivalId}, title: ${
+//                                    festival.title.take(15)
+//                                }..."
+//                            )
+//                            selectedFestivalData = festival
+//                        },
+//                    shape = RoundedCornerShape(16.dp),
+//                    elevation = CardDefaults.cardElevation(12.dp)
+//                ) {
+//                    Image(
+//                        painter = painterResource(id = festival.imageId),
+//                        contentDescription = null,
+//                        contentScale = ContentScale.FillBounds,
+//                        modifier = Modifier.fillMaxSize()
+//                    )
+//                }
             }
         }
     }
@@ -228,37 +243,57 @@ fun FavoriteContent(navController: NavController, viewModel: FavoriteViewModel) 
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .align(Alignment.Center),
+                        .padding(top = 100.dp),
+//                        .align(Alignment.Center),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
-                        text = festival.title,
-                        style = MaterialTheme.typography.headlineMedium,
-                        color = Color.White,
-                        modifier = Modifier.padding(bottom = 8.dp)
-                    )
-                    Card(
+//                    Text(
+//                        text = festival.title,
+//                        style = MaterialTheme.typography.headlineMedium,
+//                        color = Color.White,
+//                        modifier = Modifier.padding(bottom = 8.dp)
+//                    )
+
+                    NewEventCard(
+                        image = festival.imageId,
+                        title = festival.title,
+                        datum = festival.datum,
+                        onClick = {
+                            Log.d(TAG, "Navigating to detail screen for id: ${festival.festivalId}")
+                            navController.navigate("ContentDetailScreen/${festival.festivalId}")
+                        },
+                        isLarge = true,
+                        textIsLarge = true,
                         modifier = Modifier
                             .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
                             .fillMaxWidth(0.9f)
-                            .fillMaxHeight(0.5f)
-                            .clickable {
-                                Log.d(
-                                    TAG,
-                                    "Navigating to detail screen for id: ${festival.festivalId}"
-                                )
-                                    navController.navigate("ContentDetailScreen/${festival.festivalId}")
-                            },
-                        shape = RoundedCornerShape(16.dp),
-                        elevation = CardDefaults.cardElevation(12.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(id = festival.imageId),
-                            contentDescription = "Vergrößertes Bild",
-                            contentScale = ContentScale.FillBounds,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
+                            .height(300.dp)
+//                            .fillMaxHeight(0.5f)
+                    )
+
+//                    Card(
+//                        modifier = Modifier
+//                            .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
+//                            .fillMaxWidth(0.9f)
+//                            .fillMaxHeight(0.5f)
+//                            .clickable {
+//                                Log.d(
+//                                    TAG,
+//                                    "Navigating to detail screen for id: ${festival.festivalId}"
+//                                )
+//                                    navController.navigate("ContentDetailScreen/${festival.festivalId}")
+//                            },
+//                        shape = RoundedCornerShape(16.dp),
+//                        elevation = CardDefaults.cardElevation(12.dp)
+//                    ) {
+//                        Image(
+//                            painter = painterResource(id = festival.imageId),
+//                            contentDescription = "Vergrößertes Bild",
+//                            contentScale = ContentScale.FillBounds,
+//                            modifier = Modifier.fillMaxSize()
+//                        )
+//                    }
+
                 }
                 Icon(
                     imageVector = Icons.Rounded.ArrowBack,

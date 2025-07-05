@@ -43,15 +43,14 @@ fun PreviewNewEventCard(){
 
 @Composable
 fun NewEventCard(
-//    event : FestivalData,
     image: Int?,
     title: String,
     datum: String,
     modifier : Modifier = Modifier,
     onClick: () -> Unit,
     isLarge : Boolean = false,
+    textIsLarge: Boolean = false
 ){
-
     val cardSize = if (isLarge) 200.dp else 100.dp
     val imageToUse = image ?: R.drawable.festival1
 
@@ -83,14 +82,14 @@ fun NewEventCard(
                     Text(
                         text = title,
                         color = Color.White,
-                        fontSize = if (isLarge) 34.sp else 10.sp
+                        fontSize = if (textIsLarge) 34.sp else 10.sp
                     )
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Text(
                         text = datum ?: "No Date",
                         color = Color.White,
-                        fontSize = if (isLarge) 22.sp else 8.sp
+                        fontSize = if (textIsLarge) 22.sp else 8.sp
                     )
                     Spacer(modifier = Modifier.height(4.dp))
 

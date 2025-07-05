@@ -187,28 +187,40 @@ fun FavoriteContent(navController: NavController, viewModel: FavoriteViewModel) 
                     .padding(6.dp)
                     .aspectRatio(1f)
             ) {
-                Card(
+                NewEventCard(
+                    image = festival.imageId,
+                    title = festival.title,
+                    datum = festival.datum,
+                    onClick = {
+                        Log.d(TAG, "Festival card clicked - id: ${festival.festivalId}, title: ${festival.title.take(15)}...")
+                        selectedFestivalData = festival
+                    },
+                    isLarge = true,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .clickable {
-                            Log.d(
-                                TAG,
-                                "Festival card clicked - id: ${festival.festivalId}, title: ${
-                                    festival.title.take(15)
-                                }..."
-                            )
-                            selectedFestivalData = festival
-                        },
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.cardElevation(12.dp)
-                ) {
-                    Image(
-                        painter = painterResource(id = festival.imageId),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
+                )
+
+//                Card(
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .clickable {
+//                            Log.d(
+//                                TAG,
+//                                "Festival card clicked - id: ${festival.festivalId}, title: ${
+//                                    festival.title.take(15)
+//                                }..."
+//                            )
+//                            selectedFestivalData = festival
+//                        },
+//                    shape = RoundedCornerShape(16.dp),
+//                    elevation = CardDefaults.cardElevation(12.dp)
+//                ) {
+//                    Image(
+//                        painter = painterResource(id = festival.imageId),
+//                        contentDescription = null,
+//                        contentScale = ContentScale.FillBounds,
+//                        modifier = Modifier.fillMaxSize()
+//                    )
+//                }
             }
         }
     }
@@ -248,6 +260,7 @@ fun FavoriteContent(navController: NavController, viewModel: FavoriteViewModel) 
                             navController.navigate("ContentDetailScreen/${festival.festivalId}")
                         },
                         isLarge = true,
+                        textIsLarge = true,
                         modifier = Modifier
                             .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
                             .fillMaxWidth(0.9f)

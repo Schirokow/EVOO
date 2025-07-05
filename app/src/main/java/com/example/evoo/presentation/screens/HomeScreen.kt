@@ -202,24 +202,36 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                     .padding(6.dp)
                     .aspectRatio(1f)
             ){
-                Card(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clickable{
-                            Log.d(TAG, "Festival card clicked - id: ${festival.id}, title: ${festival.title.take(15)}...")
+                NewEventCard(
+                    image = festival.imageId,
+                    title = festival.title,
+                    datum = festival.datum,
+                    onClick = {
+                        Log.d(TAG, "Festival card clicked - id: ${festival.id}, title: ${festival.title.take(15)}...")
                             selectedFestivalData = festival
-                                  },
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.cardElevation(12.dp)
-                ) {
-                    Image(
-                        painter = painterResource(id = festival.imageId),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier
-                            .fillMaxSize()
-                    )
-                }
+                    },
+                    isLarge = true,
+                    modifier = Modifier
+                )
+
+//                Card(
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .clickable{
+//                            Log.d(TAG, "Festival card clicked - id: ${festival.id}, title: ${festival.title.take(15)}...")
+//                            selectedFestivalData = festival
+//                                  },
+//                    shape = RoundedCornerShape(16.dp),
+//                    elevation = CardDefaults.cardElevation(12.dp)
+//                ) {
+//                    Image(
+//                        painter = painterResource(id = festival.imageId),
+//                        contentDescription = null,
+//                        contentScale = ContentScale.FillBounds,
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                    )
+//                }
 
             }
         }
@@ -264,6 +276,7 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                                 navController.navigate("ContentDetailScreen/${festival.id}")
                         },
                         isLarge = true,
+                        textIsLarge = true,
                         modifier = Modifier
                             .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
                             .fillMaxWidth(0.9f)

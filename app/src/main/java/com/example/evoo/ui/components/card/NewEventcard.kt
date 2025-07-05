@@ -55,8 +55,8 @@ fun NewEventCard(
     val imageToUse = image ?: R.drawable.festival1
 
     Card(
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(4.dp),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(12.dp),
         modifier = modifier
             .size(cardSize)
             //.fillMaxWidth()
@@ -67,7 +67,7 @@ fun NewEventCard(
             Image(
                 painter = painterResource(id = imageToUse),
                 contentDescription = title,
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillBounds,
                 modifier = Modifier.fillMaxSize()
             )
             Box(

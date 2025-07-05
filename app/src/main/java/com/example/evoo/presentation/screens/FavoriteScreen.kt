@@ -188,6 +188,7 @@ fun FavoriteContent(navController: NavController, viewModel: FavoriteViewModel) 
                     .padding(6.dp)
                     .aspectRatio(1f)
             ) {
+              
                 NewEventCard(
                     image = festival.imageId,
                     title = festival.title,
@@ -292,6 +293,7 @@ fun FavoriteContent(navController: NavController, viewModel: FavoriteViewModel) 
 //                            modifier = Modifier.fillMaxSize()
 //                        )
 //                    }
+
                 }
                 Icon(
                     imageVector = Icons.Rounded.ArrowBack,

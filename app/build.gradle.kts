@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-android")
+    id ("kotlin-kapt")
 }
 
 android {
@@ -82,6 +84,15 @@ dependencies {
 
     // Fügen Sie diese Zeile hinzu für AndroidX Core
     implementation (libs.androidx.core.ktx.v1160)
+
+    // Room mit TOML-Referenzen
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    // Compose
+    implementation(libs.androidx.lifecycle.viewmodel.compose.v291)
+    implementation(libs.androidx.runtime.livedata.v183)
 
 
 

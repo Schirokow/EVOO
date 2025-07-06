@@ -23,6 +23,7 @@ import com.example.evoo.ui.theme.colorthemetype.BottomDarkBlue
 import androidx.compose.foundation.Image
 import androidx.navigation.NavController
 import android.util.Log
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,7 +63,7 @@ fun AnyeBottomBar(navController: NavController)
 
     // Zustände für jedes Element
     val (homeSelected, setHomeSelected) = remember { mutableStateOf(false) }
-    val (searchSelected, setSearchSelected) = remember { mutableStateOf(false) }
+    val (favoriteSelected, setFavoriteSelected) = remember { mutableStateOf(false) }
     val (profileSelected, setProfileSelected) = remember { mutableStateOf(false) }
     val (settingsSelected, setSettingsSelected) = remember { mutableStateOf(false) }
     // Zustand für das Logo hinzufügen
@@ -75,7 +76,7 @@ fun AnyeBottomBar(navController: NavController)
     // Farbzustände aktualisieren
     LaunchedEffect(currentRoute) {
         setHomeSelected(currentRoute == "HomeScreen")
-        setSearchSelected(currentRoute == "SearchScreen")
+        setFavoriteSelected(currentRoute == "FavoriteScreen")
         setProfileSelected(
             currentRoute?.startsWith("ProfileScreen1") == true ||
                     currentRoute == "LoginScreen" ||
@@ -110,11 +111,11 @@ fun AnyeBottomBar(navController: NavController)
                         tint = if (homeSelected) Color.Yellow else Color.White
                     )
                 }
-                IconButton(onClick = {navController.navigate("SearchScreen")}) {
+                IconButton(onClick = {navController.navigate("FavoriteScreen")}) {
                     Icon(
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = "Search",
-                        tint = if (searchSelected) Color.Yellow else Color.White
+                        imageVector = Icons.Filled.Favorite,
+                        contentDescription = "Favorite",
+                        tint = if (favoriteSelected) Color.Yellow else Color.White
                     )
                 }
 

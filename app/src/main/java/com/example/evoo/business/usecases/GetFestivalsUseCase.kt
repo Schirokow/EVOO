@@ -3,6 +3,7 @@ package com.example.evoo.business.usecases
 import com.example.evoo.data.FestivalData
 import com.example.evoo.data.FestivalRepository
 import com.example.evoo.data.FestivalRepositoryImpl
+import com.example.evoo.data.FestivalRepositoryImplFlow
 import com.example.evoo.data.festivalDataFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -32,16 +33,23 @@ data/
  */
 
 class GetFestivalsUseCase {
-    private val repository = FestivalRepositoryImpl()
-
+    private val repository = FestivalRepositoryImplFlow()
     fun getFestivalsFlow(): Flow<List<FestivalData>> {
         return repository.getFestivalsFlow()
     }
-
-    fun getFestivalByIdFlow(id: Int): Flow<FestivalData?> {
-        return repository.getFestivalByIdFlow(id)
-    }
 }
+
+//class GetFestivalsUseCase {
+//    private val repository = FestivalRepositoryImpl()
+//
+//    fun getFestivalsFlow(): Flow<List<FestivalData>> {
+//        return repository.getFestivalsFlow()
+//    }
+//
+//    fun getFestivalByIdFlow(id: Int): Flow<FestivalData?> {
+//        return repository.getFestivalByIdFlow(id)
+//    }
+//}
 
 //class GetFestivalsUseCase: FestivalRepository {
 //

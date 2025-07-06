@@ -62,6 +62,7 @@ import com.example.evoo.ui.theme.colorthemetype.TopLightBlue
 //import com.example.evoo.business.AuthManager
 import com.example.evoo.data.UsersRepository
 import com.example.evoo.presentation.viewmodels.LoginViewModel
+import com.example.evoo.presentation.viewmodels.Profile1ViewModel
 
 private const val TAG = "ProfileScreen1"
 
@@ -88,7 +89,7 @@ fun ProfileScreen1 (navController: NavController, userId: Int?) {
 
     Log.d(TAG, "Profile screen loaded for user: $userId")
 
-    val viewModel: LoginViewModel = viewModel()
+    val viewModel: Profile1ViewModel = viewModel()
     val userData by viewModel.users.collectAsState()
 
     // Finde den User in der Repository

@@ -3,22 +3,119 @@ package com.example.evoo.data
 import com.example.evoo.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.evoo.data.dao.FavoriteDao
+import com.example.evoo.data.dao.FestivalDao
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
+
+@Entity(tableName = "festivals")
 data class FestivalData(
-    val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0, // Eindeutige ID, automatisch generiert
     val imageId: Int,
     val title: String,
     val description: String,
     val datum: String,
     val location: String
 )
+// Erklärung:
+//@Entity(tableName = "festivals"): Markiert die Klasse als Datenbanktabelle mit dem Namen "festivals".
+//@PrimaryKey(autoGenerate = true): Definiert id als Primärschlüssel, der automatisch inkrementiert wird.
+//Die restlichen Felder (imageId, title, etc.) werden als Spalten in der Tabelle gespeichert.
 
 
+@Entity(tableName = "favorites")
+data class Favorite(
+    @PrimaryKey val festivalId: Int, // Verweist auf die ID eines Festivals in der festivals-Tabelle
+    val imageId: Int,
+    val title: String,
+    val description: String,
+    val datum: String,
+    val location: String
+)
+//Erklärung:
+//Die favorites-Tabelle speichert nur die festivalId, die auf die id-Spalte der festivals-Tabelle verweist.
+//@PrimaryKey stellt sicher, dass jede festivalId eindeutig ist, um Duplikate zu vermeiden.
+
+
+interface FestivalRepository {
+    suspend fun insertFestival(festival: List<FestivalData>)
+    fun getFestivals(): Flow<List<FestivalData>>
+    suspend fun getFestivalById(id: Int): FestivalData?
+
+    suspend fun deleteAllFestivals()
+}
+
+class FestivalRepositoryImpl(private val dao: FestivalDao) : FestivalRepository {
+    override suspend fun insertFestival(festival: List<FestivalData>) {
+        dao.insert(festival)
+    }
+
+    override fun getFestivals(): Flow<List<FestivalData>> {
+        return dao.getAllFestivals()
+    }
+
+    override suspend fun getFestivalById(id: Int): FestivalData? {
+        return dao.getFestivalById(id)
+    }
+
+    override suspend fun deleteAllFestivals() {
+        dao.deleteAllFestivals()
+    }
+}
+//Erklärung:
+//Das Repository verwendet das FestivalDao, um Datenbankoperationen durchzuführen.
+//Flow<List<FestivalData>> ermöglicht reaktive Updates, wenn sich die Daten ändern.
+
+interface FavoriteRepository {
+    suspend fun addFavorite(festival: FestivalData)
+    suspend fun removeFavorite(festivalId: Int)
+    fun getFavoriteFestivals(): Flow<List<Favorite>>
+    suspend fun isFavorite(festivalId: Int): Boolean
+    suspend fun deleteAllFavorites()
+}
+
+class FavoriteRepositoryImpl(
+    private val favoriteDao: FavoriteDao
+) : FavoriteRepository {
+    override suspend fun addFavorite(festival: FestivalData) {
+        favoriteDao.insertFavorite(
+            Favorite(
+                festivalId = festival.id,
+                imageId = festival.imageId,
+                title = festival.title,
+                description = festival.description,
+                datum = festival.datum,
+                location = festival.location
+            )
+        )
+    }
+
+    override suspend fun removeFavorite(festivalId: Int) {
+        favoriteDao.deleteFavorite(festivalId)
+    }
+
+    override fun getFavoriteFestivals(): Flow<List<Favorite>> {
+        return favoriteDao.getAllFavorites()
+    }
+
+    override suspend fun isFavorite(festivalId: Int): Boolean {
+        return favoriteDao.isFavorite(festivalId)
+    }
+
+    override suspend fun deleteAllFavorites() {
+        favoriteDao.deleteAllFavorites()
+    }
+}
+//Erklärung:
+//addFavorite nimmt ein FestivalData-Objekt und konvertiert es in ein Favorite-Objekt.
+//getFavoriteFestivals gibt direkt Flow<List<Favorite>> zurück.
 
 // Liste aller Events
 private var festivalData = mutableListOf(
         FestivalData(
-            id = 1,
             imageId = R.drawable.festival1,
             title = "Summer Festival",
             description = "Techno Festival",
@@ -26,7 +123,6 @@ private var festivalData = mutableListOf(
             location = "Am Strand"
         ),
         FestivalData(
-            id = 2,
             imageId = R.drawable.festival2,
             title = "Heaven & Hill Neukirchen",
             description = "Disco-Fest",
@@ -34,7 +130,6 @@ private var festivalData = mutableListOf(
             location = "Neukirchen-Vluyn"
         ),
         FestivalData(
-            id = 3,
             imageId = R.drawable.festival3,
             title = "LOVEMUSIC Festival Magdeburg",
             description = "Party bis zum Umfallen!!!",
@@ -42,7 +137,6 @@ private var festivalData = mutableListOf(
             location = "Elbauenpark Magdeburg"
         ),
         FestivalData(
-            id = 4,
             imageId = R.drawable.festival4,
             title = "CAPTAIN JACK Weiden",
             description = "Festival in Weiden",
@@ -50,7 +144,6 @@ private var festivalData = mutableListOf(
             location = "Festplatz Weiden"
         ),
         FestivalData(
-            id = 5,
             imageId = R.drawable.festival5,
             title = "GLÜCKSGEFÜHLE Festival",
             description = "Euphoria Stage",
@@ -58,7 +151,6 @@ private var festivalData = mutableListOf(
             location = "Discoland"
         ),
         FestivalData(
-            id = 6,
             imageId = R.drawable.festival6,
             title = "SUMMER FOOD ROCK",
             description = "Rock Festival",
@@ -66,7 +158,6 @@ private var festivalData = mutableListOf(
             location = "OPEN AIR"
         ),
         FestivalData(
-            id = 7,
             imageId = R.drawable.festival7,
             title = "HAVEL BEATS Festival",
             description = "Techno Festival",
@@ -74,7 +165,6 @@ private var festivalData = mutableListOf(
             location = "Stadion"
         ),
         FestivalData(
-            id = 8,
             imageId = R.drawable.festival8,
             title = "FESTIVAL HOCKENHEIMRING",
             description = "Techno Festival",
@@ -82,7 +172,6 @@ private var festivalData = mutableListOf(
             location = "Hockenheimring"
         ),
         FestivalData(
-            id = 9,
             imageId = R.drawable.festival9,
             title = "DAS HR-FESTIVAL 2025",
             description = "Embrace Festival",
@@ -90,7 +179,6 @@ private var festivalData = mutableListOf(
             location = "Berlin"
         ),
         FestivalData(
-            id = 10,
             imageId = R.drawable.festival10,
             title = "TAUBERTAL Festival 2025",
             description = "Festival",
@@ -98,7 +186,6 @@ private var festivalData = mutableListOf(
             location = "Rothenburg Ob Der Tauber"
         ),
         FestivalData(
-            id = 11,
             imageId = R.drawable.festival11,
             title = "BLANKENFELDE Festival Juli 2025",
             description = "Rock Festival",
@@ -106,7 +193,6 @@ private var festivalData = mutableListOf(
             location = "Blankenfelde"
         ),
         FestivalData(
-            id = 12,
             imageId = R.drawable.festival12,
             title = "Latin Airport Festival",
             description = "Latino Festival",
@@ -114,7 +200,6 @@ private var festivalData = mutableListOf(
             location = "Airport Nürnberg"
         ),
         FestivalData(
-            id = 13,
             imageId = R.drawable.festival1,
             title = "Summer Festival",
             description = "Techno Festival",
@@ -122,7 +207,6 @@ private var festivalData = mutableListOf(
             location = "Am Strand"
         ),
         FestivalData(
-            id = 14,
             imageId = R.drawable.festival2,
             title = "Heaven & Hill Neukirchen",
             description = "Disco-Fest",
@@ -130,7 +214,6 @@ private var festivalData = mutableListOf(
             location = "Neukirchen-Vluyn"
         ),
         FestivalData(
-            id = 15,
             imageId = R.drawable.festival3,
             title = "LOVEMUSIC Festival Magdeburg",
             description = "Party bis zum Umfallen!!!",
@@ -138,7 +221,6 @@ private var festivalData = mutableListOf(
             location = "Elbauenpark Magdeburg"
         ),
         FestivalData(
-            id = 16,
             imageId = R.drawable.festival4,
             title = "CAPTAIN JACK Weiden",
             description = "Festival in Weiden",
@@ -146,7 +228,6 @@ private var festivalData = mutableListOf(
             location = "Festplatz Weiden"
         ),
         FestivalData(
-            id = 17,
             imageId = R.drawable.festival5,
             title = "GLÜCKSGEFÜHLE Festival",
             description = "Euphoria Stage",
@@ -154,7 +235,6 @@ private var festivalData = mutableListOf(
             location = "Discoland"
         ),
         FestivalData(
-            id = 18,
             imageId = R.drawable.festival6,
             title = "SUMMER FOOD ROCK",
             description = "Rock Festival",
@@ -162,7 +242,6 @@ private var festivalData = mutableListOf(
             location = "OPEN AIR"
         ),
         FestivalData(
-            id =19,
             imageId = R.drawable.festival7,
             title = "HAVEL BEATS Festival",
             description = "Techno Festival",
@@ -170,7 +249,6 @@ private var festivalData = mutableListOf(
             location = "Stadion"
         ),
         FestivalData(
-            id = 20,
             imageId = R.drawable.festival8,
             title = "FESTIVAL HOCKENHEIMRING",
             description = "Techno Festival",
@@ -178,7 +256,6 @@ private var festivalData = mutableListOf(
             location = "Hockenheimring"
         ),
         FestivalData(
-            id = 21,
             imageId = R.drawable.festival9,
             title = "DAS HR-FESTIVAL 2025",
             description = "Embrace Festival",
@@ -186,7 +263,6 @@ private var festivalData = mutableListOf(
             location = "Berlin"
         ),
         FestivalData(
-            id = 22,
             imageId = R.drawable.festival10,
             title = "TAUBERTAL Festival 2025",
             description = "Festival",
@@ -194,7 +270,6 @@ private var festivalData = mutableListOf(
             location = "Rothenburg Ob Der Tauber"
         ),
         FestivalData(
-            id = 23,
             imageId = R.drawable.festival11,
             title = "BLANKENFELDE Festival Juli 2025",
             description = "Rock Festival",
@@ -202,7 +277,6 @@ private var festivalData = mutableListOf(
             location = "Blankenfelde"
         ),
         FestivalData(
-            id = 24,
             imageId = R.drawable.festival12,
             title = "Latin Airport Festival",
             description = "Latino Festival",
@@ -215,20 +289,29 @@ fun festivalDataFlow(): Flow<List<FestivalData>> = flow {
     emit(festivalData)
 }
 
-interface FestivalRepository {
+interface FestivalRepositoryFlow{
     fun getFestivalsFlow(): Flow<List<FestivalData>>
-    fun getFestivalByIdFlow(id: Int): Flow<FestivalData?>
 }
 
-class FestivalRepositoryImpl : FestivalRepository {
-
-// Hier käme normalerweise API/Datenbank-Zugriff
-override fun getFestivalsFlow(): Flow<List<FestivalData>> = festivalDataFlow()
-
-override fun getFestivalByIdFlow(id: Int): Flow<FestivalData?> = flow {
-        festivalDataFlow().collect { festivals ->
-            val festivalId = festivals.find { it.id == id }
-            emit(festivalId)
-        }
-    }
+class FestivalRepositoryImplFlow: FestivalRepositoryFlow{
+    override fun getFestivalsFlow(): Flow<List<FestivalData>> = festivalDataFlow()
 }
+
+//interface FestivalRepository {
+//    fun getFestivalsFlow(): Flow<List<FestivalData>>
+//    fun getFestivalByIdFlow(id: Int): Flow<FestivalData?>
+//}
+//
+//class FestivalRepositoryImpl : FestivalRepository {
+//
+//// Hier käme normalerweise API/Datenbank-Zugriff
+//override fun getFestivalsFlow(): Flow<List<FestivalData>> = festivalDataFlow()
+//
+//override fun getFestivalByIdFlow(id: Int): Flow<FestivalData?> = flow {
+//        festivalDataFlow().collect { festivals ->
+//            val festivalId = festivals.find { it.id == id }
+//            emit(festivalId)
+//        }
+//    }
+//}
+

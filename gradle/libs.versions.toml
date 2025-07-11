@@ -1,34 +1,39 @@
 [versions]
+kotlinxSerializationJson = "1.9.0"
+ktorClientAndroid = "3.2.1"
+ktorClientContentNegotiation = "3.2.1"
+ktorClientCore = "3.2.1"
+ktorSerializationKotlinxJson = "3.2.1"
 lifecycleViewmodelComposeVersion = "2.9.1"
-room = "2.6.1"
-lifecycleViewmodelCompose = "2.7.0"
-composeRuntimeLivedata = "1.6.4"
-accompanistPermissions = "0.33.2-alpha"
-accompanistPermissionsVersion = "0.32.0"
-agp = "8.11.0"
-androidxCoreKtx = "1.12.0"
+room = "2.7.2"
+lifecycleViewmodelCompose = "2.9.1"
+composeRuntimeLivedata = "1.8.3"
+accompanistPermissions = "0.37.3"
+accompanistPermissionsVersion = "0.37.3"
+agp = "8.11.1"
+androidxCoreKtx = "1.16.0"
 coreKtxVersion = "1.16.0"
-gson = "2.10.1"
-kotlin = "2.0.21"
-coreKtx = "1.15.0"
+gson = "2.13.1"
+kotlin = "2.2.0"
+coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-kotlinxCoroutinesAndroid = "1.7.3"
-kotlinxCoroutinesCore = "1.7.3"
-lifecycleRuntimeKtx = "2.8.7"
+kotlinxCoroutinesAndroid = "1.10.2"
+kotlinxCoroutinesCore = "1.10.2"
+lifecycleRuntimeKtx = "2.9.1"
 activityCompose = "1.10.1"
-composeBom = "2024.09.00"
-lifecycleRuntimeKtxVersion = "2.7.0"
-lifecycleViewmodelKtx = "2.9.0"
-mapsCompose = "2.11.4"
-navigationCompose = "2.8.9"
-osmdroidAndroidVersion = "6.1.16"
+composeBom = "2025.06.01"
+lifecycleRuntimeKtxVersion = "2.9.1"
+lifecycleViewmodelKtx = "2.9.1"
+mapsCompose = "6.6.0"
+navigationCompose = "2.9.1"
+osmdroidAndroidVersion = "6.1.20"
 playServicesLocation = "21.3.0"
-playServicesLocationVersion = "21.0.1"
-playServicesMaps = "19.1.0"
-playServicesMapsVersion = "18.2.0"
-runtime = "1.8.1"
+playServicesLocationVersion = "21.3.0"
+playServicesMaps = "19.2.0"
+playServicesMapsVersion = "19.2.0"
+runtime = "1.8.3"
 runtimeLivedata = "1.8.3"
 
 [libraries]
@@ -67,6 +72,11 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorClientAndroid" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorClientContentNegotiation" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClientCore" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorSerializationKotlinxJson" }
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 osmdroid-osmdroid-android = { module = "org.osmdroid:osmdroid-android", version.ref = "osmdroidAndroidVersion" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }

@@ -4,15 +4,17 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("kotlin-android")
     id ("kotlin-kapt")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
     namespace = "com.example.evoo"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.evoo"
         minSdk = 24
+        //noinspection OldTargetApi
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -93,6 +95,14 @@ dependencies {
     // Compose
     implementation(libs.androidx.lifecycle.viewmodel.compose.v291)
     implementation(libs.androidx.runtime.livedata.v183)
+
+    // Ktor Client
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    // Kotlinx Serialization
+    implementation(libs.kotlinx.serialization.json)
 
 
 

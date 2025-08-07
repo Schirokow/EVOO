@@ -6,6 +6,7 @@ ktorClientCore = "3.2.1"
 ktorSerializationKotlinxJson = "3.2.1"
 lifecycleViewmodelComposeVersion = "2.9.1"
 materialIconsExtended = "1.7.8"
+
 room = "2.7.2"
 lifecycleViewmodelCompose = "2.9.1"
 composeRuntimeLivedata = "1.8.3"

@@ -102,6 +102,10 @@ dependencies {
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
 
+    // Kotlinx Serialization
+    implementation(libs.kotlinx.serialization.json)
+
+
     // Ktor Client Logging Abhängigkeit
     implementation("io.ktor:ktor-client-logging:3.2.3")
 

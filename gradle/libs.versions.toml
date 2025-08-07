@@ -5,12 +5,14 @@ ktorClientContentNegotiation = "3.2.1"
 ktorClientCore = "3.2.1"
 ktorSerializationKotlinxJson = "3.2.1"
 lifecycleViewmodelComposeVersion = "2.9.1"
+materialIconsExtended = "1.7.8"
+
 room = "2.7.2"
 lifecycleViewmodelCompose = "2.9.1"
 composeRuntimeLivedata = "1.8.3"
 accompanistPermissions = "0.37.3"
 accompanistPermissionsVersion = "0.37.3"
-agp = "8.11.1"
+agp = "8.12.0"
 androidxCoreKtx = "1.16.0"
 coreKtxVersion = "1.16.0"
 gson = "2.13.1"
@@ -39,6 +41,7 @@ runtimeLivedata = "1.8.3"
 [libraries]
 # Room-Bibliotheken
 androidx-lifecycle-viewmodel-compose-v291 = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelComposeVersion" }
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }

@@ -189,17 +189,17 @@ fun FavoriteContent(navController: NavController, viewModel: FavoriteViewModel) 
                     .aspectRatio(1f)
             ) {
               
-                NewEventCard(
-                    image = festival.imageId,
-                    title = festival.title,
-                    datum = festival.datum,
-                    onClick = {
-                        Log.d(TAG, "Festival card clicked - id: ${festival.festivalId}, title: ${festival.title.take(15)}...")
-                        selectedFestivalData = festival
-                    },
-                    isLarge = true,
-                    modifier = Modifier
-                )
+//                NewEventCard(
+//                    image = festival.imageId,
+//                    title = festival.title,
+//                    datum = festival.datum,
+//                    onClick = {
+//                        Log.d(TAG, "Festival card clicked - id: ${festival.festivalId}, title: ${festival.title.take(15)}...")
+//                        selectedFestivalData = festival
+//                    },
+//                    isLarge = true,
+//                    modifier = Modifier
+//                )
 
 //                Card(
 //                    modifier = Modifier
@@ -254,22 +254,22 @@ fun FavoriteContent(navController: NavController, viewModel: FavoriteViewModel) 
 //                        modifier = Modifier.padding(bottom = 8.dp)
 //                    )
 
-                    NewEventCard(
-                        image = festival.imageId,
-                        title = festival.title,
-                        datum = festival.datum,
-                        onClick = {
-                            Log.d(TAG, "Navigating to detail screen for id: ${festival.festivalId}")
-                            navController.navigate("ContentDetailScreen/${festival.festivalId}")
-                        },
-                        isLarge = true,
-                        textIsLarge = true,
-                        modifier = Modifier
-                            .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
-                            .fillMaxWidth(0.9f)
-                            .height(300.dp)
-//                            .fillMaxHeight(0.5f)
-                    )
+//                    NewEventCard(
+//                        image = festival.imageId,
+//                        title = festival.title,
+//                        datum = festival.datum,
+//                        onClick = {
+//                            Log.d(TAG, "Navigating to detail screen for id: ${festival.festivalId}")
+//                            navController.navigate("ContentDetailScreen/${festival.festivalId}")
+//                        },
+//                        isLarge = true,
+//                        textIsLarge = true,
+//                        modifier = Modifier
+//                            .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
+//                            .fillMaxWidth(0.9f)
+//                            .height(300.dp)
+////                            .fillMaxHeight(0.5f)
+//                    )
 
 //                    Card(
 //                        modifier = Modifier

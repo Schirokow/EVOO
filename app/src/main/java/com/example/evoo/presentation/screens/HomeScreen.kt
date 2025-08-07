@@ -51,12 +51,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -71,6 +73,16 @@ import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.components.card.NewEventCard
 import com.example.evoo.ui.menu.AnyeBottomBar
 import kotlinx.coroutines.launch
+
+// Für Bildanzeige
+import coil.compose.AsyncImage
+
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.clickable
+import android.content.Intent
+import android.net.Uri
+import com.example.evoo.data.TicketmasterDates
+import com.example.evoo.data.TicketmasterEvent
 
 
 // Startseite
@@ -109,7 +121,10 @@ fun HomeScreen(navController: NavController){
                 ){
                     ClickButton(
                         text = "Laden",
-                        onClick = {viewModel.loadAllFestivals()},
+                        onClick = {
+//                            viewModel.loadAllFestivals()
+                             viewModel.loadAllEvents()
+                                  },
                         modifier = Modifier.width(150.dp)
                     )
 
@@ -160,6 +175,7 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
 
     val TAG = "EventContent"
     val festivalDataList by viewModel.festivalData.collectAsState()
+    val eventsDataList by viewModel.eventsData.collectAsState()
 
     val coroutineScope = rememberCoroutineScope()
     val favoriteStates = remember { mutableStateMapOf<Int, Boolean>() }
@@ -174,7 +190,10 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
     }
 
     // Schutz vor leeren Listen
-    if (festivalDataList.isEmpty()) {
+    if (
+//        festivalDataList.isEmpty()
+        eventsDataList.isEmpty()
+        ) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text("Keine Events geladen", color = Color.White, fontSize = 20.sp)
         }
@@ -182,7 +201,7 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
     }
 
     // State, um ausgewählte FestivalData zu speichern
-    var selectedFestivalData by remember { mutableStateOf<FestivalData?>(null).also {
+    var selectedFestivalData by remember { mutableStateOf<TicketmasterEvent?>(null).also {
         Log.d(TAG, "Selected festival state initialized")
     } }
 
@@ -192,23 +211,52 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 70.dp),
-        contentPadding = PaddingValues(vertical = 16.dp),
+        contentPadding = PaddingValues(
+            top = 16.dp,
+            bottom = 500.dp
+        ),
         columns = GridCells.Fixed(2)
     ){
-        itemsIndexed(festivalDataList){ index, festival ->
+        itemsIndexed(eventsDataList){ index, event ->
 
             Box(
                 modifier = Modifier
                     .padding(6.dp)
                     .aspectRatio(1f)
             ){
+//                Text(
+//                    text = event.name, // Ticketmaster Event hat direkt ein 'name' Feld
+//                    style = MaterialTheme.typography.titleLarge,
+//                    fontWeight = FontWeight.Bold // Fett gedruckt für bessere Lesbarkeit
+//                )
+//                Spacer(modifier = Modifier.height(8.dp))
+//                event.dates?.start?.localDate?.let { date ->
+//                    Text(text = "Datum: $date", style = MaterialTheme.typography.bodyMedium)
+//                }
+//                event.dates?.start?.localTime?.let { time ->
+//                    Text(text = "Uhrzeit: $time", style = MaterialTheme.typography.bodyMedium)
+//                }
+//                Text(text = "Link: ${event.url}", style = MaterialTheme.typography.bodySmall)
+//
+//                // Bild anzeigen
+//                event.images?.firstOrNull()?.url?.let { imageUrl ->
+//                    AsyncImage(
+//                        model = imageUrl,
+//                        contentDescription = "Event Image", // Bessere Beschreibung
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .height(200.dp)
+//                            .clip(MaterialTheme.shapes.medium),
+//                        contentScale = ContentScale.Crop
+//                    )
+//                }
                 NewEventCard(
-                    image = festival.imageId,
-                    title = festival.title,
-                    datum = festival.datum,
+                    image = event.images,
+                    title = event.name,
+                    datum = event.dates?.start?.localDate,
                     onClick = {
-                        Log.d(TAG, "Festival card clicked - id: ${festival.id}, title: ${festival.title.take(15)}...")
-                            selectedFestivalData = festival
+                        Log.d(TAG, "Festival card clicked - id: ${event.id}, title: ${event.name.take(15)}...")
+                            selectedFestivalData = event
                     },
                     isLarge = true,
                     modifier = Modifier
@@ -234,7 +282,9 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
 //                }
 
             }
+
         }
+
     }
 
     val animateScale by animateFloatAsState(
@@ -269,9 +319,9 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
 //                        modifier = Modifier.padding(bottom = 8.dp)
 //                    )
                     NewEventCard(
-                        image = festival.imageId,
-                        title = festival.title,
-                        datum = festival.datum,
+                        image = festival.images,
+                        title = festival.name,
+                        datum = festival.dates?.start?.localDate,
                         onClick = {
                             Log.d(TAG, "Navigating to detail screen for id: ${festival.id}")
                                 navController.navigate("ContentDetailScreen/${festival.id}")
@@ -323,20 +373,20 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                         }
                     )
 
-                Icon(
-                    imageVector = if (favoriteStates[festival.id] == true) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
-                    contentDescription = "Favorite",
-                    tint = if (favoriteStates[festival.id] == true) Color.Yellow else Color.White,
-                    modifier = Modifier
-                        .align(alignment = Alignment.TopEnd)
-                        .padding(24.dp)
-                        .size(34.dp)
-                        .clickable{
-                            Log.i(TAG, "Favorite button clicked for id: ${festival.id}")
-                            viewModel.toggleFavorite(festival)
-                            favoriteStates[festival.id] = !(favoriteStates[festival.id] ?: false)
-                        }
-                )
+//                Icon(
+//                    imageVector = if (favoriteStates[festival.id] == true) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
+//                    contentDescription = "Favorite",
+//                    tint = if (favoriteStates[festival.id] == true) Color.Yellow else Color.White,
+//                    modifier = Modifier
+//                        .align(alignment = Alignment.TopEnd)
+//                        .padding(24.dp)
+//                        .size(34.dp)
+//                        .clickable{
+//                            Log.i(TAG, "Favorite button clicked for id: ${festival.id}")
+//                            viewModel.toggleFavorite(festival)
+//                            favoriteStates[festival.id] = !(favoriteStates[festival.id] ?: false)
+//                        }
+//                )
                 //Erklärung:
                 //Der Favoritenstatus wird mit favoriteStates (eine mutableStateMapOf) dynamisch geladen, um UI-Reaktivität zu gewährleisten.
                 //LaunchedEffect lädt den Favoritenstatus für jedes Festival beim Rendern.

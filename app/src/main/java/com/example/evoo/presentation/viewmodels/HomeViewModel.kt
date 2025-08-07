@@ -3,10 +3,12 @@ package com.example.evoo.presentation.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.evoo.business.usecases.GetEventsUseCase
 import com.example.evoo.business.usecases.GetFestivalsUseCase
 import com.example.evoo.data.FavoriteRepository
 import com.example.evoo.data.FestivalData
 import com.example.evoo.data.FestivalRepository
+import com.example.evoo.data.TicketmasterEvent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -36,9 +38,14 @@ class HomeViewModel(
     private val festivalRepository: FestivalRepository,
     val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
+
+    private val getEventsUseCase: GetEventsUseCase = GetEventsUseCase()
     private val getFestivalsUseCase: GetFestivalsUseCase = GetFestivalsUseCase()
     private val _festivalData = MutableStateFlow<List<FestivalData>>(emptyList())
     val festivalData: StateFlow<List<FestivalData>> = _festivalData.asStateFlow()
+
+    private val _eventsData = MutableStateFlow<List<TicketmasterEvent>>(emptyList())
+    val eventsData: StateFlow<List<TicketmasterEvent>> = _eventsData.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -54,6 +61,14 @@ class HomeViewModel(
         viewModelScope.launch {
             getFestivalsUseCase.getFestivalsFlow().collect { festivals ->
                 festivalRepository.insertFestival(festivals)
+            }
+        }
+    }
+
+    fun loadAllEvents(){
+        viewModelScope.launch {
+            getEventsUseCase.getEventsFlow().collect { evetnts ->
+                _eventsData.value = evetnts
             }
         }
     }

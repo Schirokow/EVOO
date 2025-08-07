@@ -124,6 +124,8 @@ dependencies {
 
     implementation("androidx.compose.material3:material3:1.3.2")
 
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

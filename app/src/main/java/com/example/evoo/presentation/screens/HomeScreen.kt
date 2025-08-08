@@ -81,6 +81,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.clickable
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.ui.text.TextStyle
+import androidx.room.util.TableInfo
 import com.example.evoo.data.TicketmasterDates
 import com.example.evoo.data.TicketmasterEvent
 
@@ -97,6 +101,9 @@ fun HomeScreen(navController: NavController){
     val viewModel: HomeViewModel = viewModel(factory = AppModule.provideHomeViewModelFactory(context))
     var showDeleteDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
+    var city by remember {
+        mutableStateOf("")
+    }
 
     Box(
         modifier = Modifier
@@ -112,6 +119,25 @@ fun HomeScreen(navController: NavController){
                     BottomDarkBlue
                 )))
         ){
+            Column (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 25.dp)
+            ){
+                OutlinedTextField(
+                    value = city,
+                    singleLine = true,
+                    placeholder = {Text("Stadt eingeben", color = Color.White)},
+                    textStyle = TextStyle(color = Color.White),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color.Yellow,
+                        unfocusedBorderColor = Color.White
+                    ),
+                    onValueChange = { text ->
+                        city = text
+                    },
+                    modifier = Modifier.padding(start = 65.dp)
+                )
                 Row (
                     modifier = Modifier
                         .fillMaxWidth()
@@ -123,8 +149,8 @@ fun HomeScreen(navController: NavController){
                         text = "Laden",
                         onClick = {
 //                            viewModel.loadAllFestivals()
-                             viewModel.loadAllEvents()
-                                  },
+                            viewModel.loadAllEvents()
+                        },
                         modifier = Modifier.width(150.dp)
                     )
 
@@ -135,6 +161,8 @@ fun HomeScreen(navController: NavController){
                     )
 
                 }
+
+            }
 
 
             // Funktion für die Vorschau.
@@ -210,7 +238,7 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 70.dp),
+            .padding(top = 155.dp),
         contentPadding = PaddingValues(
             top = 16.dp,
             bottom = 500.dp

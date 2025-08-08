@@ -47,6 +47,7 @@ class HomeViewModel(
     private val _eventsData = MutableStateFlow<List<TicketmasterEvent>>(emptyList())
     val eventsData: StateFlow<List<TicketmasterEvent>> = _eventsData.asStateFlow()
 
+
     init {
         viewModelScope.launch {
             // Festivals laden
@@ -65,9 +66,9 @@ class HomeViewModel(
         }
     }
 
-    fun loadAllEvents(){
+    fun loadAllEvents(city: String){
         viewModelScope.launch {
-            getEventsUseCase.getEventsFlow().collect { evetnts ->
+            getEventsUseCase.getEventsFlow(city).collect { evetnts ->
                 _eventsData.value = evetnts
             }
         }

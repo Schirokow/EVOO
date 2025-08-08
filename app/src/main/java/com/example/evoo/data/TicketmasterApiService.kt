@@ -181,7 +181,7 @@ private val BASE_URL = "https://app.ticketmaster.com/discovery/v2/"
 private val API_KEY: String = "X0B57u3BuSKfCFLvWjCPRoFMJtA5xiVQ"
 
 suspend fun loadEvents(
-    city: String = "Berlin", // Hinzufügen einer Standard-Stadt
+    city: String, // Hinzufügen einer Standard-Stadt
     countryCode: String = "DE"
 ): List<TicketmasterEvent> {
     return try {
@@ -202,15 +202,41 @@ suspend fun loadEvents(
     }
 }
 
+suspend fun getEventById(eventId: String): TicketmasterEvent? {
+    return try {
+        withContext(Dispatchers.IO) {
+            val response: TicketmasterEvent = KtorClient.httpClient.get("${BASE_URL}events/$eventId.json") {
+                parameter("apikey", API_KEY)
+            }.body()
+            response
+        }
+    } catch (e: Exception) {
+        Log.e("TicketmasterApiService", "Error loading event with ID $eventId: ${e.message}")
+        null
+    }
+}
 
-fun eventsDataFlow(): Flow<List<TicketmasterEvent>> = flow {
-    emit(loadEvents())
+
+fun eventsDataFlow(city: String): Flow<List<TicketmasterEvent>> = flow {
+    emit(loadEvents(city))
+}
+
+fun eventByIdFlow(eventId: String): Flow<TicketmasterEvent?> = flow{
+    emit(getEventById(eventId))
 }
 
 interface EventsRepository{
-    fun getEventsDataFlow(): Flow<List<TicketmasterEvent>>
+    fun getEventsDataFlow(city: String): Flow<List<TicketmasterEvent>>
+}
+
+interface EventByIdData{
+    fun getEventByIdFlow(eventId: String): Flow<TicketmasterEvent?>
 }
 
 class EventsRepositoryImplFlow: EventsRepository{
-    override fun getEventsDataFlow(): Flow<List<TicketmasterEvent>> = eventsDataFlow()
+    override fun getEventsDataFlow(city: String): Flow<List<TicketmasterEvent>> = eventsDataFlow(city)
+}
+
+class EventByIdImplFlow: EventByIdData{
+    override fun getEventByIdFlow(eventId: String): Flow<TicketmasterEvent?> = eventByIdFlow(eventId)
 }

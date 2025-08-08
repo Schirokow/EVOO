@@ -133,9 +133,7 @@ fun HomeScreen(navController: NavController){
                         focusedBorderColor = Color.Yellow,
                         unfocusedBorderColor = Color.White
                     ),
-                    onValueChange = { text ->
-                        city = text
-                    },
+                    onValueChange = { city = it },
                     modifier = Modifier.padding(start = 65.dp)
                 )
                 Row (
@@ -149,7 +147,7 @@ fun HomeScreen(navController: NavController){
                         text = "Laden",
                         onClick = {
 //                            viewModel.loadAllFestivals()
-                            viewModel.loadAllEvents()
+                            viewModel.loadAllEvents(city)
                         },
                         modifier = Modifier.width(150.dp)
                     )

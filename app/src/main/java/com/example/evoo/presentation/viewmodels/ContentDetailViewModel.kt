@@ -14,6 +14,7 @@ import com.example.evoo.data.FavoriteRepository
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import android.util.Log
+import com.example.evoo.business.usecases.GetEventByIdUseCase
 import com.example.evoo.business.usecases.GetEventsUseCase
 import com.example.evoo.data.TicketmasterEvent
 import kotlinx.coroutines.flow.first
@@ -49,6 +50,8 @@ class ContentDetailViewModel(
     private val favoriteRepository: FavoriteRepository,
     private val eventsUseCase: GetEventsUseCase
 ) : ViewModel() {
+
+    private val getEventByIdUseCase: GetEventByIdUseCase = GetEventByIdUseCase()
     private val _festival = MutableStateFlow<FestivalData?>(null)
     val festival: StateFlow<FestivalData?> = _festival.asStateFlow()
 
@@ -62,14 +65,20 @@ class ContentDetailViewModel(
     fun loadEvent(id: String) {
         viewModelScope.launch {
             try {
+
+                // Lade das Event direkt über die API-ID
+                val eventData = getEventByIdUseCase.getEventByIdFlow(id).firstOrNull()
+                _event.value = eventData
+
+
                 // Lade das Event aus dem Flow anhand der ID
                 // Da eventsDataFlow eine Liste von Events liefert,
                 // musst du das passende Event in diesem Flow finden.
-                val eventData = eventsUseCase.getEventsFlow()
-                    .firstOrNull() // Nur den ersten Wert aus dem Flow nehmen
-                    ?.find { it.id == id }
+//                val eventData = eventsUseCase.getEventsFlow(city = String())
+//                    .firstOrNull() // Nur den ersten Wert aus dem Flow nehmen
+//                    ?.find { it.id == id }
 
-                _event.value = eventData
+//                _event.value = eventData
                 // Die Favoriten-Funktionalität musst du an das neue Event-Modell anpassen
                 // Das ist ein komplexeres Thema, also belassen wir es vorerst bei den Festivals
                 // oder passen es entsprechend an, falls du das benötigst.

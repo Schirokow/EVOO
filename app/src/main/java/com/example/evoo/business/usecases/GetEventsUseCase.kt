@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 class GetEventsUseCase() {
         private val events = EventsRepositoryImplFlow()
-    fun getEventsFlow(): Flow<List<TicketmasterEvent>> {
-        return events.getEventsDataFlow()
+    fun getEventsFlow(city: String): Flow<List<TicketmasterEvent>> {
+        return events.getEventsDataFlow(city)
     }
 }

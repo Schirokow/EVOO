@@ -224,32 +224,6 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                     .padding(6.dp)
                     .aspectRatio(1f)
             ){
-//                Text(
-//                    text = event.name, // Ticketmaster Event hat direkt ein 'name' Feld
-//                    style = MaterialTheme.typography.titleLarge,
-//                    fontWeight = FontWeight.Bold // Fett gedruckt für bessere Lesbarkeit
-//                )
-//                Spacer(modifier = Modifier.height(8.dp))
-//                event.dates?.start?.localDate?.let { date ->
-//                    Text(text = "Datum: $date", style = MaterialTheme.typography.bodyMedium)
-//                }
-//                event.dates?.start?.localTime?.let { time ->
-//                    Text(text = "Uhrzeit: $time", style = MaterialTheme.typography.bodyMedium)
-//                }
-//                Text(text = "Link: ${event.url}", style = MaterialTheme.typography.bodySmall)
-//
-//                // Bild anzeigen
-//                event.images?.firstOrNull()?.url?.let { imageUrl ->
-//                    AsyncImage(
-//                        model = imageUrl,
-//                        contentDescription = "Event Image", // Bessere Beschreibung
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .height(200.dp)
-//                            .clip(MaterialTheme.shapes.medium),
-//                        contentScale = ContentScale.Crop
-//                    )
-//                }
                 NewEventCard(
                     image = event.images,
                     title = event.name,

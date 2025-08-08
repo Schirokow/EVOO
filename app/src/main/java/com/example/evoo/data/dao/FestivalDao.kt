@@ -16,7 +16,7 @@ interface FestivalDao {
     fun getAllFestivals(): Flow<List<FestivalData>> // Gibt alle Festivals als Flow zurück
 
     @Query("SELECT * FROM festivals WHERE id = :festivalId")
-    suspend fun getFestivalById(festivalId: Int): FestivalData? // Gibt ein Festival nach ID zurück
+    suspend fun getFestivalById(festivalId: String): FestivalData? // Gibt ein Festival nach ID zurück
 
     @Query("DELETE FROM festivals")
     suspend fun deleteAllFestivals() // Methode zum Löschen aller Festivals

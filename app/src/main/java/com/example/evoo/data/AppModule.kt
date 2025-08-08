@@ -2,6 +2,7 @@ package com.example.evoo.data
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.evoo.business.usecases.GetEventsUseCase
 import com.example.evoo.data.DatabaseProvider
 import com.example.evoo.data.FestivalRepository
 import com.example.evoo.data.FestivalRepositoryImpl
@@ -22,6 +23,16 @@ object AppModule {
 
    }
 
+    // Füge eine Funktion hinzu, um das EventsRepository bereitzustellen
+    private fun provideEventsRepository(): EventsRepository {
+        return EventsRepositoryImplFlow()
+    }
+
+    // Füge eine Funktion hinzu, um den GetEventsUseCase bereitzustellen
+    private fun provideEventsUseCase(): GetEventsUseCase {
+        return GetEventsUseCase()
+    }
+
     fun provideHomeViewModelFactory(context: Context): ViewModelProvider.Factory {
         return object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -33,18 +44,34 @@ object AppModule {
             }
         }
     }
-
     fun provideDetailViewModelFactory(context: Context): ViewModelProvider.Factory {
         return object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (modelClass.isAssignableFrom(ContentDetailViewModel::class.java)) {
                     @Suppress("UNCHECKED_CAST")
-                    return ContentDetailViewModel(provideFestivalRepository(context), provideFavoriteRepository(context)) as T
+                    // Erstelle ContentDetailViewModel mit allen drei richtigen Abhängigkeiten
+                    return ContentDetailViewModel(
+                        provideFestivalRepository(context),
+                        provideFavoriteRepository(context),
+                        provideEventsUseCase()
+                    ) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel class")
             }
         }
     }
+
+//    fun provideDetailViewModelFactory(context: Context): ViewModelProvider.Factory {
+//        return object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//                if (modelClass.isAssignableFrom(ContentDetailViewModel::class.java)) {
+//                    @Suppress("UNCHECKED_CAST")
+//                    return ContentDetailViewModel(provideFestivalRepository(context), provideFavoriteRepository(context)) as T
+//                }
+//                throw IllegalArgumentException("Unknown ViewModel class")
+//            }
+//        }
+//    }
 
     fun provideFavoriteViewModelFactory(context: Context): ViewModelProvider.Factory {
         return object : ViewModelProvider.Factory {

@@ -259,7 +259,7 @@ fun ContentDetailScreen(navController: NavController, id: String){
                     )
 
 
-
+                    // Test Merge von feature/location in develop
                     // Link zum Ticketmaster-Event (als klickbarer Text)
                     event?.url?.let { url ->
                         Text(

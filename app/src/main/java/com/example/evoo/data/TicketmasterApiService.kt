@@ -149,31 +149,31 @@ data class PageInfo(
     val number: Int
 )
 
-class TicketmasterApiService(private val context: Context) {
-    private val BASE_URL = "https://app.ticketmaster.com/discovery/v2/"
-
-    private val API_KEY: String by lazy {
-        context.getString(R.string.ticketmaster_api_key)
-    }
-
-    suspend fun searchEvents(
-        query: String? = null,
-        city: String? = null,
-        countryCode: String? = null, // NEU: Optionaler countryCode Parameter
-        page: Int = 0,
-        pageSize: Int = 20
-    ): TicketmasterSearchResponse {
-        return KtorClient.httpClient.get("${BASE_URL}events.json") {
-            parameter("apikey", API_KEY)
-            query?.let { parameter("keyword", it) }
-            city?.let { parameter("city", it) }
-            countryCode?.let { parameter("countryCode", it) } // NEU: countryCode zur Anfrage hinzufügen
-            parameter("page", page)
-            parameter("size", pageSize)
-            // Optional: Land, z.B. für Deutschland: parameter("countryCode", "DE")
-        }.body()
-    }
-}
+//class TicketmasterApiService(private val context: Context) {
+//    private val BASE_URL = "https://app.ticketmaster.com/discovery/v2/"
+//
+//    private val API_KEY: String by lazy {
+//        context.getString(R.string.ticketmaster_api_key)
+//    }
+//
+//    suspend fun searchEvents(
+//        query: String? = null,
+//        city: String? = null,
+//        countryCode: String? = null, // NEU: Optionaler countryCode Parameter
+//        page: Int = 0,
+//        pageSize: Int = 20
+//    ): TicketmasterSearchResponse {
+//        return KtorClient.httpClient.get("${BASE_URL}events.json") {
+//            parameter("apikey", API_KEY)
+//            query?.let { parameter("keyword", it) }
+//            city?.let { parameter("city", it) }
+//            countryCode?.let { parameter("countryCode", it) } // NEU: countryCode zur Anfrage hinzufügen
+//            parameter("page", page)
+//            parameter("size", pageSize)
+//            // Optional: Land, z.B. für Deutschland: parameter("countryCode", "DE")
+//        }.body()
+//    }
+//}
 
 private val BASE_URL = "https://app.ticketmaster.com/discovery/v2/"
 
@@ -224,17 +224,17 @@ fun eventByIdFlow(eventId: String): Flow<TicketmasterEvent?> = flow{
     emit(getEventById(eventId))
 }
 
-interface EventsRepository{
-    fun getEventsDataFlow(city: String): Flow<List<TicketmasterEvent>>
-}
+//interface EventsRepository{
+//    fun getEventsDataFlow(city: String): Flow<List<TicketmasterEvent>>
+//}
 
 interface EventByIdData{
     fun getEventByIdFlow(eventId: String): Flow<TicketmasterEvent?>
 }
 
-class EventsRepositoryImplFlow: EventsRepository{
-    override fun getEventsDataFlow(city: String): Flow<List<TicketmasterEvent>> = eventsDataFlow(city)
-}
+//class EventsRepositoryImplFlow: EventsRepository{
+//    override fun getEventsDataFlow(city: String): Flow<List<TicketmasterEvent>> = eventsDataFlow(city)
+//}
 
 class EventByIdImplFlow: EventByIdData{
     override fun getEventByIdFlow(eventId: String): Flow<TicketmasterEvent?> = eventByIdFlow(eventId)

@@ -1,22 +1,15 @@
 package com.example.evoo.data
+
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.evoo.business.usecases.GetEventByIdUseCase
 import com.example.evoo.business.usecases.GetEventsUseCase
-import com.example.evoo.data.DatabaseProvider
-import com.example.evoo.data.FestivalRepository
-import com.example.evoo.data.FestivalRepositoryImpl
-import com.example.evoo.data.FavoriteRepository
-import com.example.evoo.data.FavoriteRepositoryImpl
 import com.example.evoo.presentation.viewmodels.ContentDetailViewModel
 import com.example.evoo.presentation.viewmodels.FavoriteViewModel
-
 import com.example.evoo.presentation.viewmodels.HomeViewModel
 
 object AppModule {
-    private fun provideFestivalRepository(context: Context): FestivalRepository {
-        return FestivalRepositoryImpl(DatabaseProvider.provideFestivalDao(context))
-    }
 
     private fun provideFavoriteRepository(context: Context): FavoriteRepository {
         return FavoriteRepositoryImpl(DatabaseProvider.provideFavoriteDao(context))
@@ -25,7 +18,7 @@ object AppModule {
 
     // Füge eine Funktion hinzu, um das EventsRepository bereitzustellen
     private fun provideEventsRepository(): EventsRepository {
-        return EventsRepositoryImplFlow()
+        return EventsRepositoryImpl()
     }
 
     // Füge eine Funktion hinzu, um den GetEventsUseCase bereitzustellen
@@ -33,12 +26,16 @@ object AppModule {
         return GetEventsUseCase()
     }
 
+    private fun provideGetEventByIdUseCase(eventsRepository: EventsRepository): GetEventByIdUseCase {
+        return GetEventByIdUseCase()
+    }
+
     fun provideHomeViewModelFactory(context: Context): ViewModelProvider.Factory {
         return object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
                     @Suppress("UNCHECKED_CAST")
-                    return HomeViewModel(provideFestivalRepository(context), provideFavoriteRepository(context)) as T
+                    return HomeViewModel(provideFavoriteRepository(context)) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel class")
             }
@@ -51,27 +48,14 @@ object AppModule {
                     @Suppress("UNCHECKED_CAST")
                     // Erstelle ContentDetailViewModel mit allen drei richtigen Abhängigkeiten
                     return ContentDetailViewModel(
-                        provideFestivalRepository(context),
                         provideFavoriteRepository(context),
-                        provideEventsUseCase()
+                        provideEventsUseCase(),
                     ) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel class")
             }
         }
     }
-
-//    fun provideDetailViewModelFactory(context: Context): ViewModelProvider.Factory {
-//        return object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//                if (modelClass.isAssignableFrom(ContentDetailViewModel::class.java)) {
-//                    @Suppress("UNCHECKED_CAST")
-//                    return ContentDetailViewModel(provideFestivalRepository(context), provideFavoriteRepository(context)) as T
-//                }
-//                throw IllegalArgumentException("Unknown ViewModel class")
-//            }
-//        }
-//    }
 
     fun provideFavoriteViewModelFactory(context: Context): ViewModelProvider.Factory {
         return object : ViewModelProvider.Factory {

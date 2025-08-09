@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.evoo.R
 import com.example.evoo.data.Event
-import com.example.evoo.data.FestivalData
 import com.example.evoo.data.TicketmasterDates
 import com.example.evoo.data.TicketmasterImage
 import coil.compose.AsyncImage // Import für die AsyncImage-Komponente
@@ -48,6 +47,7 @@ fun PreviewNewEventCard(){
 @Composable
 fun NewEventCard(
     image: List<TicketmasterImage>? = null,
+    imageUrl: String? = null,
     title: String,
     datum: String? = null,
     modifier : Modifier = Modifier,
@@ -56,8 +56,7 @@ fun NewEventCard(
     textIsLarge: Boolean = false
 ){
     val cardSize = if (isLarge) 200.dp else 100.dp
-    val imageToUse = image ?: R.drawable.festival1
-    val imageUrl = image?.firstOrNull()?.url
+    val imageToLoad = imageUrl ?: image?.firstOrNull()?.url
     val fallbackImage = R.drawable.festival1 // Dein lokales Fallback-Bild
 
     Card(
@@ -72,9 +71,9 @@ fun NewEventCard(
         Box{
 
             // Verwende AsyncImage, um das Bild von der URL zu laden
-            if (imageUrl != null) {
+            if (imageToLoad != null) {
                 AsyncImage(
-                    model = imageUrl,
+                    model = imageToLoad,
                     contentDescription = title,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier.fillMaxSize()
@@ -89,16 +88,6 @@ fun NewEventCard(
                 )
             }
 
-
-
-
-
-//            Image(
-//                painter = painterResource(id = imageToUse as Int),
-//                contentDescription = title,
-//                contentScale = ContentScale.FillBounds,
-//                modifier = Modifier.fillMaxSize()
-//            )
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -121,12 +110,6 @@ fun NewEventCard(
                         fontSize = if (textIsLarge) 22.sp else 8.sp
                     )
                     Spacer(modifier = Modifier.height(4.dp))
-
-                    //Text(
-                    //  text = event.description,
-                    //color = Color.White,
-                    //fontSize = if (isLarge) 12.sp else 8.sp
-                    //  )
 
                 }
 

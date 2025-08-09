@@ -2,26 +2,12 @@ package com.example.evoo.data
 import android.content.Context
 import androidx.room.Room
 import com.example.evoo.data.dao.FavoriteDao
-import com.example.evoo.data.dao.FestivalDao
+
 
 object DatabaseProvider {
-    @Volatile
-    private var FESTIVAL_INSTANCE: FestivalDatabase? = null
+
     @Volatile
     private var FAVORITE_INSTANCE: FavoriteDatabase? = null
-
-    fun getFestivalDatabase(context: Context): FestivalDatabase {
-        return FESTIVAL_INSTANCE ?: synchronized(this) {
-            val instance = Room.databaseBuilder(
-                context.applicationContext,
-                FestivalDatabase::class.java,
-                "festival_database"
-            )
-                .build()
-            FESTIVAL_INSTANCE = instance
-            instance
-        }
-    }
 
     fun getFavoriteDatabase(context: Context): FavoriteDatabase {
         return FAVORITE_INSTANCE ?: synchronized(this) {
@@ -36,9 +22,7 @@ object DatabaseProvider {
         }
     }
 
-    fun provideFestivalDao(context: Context): FestivalDao {
-        return getFestivalDatabase(context).festivalDao()
-    }
+
 
     fun provideFavoriteDao(context: Context): FavoriteDao {
         return getFavoriteDatabase(context).favoriteDao()

@@ -79,26 +79,37 @@ fun ContentDetailScreen(navController: NavController, id: String){
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Red),
-            contentAlignment = Alignment.Center
-        ) {
-            Row (
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                .background(AccentColor),
+            ) {
+            Box (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(WindowInsets.systemBars.asPaddingValues())
+                    .background(brush = Brush.verticalGradient(colors = listOf(
+                        TopLightBlue,
+                        BottomDarkBlue
+                    ))),
+                contentAlignment = Alignment.Center
             ){
-                Icon(
-                    imageVector = Icons.Rounded.ArrowBack,
-                    contentDescription = "Zurück",
-                    tint = Color.White,
-                    modifier = Modifier
-                        .padding(24.dp)
-                        .size(34.dp)
-                        .clickable { navController.popBackStack() }
-                )
+                Row (
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Icon(
+                        imageVector = Icons.Rounded.ArrowBack,
+                        contentDescription = "Zurück",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .padding(24.dp)
+                            .size(34.dp)
+                            .clickable { navController.popBackStack() }
+                    )
+                }
+                Text("Event nicht gefunden", color = Color.White, fontSize = 24.sp)
             }
-            Text("Event nicht gefunden", color = Color.White, fontSize = 24.sp)
-        }
-        return
+            return
+            }
+
     }
 
     Box(

@@ -81,11 +81,11 @@ class HomeViewModel(
 //        }
 //    }
 
-    fun deleteAllFestivals() {
+    fun deleteAllEvents() {
         viewModelScope.launch {
             try {
-                festivalRepository.deleteAllFestivals()
-                _festivalData.value = emptyList()
+//                festivalRepository.deleteAllFestivals()
+                _eventsData.value = emptyList()
                 Log.i("HomeViewModel", "All festivals deleted")
             } catch (e: Exception) {
                 Log.e("HomeViewModel", "Error deleting festivals: ${e.message}")

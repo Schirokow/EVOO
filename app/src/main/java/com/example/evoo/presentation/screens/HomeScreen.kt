@@ -146,8 +146,12 @@ fun HomeScreen(navController: NavController){
                     ClickButton(
                         text = "Laden",
                         onClick = {
+                            if (city.isNotBlank()){
 //                            viewModel.loadAllFestivals()
-                            viewModel.loadAllEvents(city)
+                                viewModel.loadAllEvents(city)
+                                city = ""
+                            }
+
                         },
                         modifier = Modifier.width(150.dp)
                     )
@@ -161,8 +165,6 @@ fun HomeScreen(navController: NavController){
                 }
 
             }
-
-
             // Funktion für die Vorschau.
             EventContent(navController, viewModel)
 
@@ -172,14 +174,14 @@ fun HomeScreen(navController: NavController){
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Alle Festivals löschen?") },
-            text = { Text("Möchtest du wirklich alle Festivals aus der Datenbank löschen? Favoriten bleiben erhalten.") },
+            title = { Text("Alle Events löschen?") },
+            text = { Text("Möchtest du wirklich alle Events aus der Liste löschen? Favoriten bleiben erhalten.") },
             confirmButton = {
                 Button(
                     onClick = {
-                        viewModel.deleteAllFestivals()
+                        viewModel.deleteAllEvents()
                         showDeleteDialog = false
-                        Log.d(TAG, "All festivals deleted")
+                        Log.d(TAG, "All events deleted")
                     }
                 ) {
                     Text("Löschen")
@@ -226,8 +228,8 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
         return
     }
 
-    // State, um ausgewählte FestivalData zu speichern
-    var selectedFestivalData by remember { mutableStateOf<TicketmasterEvent?>(null).also {
+    // State, um ausgewählte EventData zu speichern
+    var selectedEventData by remember { mutableStateOf<TicketmasterEvent?>(null).also {
         Log.d(TAG, "Selected festival state initialized")
     } }
 
@@ -256,50 +258,28 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                     datum = event.dates?.start?.localDate,
                     onClick = {
                         Log.d(TAG, "Festival card clicked - id: ${event.id}, title: ${event.name.take(15)}...")
-                            selectedFestivalData = event
+                            selectedEventData = event
                     },
                     isLarge = true,
                     modifier = Modifier
                 )
-
-//                Card(
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                        .clickable{
-//                            Log.d(TAG, "Festival card clicked - id: ${festival.id}, title: ${festival.title.take(15)}...")
-//                            selectedFestivalData = festival
-//                                  },
-//                    shape = RoundedCornerShape(16.dp),
-//                    elevation = CardDefaults.cardElevation(12.dp)
-//                ) {
-//                    Image(
-//                        painter = painterResource(id = festival.imageId),
-//                        contentDescription = null,
-//                        contentScale = ContentScale.FillBounds,
-//                        modifier = Modifier
-//                            .fillMaxSize()
-//                    )
-//                }
-
             }
-
         }
-
     }
 
     val animateScale by animateFloatAsState(
-        targetValue = if (selectedFestivalData != null) 1f else 0.5f,
+        targetValue = if (selectedEventData != null) 1f else 0.5f,
         animationSpec = tween(durationMillis = 400)
     )
 
-    // Overlay für vergrößertes Bild, wenn selectedFestivalData nicht null ist
-    selectedFestivalData?.let { festival ->
-        Log.d(TAG, "Showing detail overlay for id: ${festival.id}")
+    // Overlay für vergrößertes Bild, wenn selectedEventData nicht null ist
+    selectedEventData?.let { event ->
+        Log.d(TAG, "Showing detail overlay for id: ${event.id}")
 
         Surface(
             color = BackgroundColor.copy(alpha = 0.9f), // Farbe von Hintergrund
             modifier = Modifier.fillMaxSize(),
-            onClick = { /*selectedFestivalData = null */} // Klick außerhalb schließt das Overlay
+            onClick = { /*selectedEventData = null */} // Klick außerhalb schließt das Overlay
         ) {
             Box (
                 modifier = Modifier.fillMaxSize()
@@ -311,20 +291,13 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
 //                        .align(Alignment.Center),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
-
-//                    Text(
-//                        text = festival.title,
-//                        style = MaterialTheme.typography.headlineMedium,
-//                        color = Color.White,
-//                        modifier = Modifier.padding(bottom = 8.dp)
-//                    )
                     NewEventCard(
-                        image = festival.images,
-                        title = festival.name,
-                        datum = festival.dates?.start?.localDate,
+                        image = event.images,
+                        title = event.name,
+                        datum = event.dates?.start?.localDate,
                         onClick = {
-                            Log.d(TAG, "Navigating to detail screen for id: ${festival.id}")
-                                navController.navigate("ContentDetailScreen/${festival.id}")
+                            Log.d(TAG, "Navigating to detail screen for id: ${event.id}")
+                                navController.navigate("ContentDetailScreen/${event.id}")
                         },
                         isLarge = true,
                         textIsLarge = true,
@@ -334,29 +307,6 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
 //                            .fillMaxHeight(0.5f)
                             .height(300.dp)
                     )
-
-//                    Card (
-//                        modifier = Modifier
-//                            .graphicsLayer(scaleX = animateScale, scaleY = animateScale)
-//                            .fillMaxWidth(0.9f)
-//                            .fillMaxHeight(0.5f)
-//                            .clickable{
-//                                Log.d(TAG, "Navigating to detail screen for id: ${festival.id}")
-//                                navController.navigate("ContentDetailScreen/${festival.id}")
-//                                      },
-//                        shape = RoundedCornerShape(16.dp),
-//                        elevation = CardDefaults.cardElevation(12.dp)
-//                    ){
-//                        Image(
-//                            painter = painterResource(id = festival.imageId),
-//                            contentDescription = "Vergrößertes Bild",
-//                            contentScale = ContentScale.FillBounds,
-//                            modifier = Modifier
-//                                .fillMaxSize()
-//                        )
-//                    }
-
-
                 }
 
                 Icon(
@@ -369,7 +319,7 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                         .size(34.dp)
                         .clickable{
                             Log.d(TAG, "Close button clicked, hiding detail view")
-                            selectedFestivalData = null
+                            selectedEventData = null
                         }
                     )
 

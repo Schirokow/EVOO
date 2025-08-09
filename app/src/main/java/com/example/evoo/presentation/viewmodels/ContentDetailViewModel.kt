@@ -20,31 +20,6 @@ import com.example.evoo.data.TicketmasterEvent
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 
-//class ContentDetailViewModel: ViewModel() {
-//    private val getFestivalsUseCase: GetFestivalsUseCase = GetFestivalsUseCase()
-//    private val _festival = MutableStateFlow<FestivalData?>(null)
-//    val festival: StateFlow<FestivalData?> = _festival.asStateFlow()
-//
-//    fun loadFestival(id: Int) {
-//        viewModelScope.launch {
-//            getFestivalsUseCase.getFestivalByIdFlow(id).collect { festivalData ->
-//                _festival.value = festivalData
-//            }
-//        }
-//    }
-//}
-
-//class ContentDetailViewModel(private val repository: FestivalRepository) : ViewModel() {
-//    private val _festival = MutableStateFlow<FestivalData?>(null)
-//    val festival: StateFlow<FestivalData?> = _festival.asStateFlow()
-//
-//    fun loadFestival(id: Int) {
-//        viewModelScope.launch {
-//            _festival.value = repository.getFestivalById(id)
-//        }
-//    }
-//}
-
 class ContentDetailViewModel(
     private val festivalRepository: FestivalRepository,
     private val favoriteRepository: FavoriteRepository,
@@ -70,15 +45,6 @@ class ContentDetailViewModel(
                 val eventData = getEventByIdUseCase.getEventByIdFlow(id).firstOrNull()
                 _event.value = eventData
 
-
-                // Lade das Event aus dem Flow anhand der ID
-                // Da eventsDataFlow eine Liste von Events liefert,
-                // musst du das passende Event in diesem Flow finden.
-//                val eventData = eventsUseCase.getEventsFlow(city = String())
-//                    .firstOrNull() // Nur den ersten Wert aus dem Flow nehmen
-//                    ?.find { it.id == id }
-
-//                _event.value = eventData
                 // Die Favoriten-Funktionalität musst du an das neue Event-Modell anpassen
                 // Das ist ein komplexeres Thema, also belassen wir es vorerst bei den Festivals
                 // oder passen es entsprechend an, falls du das benötigst.

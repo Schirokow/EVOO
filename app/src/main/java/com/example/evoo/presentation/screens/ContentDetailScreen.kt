@@ -52,10 +52,13 @@ import com.example.evoo.data.AppModule
 import com.example.evoo.presentation.viewmodels.ContentDetailViewModel
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.menu.AnyeBottomBar
+import coil.compose.AsyncImage
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 
 @Composable
-fun ContentDetailScreen(navController: NavController, id: Int){
+fun ContentDetailScreen(navController: NavController, id: String){
     val TAG = "ContentDetailScreen"
     Log.d(TAG, "Screen initialized with id: $id")
 
@@ -66,35 +69,47 @@ fun ContentDetailScreen(navController: NavController, id: Int){
 
     LaunchedEffect(id) {
         Log.d(TAG, "Loading festival for id: $id")
-        viewModel.loadFestival(id)
+        viewModel.loadEvent(id)
     }
 
-    val festival by viewModel.festival.collectAsState()
-    val isFavorite by viewModel.isFavorite.collectAsState()
-    if (festival == null) {
+//    val festival by viewModel.festival.collectAsState()
+    val event by viewModel.event.collectAsState()
+//    val isFavorite by viewModel.isFavorite.collectAsState()
+    if (event == null) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Red),
-            contentAlignment = Alignment.Center
-        ) {
-            Row (
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                .background(AccentColor),
+            ) {
+            Box (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(WindowInsets.systemBars.asPaddingValues())
+                    .background(brush = Brush.verticalGradient(colors = listOf(
+                        TopLightBlue,
+                        BottomDarkBlue
+                    ))),
+                contentAlignment = Alignment.Center
             ){
-                Icon(
-                    imageVector = Icons.Rounded.ArrowBack,
-                    contentDescription = "Zurück",
-                    tint = Color.White,
-                    modifier = Modifier
-                        .padding(24.dp)
-                        .size(34.dp)
-                        .clickable { navController.popBackStack() }
-                )
+                Row (
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Icon(
+                        imageVector = Icons.Rounded.ArrowBack,
+                        contentDescription = "Zurück",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .padding(24.dp)
+                            .size(34.dp)
+                            .clickable { navController.popBackStack() }
+                    )
+                }
+                Text("Event nicht gefunden", color = Color.White, fontSize = 24.sp)
             }
-            Text("Festival nicht gefunden", color = Color.White, fontSize = 24.sp)
-        }
-        return
+            return
+            }
+
     }
 
     Box(
@@ -126,19 +141,19 @@ fun ContentDetailScreen(navController: NavController, id: Int){
                     }
             )
 
-            Icon(
-                imageVector = if (isFavorite) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
-                contentDescription = "Favorite",
-                tint = if (isFavorite) Color.Yellow else Color.White,
-                modifier = Modifier
-                    .align(alignment = Alignment.TopEnd)
-                    .padding(24.dp)
-                    .size(34.dp)
-                    .clickable{
-                        Log.i(TAG, "Favorite clicked for: ${festival!!.title.take(15)}...")
-                        viewModel.toggleFavorite(festival!!)
-                    }
-            )
+//            Icon(
+//                imageVector = if (isFavorite) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
+//                contentDescription = "Favorite",
+//                tint = if (isFavorite) Color.Yellow else Color.White,
+//                modifier = Modifier
+//                    .align(alignment = Alignment.TopEnd)
+//                    .padding(24.dp)
+//                    .size(34.dp)
+//                    .clickable{
+//                        Log.i(TAG, "Favorite clicked for: ${festival!!.title.take(15)}...")
+//                        viewModel.toggleFavorite(festival!!)
+//                    }
+//            )
 
             ClickButton(
                 text = "Auf der Karte",
@@ -155,62 +170,115 @@ fun ContentDetailScreen(navController: NavController, id: Int){
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 100.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                contentPadding = PaddingValues(bottom = 80.dp) // Platz für AnyeBottomBar
+                    .padding(top = 100.dp,start = 16.dp, end = 16.dp),
+                contentPadding = PaddingValues(bottom = 80.dp), // Platz für AnyeBottomBar
+                horizontalAlignment = Alignment.Start
             ) {
                 item {
-                    Log.d(TAG, "Rendering content for: ${festival?.title?.take(15)}...")
+                    Log.d(TAG, "Rendering content for: ${event?.name?.take(15)}...")
 
                     // Bild
-                    Card (
+//                    Card (
+//                        modifier = Modifier
+//                            .fillMaxWidth(0.9f)
+////                            .fillMaxHeight(0.5f),
+//                            .height(300.dp),
+//                        shape = RoundedCornerShape(16.dp),
+//                        elevation = CardDefaults.cardElevation(12.dp)
+//                    ){
+//                        Image(
+//                            painter = painterResource(id = festival?.imageId ?: 0),
+//                            contentDescription = null,
+//                            modifier = Modifier
+//                                .fillMaxSize(),
+//                            contentScale = ContentScale.FillBounds
+//                        )
+//                    }
+                    // Bild mit AsyncImage direkt laden
+                    val imageUrl = event?.images?.firstOrNull()?.url
+                    Card(
                         modifier = Modifier
-                            .fillMaxWidth(0.9f)
-//                            .fillMaxHeight(0.5f),
+                            .fillMaxWidth()
                             .height(300.dp),
-                        shape = RoundedCornerShape(16.dp),
+                        shape = MaterialTheme.shapes.medium,
                         elevation = CardDefaults.cardElevation(12.dp)
-                    ){
-                        Image(
-                            painter = painterResource(id = festival?.imageId ?: 0),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            contentScale = ContentScale.FillBounds
-                        )
+                    ) {
+                        if (imageUrl != null) {
+                            AsyncImage(
+                                model = imageUrl,
+                                contentDescription = "Event Image",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
                     }
+
 
                     // Titel
                     Text(
-                        text = festival?.title.toString(),
+                        text = event?.name.toString(),
                         style = MaterialTheme.typography.headlineLarge,
                         color = Color.White,
                         modifier = Modifier.padding(16.dp)
                     )
 
-                    // Beschreibung
+//                    // Beschreibung
+//                    Text(
+//                        text = "Beschreibung: ${festival?.description}",
+//                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
+//                        color = Color.White,
+//                        modifier = Modifier.padding(16.dp)
+//                    )
+//
+//                    // Datum
+//                    Text(
+//                        text = "Datum: ${festival?.datum}",
+//                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
+//                        color = Color.White,
+//                        modifier = Modifier.padding(16.dp)
+//                    )
+
+                    // Datum (verwende direkt den String)
                     Text(
-                        text = "Beschreibung: ${festival?.description}",
+                        text = "Datum: ${event?.dates?.start?.localDate ?: "N/A"}",
+                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
+                        color = Color.White,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    // Ort (aus dem _embedded-Objekt holen)
+                    val venueName = event?._embedded?.venues?.firstOrNull()?.name ?: "Unbekannter Ort"
+                    Text(
+                        text = "Ort: $venueName",
                         style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
                         color = Color.White,
                         modifier = Modifier.padding(16.dp)
                     )
 
-                    // Datum
-                    Text(
-                        text = "Datum: ${festival?.datum}",
-                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
-                        color = Color.White,
-                        modifier = Modifier.padding(16.dp)
-                    )
+
+
+                    // Link zum Ticketmaster-Event (als klickbarer Text)
+                    event?.url?.let { url ->
+                        Text(
+                            text = "Tickets kaufen: $url",
+                            style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
+                            color = Color.Blue, // oder eine andere Farbe, um den Link zu betonen
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .clickable {
+                                    // Logik für den Klick auf den Link
+                                    // Hier kannst du einen Intent zum Öffnen des Browsers starten
+                                }
+                        )
+                    }
+
 
                     // Location
-                    Text(
-                        text = "Ort: ${festival?.location}",
-                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
-                        color = Color.White,
-                        modifier = Modifier.padding(16.dp)
-                    )
+//                    Text(
+//                        text = "Ort: ${festival?.location}",
+//                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
+//                        color = Color.White,
+//                        modifier = Modifier.padding(16.dp)
+//                    )
 
                     // Spacer für minimale Scroll-Länge
                     Spacer(

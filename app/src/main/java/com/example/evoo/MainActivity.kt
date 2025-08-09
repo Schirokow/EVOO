@@ -87,9 +87,9 @@ fun Navigation() {
 
         composable(
             route = "ContentDetailScreen/{id}",
-            arguments = listOf(navArgument("id") { type = NavType.IntType })
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) { backStackEntry ->
-            val id = backStackEntry.arguments?.getInt("id") ?: 0
+            val id = backStackEntry.arguments?.getString("id") ?: ""
             Log.d(TAG, "Navigating to ContentDetailScreen with index: $id")
             ContentDetailScreen(navController, id)
         }

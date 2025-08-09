@@ -27,25 +27,29 @@ import androidx.compose.ui.unit.sp
 import com.example.evoo.R
 import com.example.evoo.data.Event
 import com.example.evoo.data.FestivalData
+import com.example.evoo.data.TicketmasterDates
+import com.example.evoo.data.TicketmasterImage
+import coil.compose.AsyncImage // Import für die AsyncImage-Komponente
+
 
 @Preview //(showBackground = true)
 @Composable
 fun PreviewNewEventCard(){
 
-    NewEventCard(
-        image = R.drawable.festival3,
-        title = "Festival",
-        datum = "04.07.2025",
-        onClick = {} ,
-        isLarge = true
-    )
+//    NewEventCard(
+//        image = R.drawable.festival3,
+//        title = "Festival",
+//        datum = "04.07.2025",
+//        onClick = {} ,
+//        isLarge = true
+//    )
 }
 
 @Composable
 fun NewEventCard(
-    image: Int?,
+    image: List<TicketmasterImage>? = null,
     title: String,
-    datum: String,
+    datum: String? = null,
     modifier : Modifier = Modifier,
     onClick: () -> Unit,
     isLarge : Boolean = false,
@@ -53,6 +57,8 @@ fun NewEventCard(
 ){
     val cardSize = if (isLarge) 200.dp else 100.dp
     val imageToUse = image ?: R.drawable.festival1
+    val imageUrl = image?.firstOrNull()?.url
+    val fallbackImage = R.drawable.festival1 // Dein lokales Fallback-Bild
 
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -64,12 +70,35 @@ fun NewEventCard(
             .clickable(onClick = onClick)
     ){
         Box{
-            Image(
-                painter = painterResource(id = imageToUse),
-                contentDescription = title,
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier.fillMaxSize()
-            )
+
+            // Verwende AsyncImage, um das Bild von der URL zu laden
+            if (imageUrl != null) {
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = title,
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.fillMaxSize()
+                )
+            } else {
+                // Zeige das Fallback-Bild an, wenn keine URL vorhanden ist
+                Image(
+                    painter = painterResource(id = fallbackImage),
+                    contentDescription = title,
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+
+
+
+
+
+//            Image(
+//                painter = painterResource(id = imageToUse as Int),
+//                contentDescription = title,
+//                contentScale = ContentScale.FillBounds,
+//                modifier = Modifier.fillMaxSize()
+//            )
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -43,7 +43,7 @@ data class Favorite(
 interface FestivalRepository {
     suspend fun insertFestival(festival: List<FestivalData>)
     fun getFestivals(): Flow<List<FestivalData>>
-    suspend fun getFestivalById(id: Int): FestivalData?
+    suspend fun getFestivalById(id: String): FestivalData?
 
     suspend fun deleteAllFestivals()
 }
@@ -57,7 +57,7 @@ class FestivalRepositoryImpl(private val dao: FestivalDao) : FestivalRepository 
         return dao.getAllFestivals()
     }
 
-    override suspend fun getFestivalById(id: Int): FestivalData? {
+    override suspend fun getFestivalById(id: String): FestivalData? {
         return dao.getFestivalById(id)
     }
 

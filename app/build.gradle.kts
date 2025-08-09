@@ -105,6 +105,26 @@ dependencies {
     // Kotlinx Serialization
     implementation(libs.kotlinx.serialization.json)
 
+    // Ktor Client Logging Abhängigkeit
+    implementation("io.ktor:ktor-client-logging:3.2.3")
+
+    // Kotlinx Serialization
+    implementation(libs.kotlinx.serialization.json)
+
+    // Extended Icons
+    implementation(libs.androidx.material.icons.extended)
+
+    // Koin
+    implementation("io.insert-koin:koin-android:4.1.0")
+    implementation("io.insert-koin:koin-androidx-navigation:4.1.0")
+    implementation("io.insert-koin:koin-androidx-compose:4.1.0")
+    testImplementation("io.insert-koin:koin-test-junit4:4.1.0")
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2")
+
+    implementation("androidx.compose.material3:material3:1.3.2")
+
+    implementation("io.coil-kt:coil-compose:2.7.0")
 
     // Ktor Client Logging Abhängigkeit
     implementation("io.ktor:ktor-client-logging:3.2.3")

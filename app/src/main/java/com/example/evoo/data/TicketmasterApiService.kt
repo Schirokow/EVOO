@@ -13,6 +13,12 @@ import android.util.Log
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 
 // Helper-Objekt für den Ktor-Client
@@ -167,4 +173,69 @@ class TicketmasterApiService(private val context: Context) {
             // Optional: Land, z.B. für Deutschland: parameter("countryCode", "DE")
         }.body()
     }
+}
+
+private val BASE_URL = "https://app.ticketmaster.com/discovery/v2/"
+
+private val API_KEY: String = "X0B57u3BuSKfCFLvWjCPRoFMJtA5xiVQ"
+
+suspend fun loadEvents(
+    city: String, // Hinzufügen einer Standard-Stadt
+    countryCode: String = "DE"
+): List<TicketmasterEvent> {
+    return try {
+        withContext(Dispatchers.IO){
+            val response: TicketmasterSearchResponse = KtorClient.httpClient.get("${BASE_URL}events.json"){
+                parameter("apikey", API_KEY)
+                parameter("city", city) // Default-Stadt-Parameter hinzufügen
+                parameter("countryCode", countryCode) // Default-Länder-Code hinzufügen
+                println("suspend fun loadEvents in TicketmasterApiService used")
+            }.body()
+            // Hier extrahieren wir die Liste aus dem verschachtelten Objekt
+            response._embedded?.events ?: emptyList()
+        }
+    } catch (e: Exception){
+        println("Fehler beim laden von Events: ${e.message}")
+        e.printStackTrace() // Wichtig, um den genauen Fehler im Logcat zu sehen
+        emptyList()
+    }
+}
+
+suspend fun getEventById(eventId: String): TicketmasterEvent? {
+    return try {
+        withContext(Dispatchers.IO) {
+            val response: TicketmasterEvent = KtorClient.httpClient.get("${BASE_URL}events/$eventId.json") {
+                parameter("apikey", API_KEY)
+            }.body()
+            response
+        }
+    } catch (e: Exception) {
+        Log.e("TicketmasterApiService", "Error loading event with ID $eventId: ${e.message}")
+        null
+    }
+}
+
+
+fun eventsDataFlow(city: String): Flow<List<TicketmasterEvent>> = flow {
+    emit(loadEvents(city))
+}
+
+fun eventByIdFlow(eventId: String): Flow<TicketmasterEvent?> = flow{
+    emit(getEventById(eventId))
+}
+
+interface EventsRepository{
+    fun getEventsDataFlow(city: String): Flow<List<TicketmasterEvent>>
+}
+
+interface EventByIdData{
+    fun getEventByIdFlow(eventId: String): Flow<TicketmasterEvent?>
+}
+
+class EventsRepositoryImplFlow: EventsRepository{
+    override fun getEventsDataFlow(city: String): Flow<List<TicketmasterEvent>> = eventsDataFlow(city)
+}
+
+class EventByIdImplFlow: EventByIdData{
+    override fun getEventByIdFlow(eventId: String): Flow<TicketmasterEvent?> = eventByIdFlow(eventId)
 }

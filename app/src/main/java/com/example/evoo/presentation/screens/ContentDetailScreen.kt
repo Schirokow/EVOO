@@ -60,6 +60,7 @@ import android.net.Uri
 import androidx.compose.ui.platform.LocalContext
 
 
+
 @Composable
 fun ContentDetailScreen(navController: NavController, id: String){
     val TAG = "ContentDetailScreen"
@@ -273,6 +274,7 @@ fun ContentDetailScreen(navController: NavController, id: String){
                                     if (intent.resolveActivity(context.packageManager) != null) {
                                         context.startActivity(intent)
                                     }
+
                                 }
                         )
                     }

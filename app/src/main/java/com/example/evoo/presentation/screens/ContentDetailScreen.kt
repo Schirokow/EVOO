@@ -55,6 +55,10 @@ import com.example.evoo.ui.menu.AnyeBottomBar
 import coil.compose.AsyncImage
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.ui.platform.LocalContext
+
 
 
 @Composable
@@ -266,7 +270,11 @@ fun ContentDetailScreen(navController: NavController, id: String){
                                 .padding(16.dp)
                                 .clickable {
                                     // Logik für den Klick auf den Link
-                                    // Hier kannst du einen Intent zum Öffnen des Browsers starten
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                    if (intent.resolveActivity(context.packageManager) != null) {
+                                        context.startActivity(intent)
+                                    }
+
                                 }
                         )
                     }

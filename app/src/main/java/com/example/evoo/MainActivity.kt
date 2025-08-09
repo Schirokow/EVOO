@@ -44,16 +44,6 @@ fun Navigation() {
 
     val TAG = "AppNavigation"
     val navController = rememberNavController()
-//    val currentUser = AuthManager.currentUser
-//    val startDestination = if (currentUser != null) {
-//        Log.i(TAG, "User authenticated: ${currentUser.name.take(3)}...")
-//        "ProfileScreen1/${currentUser.name}" //Direkt zum Profil
-//    } else {
-//        Log.i(TAG, "No authenticated user found")
-//        "LoginScreen"
-//    }
-
-//    Log.d(TAG, "Initializing navigation with start destination: $startDestination")
 
     NavHost(
         navController = navController,

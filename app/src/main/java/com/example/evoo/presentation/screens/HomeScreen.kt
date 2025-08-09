@@ -67,7 +67,7 @@ import com.example.evoo.AccentColor
 import com.example.evoo.BottomDarkBlue
 import com.example.evoo.TopLightBlue
 import com.example.evoo.data.AppModule
-import com.example.evoo.data.FestivalData
+
 import com.example.evoo.presentation.viewmodels.HomeViewModel
 import com.example.evoo.ui.components.buttons.ClickButton
 import com.example.evoo.ui.components.card.NewEventCard
@@ -202,24 +202,22 @@ fun HomeScreen(navController: NavController){
 fun EventContent(navController: NavController,viewModel: HomeViewModel) {
 
     val TAG = "EventContent"
-    val festivalDataList by viewModel.festivalData.collectAsState()
     val eventsDataList by viewModel.eventsData.collectAsState()
 
     val coroutineScope = rememberCoroutineScope()
-    val favoriteStates = remember { mutableStateMapOf<Int, Boolean>() }
+    val favoriteStates = remember { mutableStateMapOf<String, Boolean>() }
 
-    LaunchedEffect(festivalDataList) {
-        festivalDataList.forEach { festival ->
+    LaunchedEffect(eventsDataList) {
+        eventsDataList.forEach { event ->
             coroutineScope.launch {
-                val isFavorite = viewModel.favoriteRepository.isFavorite(festival.id)
-                favoriteStates[festival.id] = isFavorite
+                val isFavorite = viewModel.favoriteRepository.isFavorite(event.id)
+                favoriteStates[event.id] = isFavorite
             }
         }
     }
 
     // Schutz vor leeren Listen
     if (
-//        festivalDataList.isEmpty()
         eventsDataList.isEmpty()
         ) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -233,7 +231,7 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
         Log.d(TAG, "Selected festival state initialized")
     } }
 
-    Log.d(TAG, "Rendering festival grid with ${festivalDataList.size} items")
+    Log.d(TAG, "Rendering event grid with ${eventsDataList.size} items")
 
     LazyVerticalGrid(
         modifier = Modifier
@@ -323,20 +321,20 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
                         }
                     )
 
-//                Icon(
-//                    imageVector = if (favoriteStates[festival.id] == true) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
-//                    contentDescription = "Favorite",
-//                    tint = if (favoriteStates[festival.id] == true) Color.Yellow else Color.White,
-//                    modifier = Modifier
-//                        .align(alignment = Alignment.TopEnd)
-//                        .padding(24.dp)
-//                        .size(34.dp)
-//                        .clickable{
-//                            Log.i(TAG, "Favorite button clicked for id: ${festival.id}")
-//                            viewModel.toggleFavorite(festival)
-//                            favoriteStates[festival.id] = !(favoriteStates[festival.id] ?: false)
-//                        }
-//                )
+                Icon(
+                    imageVector = if (favoriteStates[event.id] == true) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
+                    contentDescription = "Favorite",
+                    tint = if (favoriteStates[event.id] == true) Color.Yellow else Color.White,
+                    modifier = Modifier
+                        .align(alignment = Alignment.TopEnd)
+                        .padding(24.dp)
+                        .size(34.dp)
+                        .clickable{
+                            Log.i(TAG, "Favorite button clicked for id: ${event.id}")
+                            viewModel.toggleFavorite(event)
+                            favoriteStates[event.id] = !(favoriteStates[event.id] ?: false)
+                        }
+                )
                 //Erklärung:
                 //Der Favoritenstatus wird mit favoriteStates (eine mutableStateMapOf) dynamisch geladen, um UI-Reaktivität zu gewährleisten.
                 //LaunchedEffect lädt den Favoritenstatus für jedes Festival beim Rendern.

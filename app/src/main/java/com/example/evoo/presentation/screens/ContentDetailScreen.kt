@@ -78,7 +78,7 @@ fun ContentDetailScreen(navController: NavController, id: String){
 
 //    val festival by viewModel.festival.collectAsState()
     val event by viewModel.event.collectAsState()
-//    val isFavorite by viewModel.isFavorite.collectAsState()
+    val isFavorite by viewModel.isFavorite.collectAsState()
     if (event == null) {
         Box(
             modifier = Modifier
@@ -145,19 +145,19 @@ fun ContentDetailScreen(navController: NavController, id: String){
                     }
             )
 
-//            Icon(
-//                imageVector = if (isFavorite) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
-//                contentDescription = "Favorite",
-//                tint = if (isFavorite) Color.Yellow else Color.White,
-//                modifier = Modifier
-//                    .align(alignment = Alignment.TopEnd)
-//                    .padding(24.dp)
-//                    .size(34.dp)
-//                    .clickable{
-//                        Log.i(TAG, "Favorite clicked for: ${festival!!.title.take(15)}...")
-//                        viewModel.toggleFavorite(festival!!)
-//                    }
-//            )
+            Icon(
+                imageVector = if (isFavorite) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
+                contentDescription = "Favorite",
+                tint = if (isFavorite) Color.Yellow else Color.White,
+                modifier = Modifier
+                    .align(alignment = Alignment.TopEnd)
+                    .padding(24.dp)
+                    .size(34.dp)
+                    .clickable{
+                        Log.i(TAG, "Favorite clicked for: ${event!!.name.take(15)}...")
+                        viewModel.toggleFavorite(event!!)
+                    }
+            )
 
             ClickButton(
                 text = "Auf der Karte",
@@ -181,23 +181,6 @@ fun ContentDetailScreen(navController: NavController, id: String){
                 item {
                     Log.d(TAG, "Rendering content for: ${event?.name?.take(15)}...")
 
-                    // Bild
-//                    Card (
-//                        modifier = Modifier
-//                            .fillMaxWidth(0.9f)
-////                            .fillMaxHeight(0.5f),
-//                            .height(300.dp),
-//                        shape = RoundedCornerShape(16.dp),
-//                        elevation = CardDefaults.cardElevation(12.dp)
-//                    ){
-//                        Image(
-//                            painter = painterResource(id = festival?.imageId ?: 0),
-//                            contentDescription = null,
-//                            modifier = Modifier
-//                                .fillMaxSize(),
-//                            contentScale = ContentScale.FillBounds
-//                        )
-//                    }
                     // Bild mit AsyncImage direkt laden
                     val imageUrl = event?.images?.firstOrNull()?.url
                     Card(
@@ -225,22 +208,6 @@ fun ContentDetailScreen(navController: NavController, id: String){
                         color = Color.White,
                         modifier = Modifier.padding(16.dp)
                     )
-
-//                    // Beschreibung
-//                    Text(
-//                        text = "Beschreibung: ${festival?.description}",
-//                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
-//                        color = Color.White,
-//                        modifier = Modifier.padding(16.dp)
-//                    )
-//
-//                    // Datum
-//                    Text(
-//                        text = "Datum: ${festival?.datum}",
-//                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
-//                        color = Color.White,
-//                        modifier = Modifier.padding(16.dp)
-//                    )
 
                     // Datum (verwende direkt den String)
                     Text(
@@ -279,15 +246,6 @@ fun ContentDetailScreen(navController: NavController, id: String){
                         )
                     }
 
-
-                    // Location
-//                    Text(
-//                        text = "Ort: ${festival?.location}",
-//                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 25.sp),
-//                        color = Color.White,
-//                        modifier = Modifier.padding(16.dp)
-//                    )
-
                     // Spacer für minimale Scroll-Länge
                     Spacer(
                         modifier = Modifier
@@ -297,7 +255,6 @@ fun ContentDetailScreen(navController: NavController, id: String){
 
                 }
                 }
-
 
             AnyeBottomBar(navController)
         }

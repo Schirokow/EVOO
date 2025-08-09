@@ -126,6 +126,14 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.7.0")
 
+    // Ktor Client Logging Abhängigkeit
+    implementation("io.ktor:ktor-client-logging:3.2.3")
+
+    // Kotlinx Serialization
+    implementation(libs.kotlinx.serialization.json)
+
+    // Extended Icons
+    implementation(libs.androidx.material.icons.extended)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

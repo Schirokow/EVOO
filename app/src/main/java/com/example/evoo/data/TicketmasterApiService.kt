@@ -173,9 +173,8 @@ class TicketmasterApiService(private val context: Context) {
             // Optional: Land, z.B. für Deutschland: parameter("countryCode", "DE")
         }.body()
     }
-
-
 }
+
 private val BASE_URL = "https://app.ticketmaster.com/discovery/v2/"
 
 private val API_KEY: String = "X0B57u3BuSKfCFLvWjCPRoFMJtA5xiVQ"

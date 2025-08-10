@@ -19,15 +19,20 @@ class HomeViewModel(
 ) : ViewModel() {
     private val getEventsUseCase: GetEventsUseCase = GetEventsUseCase()
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
     private val _eventsData = MutableStateFlow<List<TicketmasterEvent>>(emptyList())
     val eventsData: StateFlow<List<TicketmasterEvent>> = _eventsData.asStateFlow()
 
 
     fun loadAllEvents(city: String) {
         viewModelScope.launch {
+            _isLoading.value = true
             getEventsUseCase.getEventsFlow(city).collect { evetnts ->
                 _eventsData.value = evetnts
             }
+            _isLoading.value = false
         }
     }
 

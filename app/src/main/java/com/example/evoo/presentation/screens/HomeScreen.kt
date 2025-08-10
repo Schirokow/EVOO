@@ -100,6 +100,7 @@ fun HomeScreen(navController: NavController){
     val context = LocalContext.current
     val viewModel: HomeViewModel = viewModel(factory = AppModule.provideHomeViewModelFactory(context))
     var showDeleteDialog by remember { mutableStateOf(false) }
+    val isLoading by viewModel.isLoading.collectAsState()
     val coroutineScope = rememberCoroutineScope()
     var city by remember {
         mutableStateOf("")
@@ -165,8 +166,27 @@ fun HomeScreen(navController: NavController){
                 }
 
             }
-            // Funktion für die Vorschau.
-            EventContent(navController, viewModel)
+            when {
+                isLoading -> {
+                    Box (
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ){
+                        CircularProgressIndicator(color = Color.White)
+                        Text(
+                            text = "Lade..",
+                            color = Color.White,
+                            fontSize = 24.sp,
+                            modifier = Modifier.padding(top = 70.dp)
+                        )
+                    }
+                }
+                else -> {
+                    // Funktion für die Vorschau.
+                    EventContent(navController, viewModel)
+                }
+            }
+
 
             AnyeBottomBar(navController)
         }
@@ -203,7 +223,6 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
 
     val TAG = "EventContent"
     val eventsDataList by viewModel.eventsData.collectAsState()
-
     val coroutineScope = rememberCoroutineScope()
     val favoriteStates = remember { mutableStateMapOf<String, Boolean>() }
 
@@ -233,37 +252,39 @@ fun EventContent(navController: NavController,viewModel: HomeViewModel) {
 
     Log.d(TAG, "Rendering event grid with ${eventsDataList.size} items")
 
-    LazyVerticalGrid(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 155.dp),
-        contentPadding = PaddingValues(
-            top = 16.dp,
-            bottom = 500.dp
-        ),
-        columns = GridCells.Fixed(2)
-    ){
-        itemsIndexed(eventsDataList){ index, event ->
 
-            Box(
+            LazyVerticalGrid(
                 modifier = Modifier
-                    .padding(6.dp)
-                    .aspectRatio(1f)
+                    .fillMaxSize()
+                    .padding(top = 155.dp),
+                contentPadding = PaddingValues(
+                    top = 16.dp,
+                    bottom = 500.dp
+                ),
+                columns = GridCells.Fixed(2)
             ){
-                NewEventCard(
-                    image = event.images,
-                    title = event.name,
-                    datum = event.dates?.start?.localDate,
-                    onClick = {
-                        Log.d(TAG, "Festival card clicked - id: ${event.id}, title: ${event.name.take(15)}...")
-                            selectedEventData = event
-                    },
-                    isLarge = true,
-                    modifier = Modifier
-                )
+                itemsIndexed(eventsDataList){ index, event ->
+
+                    Box(
+                        modifier = Modifier
+                            .padding(6.dp)
+                            .aspectRatio(1f)
+                    ){
+                        NewEventCard(
+                            image = event.images,
+                            title = event.name,
+                            datum = event.dates?.start?.localDate,
+                            onClick = {
+                                Log.d(TAG, "Festival card clicked - id: ${event.id}, title: ${event.name.take(15)}...")
+                                selectedEventData = event
+                            },
+                            isLarge = true,
+                            modifier = Modifier
+                        )
+                    }
+                }
             }
-        }
-    }
+
 
     val animateScale by animateFloatAsState(
         targetValue = if (selectedEventData != null) 1f else 0.5f,
